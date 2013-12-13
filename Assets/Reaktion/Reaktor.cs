@@ -27,7 +27,15 @@ public class Reaktor : MonoBehaviour
 {
     #region Basic settings
 
-    public int bandIndex = 1;
+    public enum InputMode
+    {
+        MonoLevel,
+        StereoLevel,
+        SpecturmBand
+    }
+
+    public InputMode inputMode = InputMode.SpecturmBand;
+    public int inputIndex = 1;
     public float sensibility = 18.0f;
     public AnimationCurve curve = AnimationCurve.Linear (0, 0, 1, 1);
 
@@ -73,7 +81,19 @@ public class Reaktor : MonoBehaviour
     void Update ()
     {
         // Audio input.
-        var input = bandIndex < 0 ? -1e6f : AudioJack.instance.BandLevels [bandIndex];
+        float input;
+        if (inputMode == InputMode.MonoLevel)
+        {
+            input = AudioJack.instance.ChannelLevels [inputIndex];
+        }
+        else if (inputMode == InputMode.StereoLevel)
+        {
+            input = 0.5f * (AudioJack.instance.ChannelLevels [inputIndex] + AudioJack.instance.ChannelLevels [inputIndex + 1]);
+        }
+        else
+        {
+            input = AudioJack.instance.BandLevels [inputIndex];
+        }
 
         // Check the peak level.
         peak -= Time.deltaTime * falldown;

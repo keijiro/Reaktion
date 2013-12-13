@@ -30,8 +30,9 @@ public class ReaktorEditor : Editor
     #region References to the properties
 
     // Basic settings.
-    SerializedProperty propBandIndex;
-    SerializedProperty propSensibility;
+    SerializedProperty propInputMode;
+	SerializedProperty propInputIndex;
+	SerializedProperty propSensibility;
     SerializedProperty propCurve;
 
     // Audio input options.
@@ -56,8 +57,9 @@ public class ReaktorEditor : Editor
     void OnEnable ()
     {
         // Basic settings.
-        propBandIndex = serializedObject.FindProperty ("bandIndex");
-        propSensibility = serializedObject.FindProperty ("sensibility");
+        propInputMode = serializedObject.FindProperty ("inputMode");
+		propInputIndex = serializedObject.FindProperty ("inputIndex");
+		propSensibility = serializedObject.FindProperty ("sensibility");
         propCurve = serializedObject.FindProperty ("curve");
         
         // Audio input options.
@@ -87,8 +89,16 @@ public class ReaktorEditor : Editor
         serializedObject.Update ();
 
         // Basic settings.
-        propBandIndex.intValue = EditorGUILayout.IntField ("Band Index", propBandIndex.intValue);
-        EditorGUILayout.Slider (propSensibility, 0.1f, 40.0f);
+        propInputMode.intValue = (int)(Reaktor.InputMode)EditorGUILayout.EnumPopup ("Input Mode", (Reaktor.InputMode)propInputMode.intValue);
+        if (propInputMode.intValue == (int)Reaktor.InputMode.SpecturmBand)
+        {
+            propInputIndex.intValue = EditorGUILayout.IntField ("Band Index", propInputIndex.intValue);
+        }
+        else
+        {
+            propInputIndex.intValue = EditorGUILayout.IntField ("Channel", propInputIndex.intValue);
+        }
+		EditorGUILayout.Slider (propSensibility, 0.1f, 40.0f);
         propCurve.animationCurveValue = EditorGUILayout.CurveField ("Output Curve", propCurve.animationCurveValue);
 
         // Audio input options.
