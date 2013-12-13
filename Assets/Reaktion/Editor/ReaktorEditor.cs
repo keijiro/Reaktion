@@ -1,33 +1,97 @@
-﻿using UnityEngine;
+﻿//
+// Reaktion - An audio reactive animation toolkit for Unity.
+//
+// Copyright (C) 2013 Keijiro Takahashi
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
-using System.Linq;
 
 [CustomEditor(typeof(Reaktor)), CanEditMultipleObjects]
 public class ReaktorEditor : Editor
 {
-    // Properties.
-    SerializedProperty propBandIndex;
-    SerializedProperty propDynamicRange;
-    SerializedProperty propHeadroom;
-    SerializedProperty propFalldown;
-    SerializedProperty propLowerBound;
-    SerializedProperty propPowerFactor;
-    SerializedProperty propSensibility;
-    SerializedProperty propShowOptions;
+    #region References to the properties
 
-    // Texutres for drawing bars.
+    // Basic settings.
+    SerializedProperty propBandIndex;
+    SerializedProperty propSensibility;
+    SerializedProperty propCurve;
+
+    // Audio input options.
+    SerializedProperty propShowOptions;
+    SerializedProperty propHeadroom;
+    SerializedProperty propDynamicRange;
+    SerializedProperty propLowerBound;
+    SerializedProperty propFalldown;
+
+    #endregion
+
+    #region Private variables
+
+    // Texutres for drawing level bars.
     Texture2D[] barTextures;
 
-    // Shows the inspaector.
+    #endregion
+
+    #region Editor functions
+
+    // On Enable (initialization)
+    void OnEnable ()
+    {
+        // Basic settings.
+        propBandIndex = serializedObject.FindProperty ("bandIndex");
+        propSensibility = serializedObject.FindProperty ("sensibility");
+        propCurve = serializedObject.FindProperty ("curve");
+        
+        // Audio input options.
+        propShowOptions = serializedObject.FindProperty ("showOptions");
+        propHeadroom = serializedObject.FindProperty ("headroom");
+        propDynamicRange = serializedObject.FindProperty ("dynamicRange");
+        propLowerBound = serializedObject.FindProperty ("lowerBound");
+        propFalldown = serializedObject.FindProperty ("falldown");
+    }
+    
+    // On Disable (cleanup)
+    void OnDisable ()
+    {
+        if (barTextures != null)
+        {
+            // Destroy the bar textures.
+            foreach (var texture in barTextures)
+                DestroyImmediate (texture);
+            barTextures = null;
+        }
+    }
+
+    // Shows the inspector.
     public override void OnInspectorGUI ()
     {
+        // Update the references.
         serializedObject.Update ();
-        
-        // Show the editable properties.
+
+        // Basic settings.
         propBandIndex.intValue = EditorGUILayout.IntField ("Band Index", propBandIndex.intValue);
-        EditorGUILayout.Slider (propPowerFactor, 0.1f, 20.0f);
         EditorGUILayout.Slider (propSensibility, 0.1f, 40.0f);
+        propCurve.animationCurveValue = EditorGUILayout.CurveField ("Output Curve", propCurve.animationCurveValue);
+
+        // Audio input options.
         propShowOptions.boolValue = EditorGUILayout.Foldout (propShowOptions.boolValue, "Audio Input Options");
         if (propShowOptions.boolValue)
         {
@@ -44,36 +108,13 @@ public class ReaktorEditor : Editor
         if (EditorApplication.isPlaying && !serializedObject.isEditingMultipleObjects)
         {
             DrawLevelBar (target as Reaktor);
-            // Make it dirty to update the view.
-            EditorUtility.SetDirty (target);
+            EditorUtility.SetDirty (target); // Make it dirty to update the view.
         }
     }
 
-    // On Enable (initialization)
-    void OnEnable ()
-    {
-        // Get references to the properties.
-        propBandIndex = serializedObject.FindProperty ("bandIndex");
-        propDynamicRange = serializedObject.FindProperty ("dynamicRange");
-        propHeadroom = serializedObject.FindProperty ("headroom");
-        propFalldown = serializedObject.FindProperty ("falldown");
-        propLowerBound = serializedObject.FindProperty ("lowerBound");
-        propPowerFactor = serializedObject.FindProperty ("powerFactor");
-        propSensibility = serializedObject.FindProperty ("sensibility");
-        propShowOptions = serializedObject.FindProperty ("showOptions");
-    }
-
-    // On Disable (cleanup)
-    void OnDisable ()
-    {
-        if (barTextures != null)
-        {
-            // Destroy the bar textures.
-            foreach (var texture in barTextures)
-                DestroyImmediate (texture);
-            barTextures = null;
-        }
-    }
+    #endregion
+    
+    #region Private functions
 
     // Make a texture which contains only one pixel.
     Texture2D NewBarTexture (Color color)
@@ -123,4 +164,6 @@ public class ReaktorEditor : Editor
         rect.height /= 2;
         GUI.DrawTexture (rect, barTextures [2]);
     }
+
+    #endregion
 }

@@ -23,32 +23,27 @@
 using UnityEngine;
 using System.Collections;
 
-public class ReaktorToTransform : MonoBehaviour
+public class ReaktorToAnimator : MonoBehaviour
 {
     #region Public properties
 
-    // Position control.
-    public bool enablePosition;
-    public Vector3 position = Vector3.up;
+    // Speed control.
+    public bool enableSpeed;
+    public float maxSpeed = 1.0f;
+    public AnimationCurve speedCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
-    // Rotation control.
-    public bool enableRotation;
-    public Vector3 rotationAxis = Vector3.up;
-    public float minAngle = -90.0f;
-    public float maxAngle = 90.0f;
-
-    // Scale control.
-    public bool enableScale;
-    public Vector3 scale = Vector3.one;
+    // Trigger control.
+    public bool enableTrigger;
+    public float triggerThreshold = 0.9f;
+    public string triggerName;
 
     #endregion
 
     #region Private variables
 
     Reaktor reaktor;
-    Vector3 initialPosition;
-    Quaternion initialRotation;
-    Vector3 initialScale;
+    Animator animator;
+    float previousOutput;
 
     #endregion
 
@@ -57,28 +52,25 @@ public class ReaktorToTransform : MonoBehaviour
     void Start ()
     {
         reaktor = Reaktor.SearchAvailableFrom (gameObject);
-        initialPosition = transform.localPosition;
-        initialRotation = transform.localRotation;
-        initialScale = transform.localScale;
+        animator = GetComponent<Animator> ();
     }
 
     void Update ()
     {
-        if (enablePosition)
+        if (enableTrigger)
         {
-            transform.localPosition = initialPosition + position * reaktor.Output;
+            if (previousOutput < triggerThreshold && reaktor.Output >= triggerThreshold)
+            {
+                animator.SetTrigger (triggerName);
+            }
         }
 
-        if (enableRotation)
+        if (enableSpeed)
         {
-            var angle = Mathf.Lerp (minAngle, maxAngle, reaktor.Output);
-            transform.localRotation = Quaternion.AngleAxis (angle, rotationAxis) * initialRotation;
+            animator.speed = maxSpeed * speedCurve.Evaluate (reaktor.Output);
         }
 
-        if (enableScale)
-        {
-            transform.localScale = initialScale + scale * reaktor.Output;
-        }
+        previousOutput = reaktor.Output;
     }
 
     #endregion
