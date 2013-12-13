@@ -118,7 +118,7 @@ public class ReaktorEditor : Editor
         GUI.DrawTexture (rect, barTextures [1]);
         
         // Draw the output level bar with blue.
-        rect.width = width * (reaktor.dynamicRange + reaktor.headroom) * reaktor.Output / (3 - reaktor.lowerBound);
+        rect.width = width * reaktor.dynamicRange * reaktor.Output / (3 - reaktor.lowerBound);
         rect.y += rect.height / 2;
         rect.height /= 2;
         GUI.DrawTexture (rect, barTextures [2]);
