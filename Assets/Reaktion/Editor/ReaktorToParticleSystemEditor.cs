@@ -66,16 +66,16 @@ public class ReaktorToParticleSystemEditor : Editor
         if (propEnableBurst.boolValue)
         {
             EditorGUILayout.Slider (propBurstThreshold, 0.0f, 1.0f, "Threshold");
-            EditorGUILayout.PropertyField (propBurstEmissionNumber, new GUIContent ("Particles"));
+            propBurstEmissionNumber.intValue = EditorGUILayout.IntField ("Particles", propBurstEmissionNumber.intValue);
+            EditorGUILayout.Space ();
         }
 
         // Emission rate options.
         propEnableEmissionRate.boolValue = EditorGUILayout.Toggle ("Emission Rate", propEnableEmissionRate.boolValue);
         if (propEnableEmissionRate.boolValue)
         {
-            EditorGUILayout.PropertyField (propMaxEmissionRate, new GUIContent ("Max Rate"));
-            EditorGUILayout.PropertyField (propEmissionRateCurve, new GUIContent ("Rate Curve"));
-            EditorGUILayout.Space ();
+            propMaxEmissionRate.floatValue = EditorGUILayout.FloatField ("Max Rate", propMaxEmissionRate.floatValue);
+            propEmissionRateCurve.animationCurveValue = EditorGUILayout.CurveField ("Rate Curve", propEmissionRateCurve.animationCurveValue);
         }
 
         // Apply modifications.

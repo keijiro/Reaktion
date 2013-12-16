@@ -37,15 +37,15 @@ public class ReaktorToMessage : MonoBehaviour
     public GameObject target;
     public bool broadcast;
 
-    // Input message.
-    public bool enableInput;
-	public AnimationCurve inputCurve = AnimationCurve.Linear (0, 0, 1, 1);
-    public string inputMessage = "OnReaktorInput";
-
     // Trigger message.
     public bool enableTrigger;
     public float triggerThreshold = 0.9f;
     public string triggerMessage = "OnReaktorTrigger";
+    
+    // Input message.
+    public bool enableInput;
+	public AnimationCurve inputCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public string inputMessage = "OnReaktorInput";
 
     #endregion
 
@@ -68,19 +68,6 @@ public class ReaktorToMessage : MonoBehaviour
         var sendTo = (target == null) ? gameObject : target;
         var level = Mathf.Max (reaktor.Output, MinValue);
 
-        // Input message.
-        if (enableInput && level != previousOutput)
-        {
-            if (broadcast)
-            {
-                sendTo.BroadcastMessage (inputMessage, inputCurve.Evaluate (level));
-            }
-            else
-            {
-                sendTo.SendMessage (inputMessage, inputCurve.Evaluate (level));
-            }
-        }
-
         // Trigger message.
         if (enableTrigger)
         {
@@ -97,6 +84,19 @@ public class ReaktorToMessage : MonoBehaviour
             }
         }
         
+        // Input message.
+        if (enableInput && level != previousOutput)
+        {
+            if (broadcast)
+            {
+                sendTo.BroadcastMessage (inputMessage, inputCurve.Evaluate (level));
+            }
+            else
+            {
+                sendTo.SendMessage (inputMessage, inputCurve.Evaluate (level));
+            }
+        }
+
         previousOutput = level;
     }
 

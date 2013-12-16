@@ -27,16 +27,16 @@ public class ReaktorToParticleSystem : MonoBehaviour
 {
     #region Public properties
 
-    // Emission rate options.
-    public bool enableEmissionRate;
-    public float maxEmissionRate = 30.0f;
-    public AnimationCurve emissionRateCurve = AnimationCurve.Linear (0, 0, 1, 1);
-    
     // Burst options.
     public bool enableBurst;
     public float burstThreshold = 0.9f;
     public int burstEmissionNumber = 10;
 
+    // Emission rate options.
+    public bool enableEmissionRate;
+    public float maxEmissionRate = 30.0f;
+    public AnimationCurve emissionRateCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    
     #endregion
 
     #region Private variables
@@ -55,11 +55,6 @@ public class ReaktorToParticleSystem : MonoBehaviour
 
     void Update ()
     {
-        if (enableEmissionRate)
-        {
-            particleSystem.emissionRate = maxEmissionRate * emissionRateCurve.Evaluate (reaktor.Output);
-        }
-        
         if (enableBurst)
         {
             if (previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
@@ -68,7 +63,12 @@ public class ReaktorToParticleSystem : MonoBehaviour
                 particleSystem.Play ();
             }
         }
-
+        
+        if (enableEmissionRate)
+        {
+            particleSystem.emissionRate = maxEmissionRate * emissionRateCurve.Evaluate (reaktor.Output);
+        }
+        
         previousOutput = reaktor.Output;
     }
 

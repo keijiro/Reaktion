@@ -33,16 +33,16 @@ public class ReaktorToMessageEditor : Editor
     SerializedProperty propTarget;
     SerializedProperty propBroadcast;
 
+    // Trigger message.
+    SerializedProperty propEnableTrigger;
+    SerializedProperty propTriggerThreshold;
+    SerializedProperty propTriggerMessage;
+    
     // Input message.
     SerializedProperty propEnableInput;
     SerializedProperty propInputCurve;
     SerializedProperty propMaxInput;
     SerializedProperty propInputMessage;
-
-    // Trigger message.
-    SerializedProperty propEnableTrigger;
-    SerializedProperty propTriggerThreshold;
-    SerializedProperty propTriggerMessage;
 
     #endregion
 
@@ -54,15 +54,15 @@ public class ReaktorToMessageEditor : Editor
         propTarget = serializedObject.FindProperty ("target");
         propBroadcast = serializedObject.FindProperty ("broadcast");
 
-        // Input message.
-        propEnableInput = serializedObject.FindProperty ("enableInput");
-        propInputCurve = serializedObject.FindProperty ("inputCurve");
-        propInputMessage = serializedObject.FindProperty ("inputMessage");
-
         // Trigger message.
         propEnableTrigger = serializedObject.FindProperty ("enableTrigger");
         propTriggerThreshold = serializedObject.FindProperty ("triggerThreshold");
         propTriggerMessage = serializedObject.FindProperty ("triggerMessage");
+
+        // Input message.
+        propEnableInput = serializedObject.FindProperty ("enableInput");
+        propInputCurve = serializedObject.FindProperty ("inputCurve");
+        propInputMessage = serializedObject.FindProperty ("inputMessage");
     }
 
     public override void OnInspectorGUI ()
@@ -82,21 +82,21 @@ public class ReaktorToMessageEditor : Editor
         }
         EditorGUILayout.Space ();
 
-        // Input message.
-        propEnableInput.boolValue = EditorGUILayout.Toggle ("Input Message", propEnableInput.boolValue);
-        if (propEnableInput.boolValue)
-        {
-            propInputCurve.animationCurveValue = EditorGUILayout.CurveField ("Input Curve", propInputCurve.animationCurveValue);
-            propInputMessage.stringValue = EditorGUILayout.TextField ("Message", propInputMessage.stringValue);
-            EditorGUILayout.Space ();
-        }
-
         // Trigger message.
         propEnableTrigger.boolValue = EditorGUILayout.Toggle ("Trigger Message", propEnableTrigger.boolValue);
         if (propEnableTrigger.boolValue)
         {
             EditorGUILayout.Slider (propTriggerThreshold, 0.0f, 1.0f, "Threahold");
             propTriggerMessage.stringValue = EditorGUILayout.TextField ("Message", propTriggerMessage.stringValue);
+            EditorGUILayout.Space ();
+        }
+        
+        // Input message.
+        propEnableInput.boolValue = EditorGUILayout.Toggle ("Input Message", propEnableInput.boolValue);
+        if (propEnableInput.boolValue)
+        {
+            propInputCurve.animationCurveValue = EditorGUILayout.CurveField ("Input Curve", propInputCurve.animationCurveValue);
+            propInputMessage.stringValue = EditorGUILayout.TextField ("Message", propInputMessage.stringValue);
         }
 
         // Apply modifications.
