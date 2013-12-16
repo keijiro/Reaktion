@@ -81,6 +81,10 @@ public class AudioJack : MonoBehaviour
     // Internal audio mode.
     public bool internalMode = false;
 
+	// Editor properties.
+	public bool showLevels = false;
+	public bool showSpectrum = false;
+
     // Octave band array (readonly).
     public float[] BandLevels {
         get { return bandLevels; }
@@ -119,30 +123,30 @@ public class AudioJack : MonoBehaviour
 
 #if UNITY_STANDALONE_OSX
     [DllImport ("AudioJackPlugin")]
-    static extern int AudioJackCountChannels ();
+	public static extern int AudioJackCountChannels ();
     [DllImport ("AudioJackPlugin")]
-    static extern float AudioJackGetSampleRate ();
+	public static extern float AudioJackGetSampleRate ();
     [DllImport ("AudioJackPlugin")]
-    static extern float AudioJackGetChannelLevel (int channel);
+    public static extern float AudioJackGetChannelLevel (int channel);
     [DllImport ("AudioJackPlugin")]
-    static extern void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum);
+	public static extern void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum);
 #else
-    static int AudioJackCountChannels ()
+	public static int AudioJackCountChannels ()
     {
         return 1;
     }
 
-    static float AudioJackGetSampleRate ()
+	public static float AudioJackGetSampleRate ()
     {
         return 44100;
     }
 
-    static float AudioJackGetChannelLevel (int channel)
+	public static float AudioJackGetChannelLevel (int channel)
     {
         return 0.0f;
     }
 
-    static void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum)
+	public static void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum)
     {
         for (var i = 0; i < pointNumber; i++)
         {
