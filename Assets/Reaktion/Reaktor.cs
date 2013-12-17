@@ -25,25 +25,47 @@ using System.Collections;
 
 public class Reaktor : MonoBehaviour
 {
-    #region Basic settings
+    #region Audio input settings
 
-    public enum InputMode
+    public enum AudioMode
     {
+        NoInput,
         MonoLevel,
         StereoLevel,
         SpecturmBand
     }
 
-    public InputMode inputMode = InputMode.SpecturmBand;
-    public int inputIndex = 1;
+    public AudioMode audioMode = AudioMode.SpecturmBand;
+    public int audioIndex = 1;
+    public AnimationCurve audioCurve = AnimationCurve.Linear (0, 0, 1, 1);
+
+    #endregion
+
+    #region Gain control settings
+
+    public bool gainEnabled = false;
+    public int gainKnobIndex = 2;
+    public AnimationCurve gainCurve = AnimationCurve.Linear (0, 0, 1, 1);
+
+    #endregion
+
+    #region Offset control settings
+
+    public bool offsetEnabled = false;
+    public int offsetKnobIndex = 3;
+    public AnimationCurve offsetCurve = AnimationCurve.Linear (0, 0, 1, 1);
+
+    #endregion
+
+    #region General option
+
     public float sensibility = 18.0f;
-    public AnimationCurve curve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
 
     #region Audio input options
 
-    public bool showOptions;
+    public bool showAudioOptions = false;
     public float headroom = 6.0f;
     public float dynamicRange = 20.0f;
     public float lowerBound = -60.0f;
@@ -61,12 +83,17 @@ public class Reaktor : MonoBehaviour
         get { return peak; }
     }
 
+    public float RawInput {
+        get { return rawInput; }
+    }
+
     #endregion
 
     #region Private variables
-    
+
     float output;
     float peak;
+    float rawInput;
 
     #endregion
 
@@ -76,34 +103,50 @@ public class Reaktor : MonoBehaviour
     {
         // Begins with the lowest level.
         peak = lowerBound + dynamicRange + headroom;
+        rawInput = -1e12f;
     }
 
     void Update ()
     {
+        float input = 0.0f;
+
         // Audio input.
-        float input;
-        if (inputMode == InputMode.MonoLevel)
+        if (audioMode != AudioMode.NoInput)
         {
-            input = AudioJack.instance.ChannelLevels [inputIndex];
-        }
-        else if (inputMode == InputMode.StereoLevel)
-        {
-            input = 0.5f * (AudioJack.instance.ChannelLevels [inputIndex] + AudioJack.instance.ChannelLevels [inputIndex + 1]);
-        }
-        else
-        {
-            input = AudioJack.instance.BandLevels [inputIndex];
+            if (audioMode == AudioMode.MonoLevel)
+            {
+                rawInput = AudioJack.instance.ChannelLevels [audioIndex];
+            }
+            else if (audioMode == AudioMode.StereoLevel)
+            {
+                rawInput = 0.5f * (AudioJack.instance.ChannelLevels [audioIndex] + AudioJack.instance.ChannelLevels [audioIndex + 1]);
+            }
+            else
+            {
+                rawInput = AudioJack.instance.BandLevels [audioIndex];
+            }
+
+            // Check the peak level.
+            peak -= Time.deltaTime * falldown;
+            peak = Mathf.Max (peak, Mathf.Max (rawInput, lowerBound + dynamicRange + headroom));
+            
+            // Normalize the input level.
+            input = (rawInput - peak + headroom + dynamicRange) / dynamicRange;
+            input = audioCurve.Evaluate (Mathf.Clamp01 (input));
         }
 
-        // Check the peak level.
-        peak -= Time.deltaTime * falldown;
-        peak = Mathf.Max (peak, Mathf.Max (input, lowerBound + dynamicRange + headroom));
-
-        // Normalize the input level.
-        input = (input - peak + headroom + dynamicRange) / dynamicRange;
-        input = curve.Evaluate (Mathf.Clamp01 (input));
+        // MIDI CC input.
+        if (gainEnabled)
+        {
+            input *= gainCurve.Evaluate (MidiJack.GetKnob (gainKnobIndex, 1.0f));
+        }
+        if (offsetEnabled)
+        {
+            input += offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobIndex));
+        }
 
         // Interpolation.
+        input = Mathf.Clamp01 (input);
         output = input - (input - output) * Mathf.Exp (-sensibility * Time.deltaTime);
     }
 
