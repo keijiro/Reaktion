@@ -37,6 +37,7 @@ public class ReaktorToParticleSystemEditor : Editor
     // Burst options.
     SerializedProperty propEnableBurst;
     SerializedProperty propBurstThreshold;
+    SerializedProperty propBurstInterval;
     SerializedProperty propBurstEmissionNumber;
 
     #endregion
@@ -53,6 +54,7 @@ public class ReaktorToParticleSystemEditor : Editor
         // Burst options.
         propEnableBurst = serializedObject.FindProperty ("enableBurst");
         propBurstThreshold = serializedObject.FindProperty ("burstThreshold");
+        propBurstInterval = serializedObject.FindProperty ("burstInterval");
         propBurstEmissionNumber = serializedObject.FindProperty ("burstEmissionNumber");
     }
 
@@ -66,6 +68,7 @@ public class ReaktorToParticleSystemEditor : Editor
         if (propEnableBurst.boolValue)
         {
             EditorGUILayout.Slider (propBurstThreshold, 0.0f, 1.0f, "Threshold");
+            EditorGUILayout.Slider (propBurstInterval, 0.0f, 1.0f, "Interval");
             propBurstEmissionNumber.intValue = EditorGUILayout.IntField ("Particles", propBurstEmissionNumber.intValue);
             EditorGUILayout.Space ();
         }

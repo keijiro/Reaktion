@@ -36,6 +36,7 @@ public class ReaktorToMessageEditor : Editor
     // Trigger message.
     SerializedProperty propEnableTrigger;
     SerializedProperty propTriggerThreshold;
+    SerializedProperty propTriggerInterval;
     SerializedProperty propTriggerMessage;
     
     // Input message.
@@ -57,6 +58,7 @@ public class ReaktorToMessageEditor : Editor
         // Trigger message.
         propEnableTrigger = serializedObject.FindProperty ("enableTrigger");
         propTriggerThreshold = serializedObject.FindProperty ("triggerThreshold");
+        propTriggerInterval = serializedObject.FindProperty ("triggerInterval");
         propTriggerMessage = serializedObject.FindProperty ("triggerMessage");
 
         // Input message.
@@ -87,6 +89,7 @@ public class ReaktorToMessageEditor : Editor
         if (propEnableTrigger.boolValue)
         {
             EditorGUILayout.Slider (propTriggerThreshold, 0.0f, 1.0f, "Threahold");
+            EditorGUILayout.Slider (propTriggerInterval, 0.0f, 1.0f, "Interval");
             propTriggerMessage.stringValue = EditorGUILayout.TextField ("Message", propTriggerMessage.stringValue);
             EditorGUILayout.Space ();
         }

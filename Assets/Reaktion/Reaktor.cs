@@ -59,7 +59,7 @@ public class Reaktor : MonoBehaviour
 
     #region General option
 
-    public float sensibility = 18.0f;
+    public float sensibility = 15.1f;
 
     #endregion
 
@@ -145,9 +145,17 @@ public class Reaktor : MonoBehaviour
             input += offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobIndex));
         }
 
-        // Interpolation.
+        // Make output.
         input = Mathf.Clamp01 (input);
-        output = input - (input - output) * Mathf.Exp (-sensibility * Time.deltaTime);
+		
+        if (sensibility > 0.0f)
+        {
+            output = input - (input - output) * Mathf.Exp (-sensibility * Time.deltaTime);
+        }
+        else
+        {
+            output = input;
+        }
     }
 
     // Search an available Reaktor placed close to the game object.
