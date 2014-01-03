@@ -27,133 +27,175 @@ using System.Runtime.InteropServices;
 public class AudioJack : MonoBehaviour
 {
     // Octave band type definition
-    public enum BandType
+    public enum OctaveBandType
     {
         FourBand,
+        FourBandVisual,
         EightBand,
         TenBand,
-        TwentySixBand
+        TwentySixBand,
+        ThirtyOneBand
     }
-
+    
     // Channel selection.
     public enum ChannelSelect
     {
-        Discrete,
+        Mono,
         MixStereo,
         MixAll
     }
 
-    #region Configurations
-
-    // FFT point number settings.
-    static int[] fftPointNumberForBands = { 1024, 2048, 2048, 4096 };
-
-    // Octave band frequency.
-    static float[][] middleFrequenciesForBands = {
-        new float[]{ 125.0f, 500, 1000, 2000 },
-        new float[]{ 63.0f, 125, 500, 1000, 2000, 4000, 6000, 8000 },
-        new float[]{ 31.5f, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000 },
-		new float[]{ 20.0f, 25, 31.5f, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000 }
-    };
-
-    // Octave band width.
-    static float[] bandwidthForBands = {
-        1.414f, // 2^(1/2)
-        1.414f, // 2^(1/2)
-        1.414f, // 2^(1/2)
-        1.122f  // 2^(1/6)
-    };
-    
-    #endregion
-
-    #region Public variables and properties
+    #region Public variables
 
     // Octave band type.
-    public BandType bandType = BandType.TenBand;
-
+    public OctaveBandType octaveBandType = OctaveBandType.TenBand;
+    
     // Channel selection.
-    public int channelToAnalyze;
+    public int channelToAnalyze = 0;
     public ChannelSelect channelSelect = ChannelSelect.MixStereo;
-
+    
     // Timekeeping.
     public float minimumInterval = 0.0f;
-
+    
     // Internal audio mode.
-    public bool internalMode = false;
+    public bool useAudioListener = false;
 
-	// Editor properties.
-	public bool showLevels = false;
-	public bool showSpectrum = false;
-
-    // Octave band array (readonly).
-    public float[] BandLevels {
-        get { return bandLevels; }
-    }
-
-    // Channel level array (readonly).
-    public float[] ChannelLevels {
-        get { return channelLevels; }
-    }
+    // Editor properties.
+    public bool showLevels = false;
+    public bool showSpectrum = false;
 
     // Reference to the last created instance.
     static public AudioJack instance;
+    
+    #endregion
+
+    #region Public properties
 
     #endregion
-    
-    #region Private variables and functions
 
-    // Internal buffers.
-    float[] fftSpectrum;
-    float[] bandLevels;
-    float[] channelLevels;
+    // Octave band spectrum (readonly).
+    public float[] OctaveBandSpectrum {
+        get {
+            if (!octaveBandSpectrumIsUpdated && analyzer != System.IntPtr.Zero)
+            {
+                // Retrieve the spectrum from the analyzer.
+                var count = AudioJackGetOctaveBandSpectrum (analyzer, tempArrayForOctaveBandSpectrum);
+
+                // Reallocate the array if mismatch.
+                if (octaveBandSpectrum == null || octaveBandSpectrum.Length != count)
+                    octaveBandSpectrum = new float[count];
+
+                // Update the spectrum.
+                System.Array.Copy (tempArrayForOctaveBandSpectrum, 0, octaveBandSpectrum, 0, count);
+                octaveBandSpectrumIsUpdated = true;
+            }
+            return octaveBandSpectrum;
+        }
+    }
+    
+    // Raw Fourier spectrum (readonly).
+    public float[] RawSpectrum {
+        get {
+            if (!rawSpectrumIsUpdated && analyzer != System.IntPtr.Zero)
+            {
+                // Reallocate the array if mismatch.
+                if (rawSpectrum == null || rawSpectrum.Length != dftPointNumber)
+                    rawSpectrum = new float[dftPointNumber];
+
+                // Update the spectrum.
+                AudioJackGetRawSpectrum (analyzer, rawSpectrum);
+                rawSpectrumIsUpdated = true;
+            }
+            return rawSpectrum;
+        }
+    }
+    
+    // Channel RMS level array (readonly).
+    public float[] ChannelRmsLevels {
+        get {
+            if (!channelRmsLevelsAreUpdated)
+            {
+                if (useAudioListener)
+                {
+                    // Reallocate the array if mismatch.
+                    if (channelRmsLevels == null || channelRmsLevels.Length != 2)
+                        channelRmsLevels = new float[2];
+
+                    // Special case: Update the loopback buffer if not yet.
+                    if (loopbackBuffer1 == null) UpdateLoopbackBuffer();
+
+                    // Update the array.
+                    channelRmsLevels[0] = AudioJackCalculateRmsWaveform (loopbackBuffer1, 512U);
+                    channelRmsLevels[1] = AudioJackCalculateRmsWaveform (loopbackBuffer2, 512U);
+                }
+                else
+                {
+                    // Reallocate the array if mismatch.
+                    var count = AudioJackCountInputChannels ();
+                    if (channelRmsLevels == null || channelRmsLevels.Length != count)
+                        channelRmsLevels = new float[count];
+                    
+                    // Update the array.
+                    float duration = 1.0f / 60;
+                    for (var i = 0U; i < count; i++)
+                        channelRmsLevels [i] = AudioJackCalculateRmsAudioInput (i, duration);
+                }
+
+                channelRmsLevelsAreUpdated = true;
+            }
+            return channelRmsLevels;
+        }
+    }
+
+    #region Private variables
+
+    // Octave band spectrum.
+    float[] octaveBandSpectrum;
+    float[] tempArrayForOctaveBandSpectrum;
+    bool octaveBandSpectrumIsUpdated;
+
+    // Raw DFT spectrum.
+    float[] rawSpectrum;
+    uint dftPointNumber;
+    bool rawSpectrumIsUpdated;
+
+    // Channel RMS level array.
+    float[] channelRmsLevels;
+    bool channelRmsLevelsAreUpdated;
+
+    // Loopback buffer.
+    float[] loopbackBuffer1;
+    float[] loopbackBuffer2;
 
     // Timekeeping.
     float timer;
 
-    int FrequencyToFftIndex (float f, float sampleRate)
-    {
-        var points = fftSpectrum.Length;
-        var index = Mathf.FloorToInt (f / sampleRate * 2.0f * points);
-        return Mathf.Clamp (index, 0, points - 1);
-    }
+    // Reference to the analyzer object.
+    System.IntPtr analyzer;
 
     #endregion
 
-    #region Interface for the native part
+    #region Private functions
 
-#if UNITY_STANDALONE_OSX
-    [DllImport ("AudioJackPlugin")]
-	public static extern int AudioJackCountChannels ();
-    [DllImport ("AudioJackPlugin")]
-	public static extern float AudioJackGetSampleRate ();
-    [DllImport ("AudioJackPlugin")]
-    public static extern float AudioJackGetChannelLevel (int channel);
-    [DllImport ("AudioJackPlugin")]
-	public static extern void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum);
-#else
-	public static int AudioJackCountChannels ()
+    uint GetRecommendedDftPointNumber ()
     {
-        return 1;
+        if (octaveBandType <= OctaveBandType.FourBandVisual)
+            return 512U;
+        if (octaveBandType <= OctaveBandType.TenBand)
+            return 1024U;
+        return (octaveBandType == OctaveBandType.TwentySixBand) ? 2048U : 4096U;
     }
 
-	public static float AudioJackGetSampleRate ()
+    void UpdateLoopbackBuffer ()
     {
-        return 44100;
-    }
-
-	public static float AudioJackGetChannelLevel (int channel)
-    {
-        return 0.0f;
-    }
-
-	public static void AudioJackGetSpectrum (int channel, int mode, int pointNumber, float[] spectrum)
-    {
-        for (var i = 0; i < pointNumber; i++)
+        if (loopbackBuffer1 == null || loopbackBuffer1.Length != dftPointNumber)
         {
-            spectrum.elements [i] = 0.0f;
+            loopbackBuffer1 = new float[dftPointNumber];
+            loopbackBuffer2 = new float[dftPointNumber];
         }
+        AudioListener.GetOutputData (loopbackBuffer1, 0);
+        AudioListener.GetOutputData (loopbackBuffer2, 1);
     }
-#endif
 
     #endregion
 
@@ -161,83 +203,86 @@ public class AudioJack : MonoBehaviour
 
     void Awake ()
     {
+        AudioJackInitialize ();
+        tempArrayForOctaveBandSpectrum = new float[32];
         instance = this;
-
-        bandLevels = new float[middleFrequenciesForBands [(int)bandType].Length];
-        channelLevels = new float[AudioJackCountChannels ()];
     }
 
     void Update ()
     {
-        // Wait for the minimum interval.
-        timer += Time.deltaTime;
-        if (timer < minimumInterval)
-            return;
-        timer = 0.0f;
-
-        // Reallocate the buffers if it needs.
-        var fftNumber = fftPointNumberForBands [(int)bandType];
-        if (fftSpectrum == null || fftSpectrum.Length * 2 != fftNumber)
+        dftPointNumber = GetRecommendedDftPointNumber ();
+        AudioJackSetDftPointNumber (analyzer, dftPointNumber);
+        AudioJackSetOctaveBandType (analyzer, (uint)octaveBandType);
+        if (useAudioListener)
         {
-            fftSpectrum = new float[fftNumber / 2];
-        }
-
-        var bandCount = middleFrequenciesForBands [(int)bandType].Length;
-        if (bandLevels == null || bandLevels.Length != bandCount)
-        {
-            bandLevels = new float[bandCount];
-        }
-
-        var channelCount = AudioJackCountChannels ();
-        if (channelLevels == null || channelLevels.Length != channelCount)
-        {
-            channelLevels = new float[channelCount];
-        }
-        
-        // Do FFT.
-        if (internalMode)
-        {
-            AudioListener.GetSpectrumData (fftSpectrum, 0, FFTWindow.Blackman);
+            UpdateLoopbackBuffer ();
+            AudioJackAnalyzerWaveform (analyzer, loopbackBuffer1, loopbackBuffer2, AudioSettings.outputSampleRate); 
         }
         else
         {
-            AudioJackGetSpectrum (channelToAnalyze, (int)channelSelect, fftNumber, fftSpectrum);
+            loopbackBuffer1 = loopbackBuffer2 = null;
+            AudioJackAnalyzeAudioInput (analyzer, (uint)channelToAnalyze, (uint)channelSelect);
         }
-        
-        // Convert the spectrum into octave bands.
-        var sampleRate = internalMode ? AudioSettings.outputSampleRate : AudioJackGetSampleRate ();
-        var frequencies = middleFrequenciesForBands [(int)bandType];
-        var bandwidth = bandwidthForBands [(int)bandType];
-        
-        for (var bi = 0; bi < bandCount; bi++)
+        octaveBandSpectrumIsUpdated = rawSpectrumIsUpdated = channelRmsLevelsAreUpdated = false;
+    }
+
+    void OnEnable ()
+    {
+        if (analyzer == System.IntPtr.Zero)
         {
-            // Specify the spectrum range of the band.
-            int imin = FrequencyToFftIndex (frequencies [bi] / bandwidth, sampleRate);
-            int imax = FrequencyToFftIndex (frequencies [bi] * bandwidth, sampleRate);
-            
-            // Specify the max level of the band.
-            var bandMax = fftSpectrum [imin];
-            for (var fi = imin + 1; fi < imax; fi++)
-            {
-                bandMax = Mathf.Max (bandMax, fftSpectrum [fi]);
-            }
-
-            if (internalMode)
-            {
-                // Convert amplitude to decibel.
-                bandMax = 20.0f * Mathf.Log10 (bandMax * 2 + 1.5849e-13f);
-            }
-
-            // Store the result.
-            bandLevels [bi] = bandMax;
-        }
-
-        // Read the channel levels.
-        for (var i = 0; i < channelCount; i++)
-        {
-            channelLevels [i] = AudioJackGetChannelLevel (i);
+            analyzer = AudioJackCreateAnalyzer ();
+            Update ();
         }
     }
+
+    void OnDisable ()
+    {
+        if (analyzer != System.IntPtr.Zero)
+        {
+            AudioJackReleaseAnalyzer (analyzer);
+            analyzer = System.IntPtr.Zero;
+        }
+    }
+
+    #endregion
+
+    #region Native plugin import
+    
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackInitialize ();
+
+    [DllImport ("AudioJackPlugin")]
+    static extern uint AudioJackCountInputChannels ();
+
+    [DllImport ("AudioJackPlugin")]
+    static extern System.IntPtr AudioJackCreateAnalyzer ();
+
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackReleaseAnalyzer (System.IntPtr analyzer);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackSetDftPointNumber (System.IntPtr analyzer, uint number);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackSetOctaveBandType (System.IntPtr analyzer, uint type);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackAnalyzeAudioInput (System.IntPtr analyzer, uint channel, uint mode);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackAnalyzerWaveform (System.IntPtr analyzer, float[] waveform1, float[] waveform2, float sampleRate);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern uint AudioJackGetRawSpectrum (System.IntPtr analyzer, float[] destination);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern uint AudioJackGetOctaveBandSpectrum (System.IntPtr analyzer, float[] destination);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern float AudioJackCalculateRmsAudioInput (uint channel, float duration);
+
+    [DllImport ("AudioJackPlugin")]
+    static extern float AudioJackCalculateRmsWaveform (float[] waveform, uint length);
     
     #endregion
 }

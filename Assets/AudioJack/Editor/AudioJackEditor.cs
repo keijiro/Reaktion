@@ -23,15 +23,16 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 [CustomEditor(typeof(AudioJack)), CanEditMultipleObjects]
 public class AudioJackEditor : Editor
 {
     #region Reference to properties
 
-    SerializedProperty propBandType;
+    SerializedProperty propOctaveBandType;
     SerializedProperty propMinimumInterval;
-    SerializedProperty propInternalMode;
+    SerializedProperty propUseAudioListener;
     SerializedProperty propChannelToAnalyze;
     SerializedProperty propChannelSelect;
     SerializedProperty propShowLevels;
@@ -42,13 +43,13 @@ public class AudioJackEditor : Editor
     #region UI constants and variables
 
     static string[] bandTypeLabels = {
-        "4 Band", "8 Band", "10 Band (Standard)", "26 Band"
+        "4 Band", "4 Band (Visual)", "8 Band", "10 Band (Standard)", "26 Band", "31 Band (FBQ3012)"
     };
     static int[] BandTypeValues = {
-        0, 1, 2, 3
+        0, 1, 2, 3, 4, 5
     };
     static string[] mixModeLabels = {
-        "Discrete", "Mix L + R", "Mix All"
+        "Mono", "Mix L + R", "Mix All"
     };
     static int[] mixModeValues = {
         0, 1, 2
@@ -62,9 +63,9 @@ public class AudioJackEditor : Editor
 
     void OnEnable ()
     {
-        propBandType = serializedObject.FindProperty ("bandType");
+        propOctaveBandType = serializedObject.FindProperty ("octaveBandType");
         propMinimumInterval = serializedObject.FindProperty ("minimumInterval");
-        propInternalMode = serializedObject.FindProperty ("internalMode");
+        propUseAudioListener = serializedObject.FindProperty ("useAudioListener");
         propChannelToAnalyze = serializedObject.FindProperty ("channelToAnalyze");
         propChannelSelect = serializedObject.FindProperty ("channelSelect");
         propShowLevels = serializedObject.FindProperty ("showLevels");
@@ -77,12 +78,12 @@ public class AudioJackEditor : Editor
         serializedObject.Update ();
 
         // Basic settings.
-        propBandType.intValue = EditorGUILayout.IntPopup ("Band Type", propBandType.intValue, bandTypeLabels, BandTypeValues);
+        propOctaveBandType.intValue = EditorGUILayout.IntPopup ("Octave Band Type", propOctaveBandType.intValue, bandTypeLabels, BandTypeValues);
         EditorGUILayout.Slider (propMinimumInterval, 0.0f, 1.0f, "Interval");
 
         // Input settings.
-        propInternalMode.boolValue = !EditorGUILayout.Toggle ("External Audio", !propInternalMode.boolValue);
-        if (propInternalMode.boolValue)
+        propUseAudioListener.boolValue = !EditorGUILayout.Toggle ("External Audio", !propUseAudioListener.boolValue);
+        if (propUseAudioListener.boolValue)
         {
             EditorGUILayout.HelpBox ("The External Audio option is disabled. Captures audio data from the Audio Listener.", MessageType.None);
         }
@@ -97,7 +98,7 @@ public class AudioJackEditor : Editor
             {
                 var channel = UpdateAndShowChannelOptions ();
                 if (propChannelSelect.intValue == 0)
-                    EditorGUILayout.HelpBox ("Discrete Mode. Handles audio signals from channel #" + channel + ".", MessageType.None);
+                    EditorGUILayout.HelpBox ("Mono Mode. Analyzes audio signals from channel #" + channel + ".", MessageType.None);
                 else
                     EditorGUILayout.HelpBox ("Mix L + R Mode. Mixes audio signals from channel #" + channel + " and #" + (channel + 1) + ".", MessageType.None);
             }
@@ -108,18 +109,18 @@ public class AudioJackEditor : Editor
         {
             var audioJack = target as AudioJack;
             
-            // Channel level bars.
+            // Channel RMS level bars.
             EditorGUILayout.Space ();
-            propShowLevels.boolValue = EditorGUILayout.Foldout (propShowLevels.boolValue, "Channel Levels");
+            propShowLevels.boolValue = EditorGUILayout.Foldout (propShowLevels.boolValue, "Channel RMS Level");
             if (propShowLevels.boolValue)
-                DisplayLevelBars (audioJack.ChannelLevels);
+                DisplayLevelBars (audioJack.ChannelRmsLevels);
             
-            // Band level bars.
+            // Octave band level bars.
             EditorGUILayout.Space ();
             propShowSpectrum.boolValue = EditorGUILayout.Foldout (propShowSpectrum.boolValue, "Spectrum");
             if (propShowSpectrum.boolValue)
-                DisplayLevelBars (audioJack.BandLevels);
-            
+                DisplayLevelBars (audioJack.OctaveBandSpectrum);
+
             // Make itself dirty to update on every time.
             if ((propShowLevels.boolValue || propShowSpectrum.boolValue) && EditorApplication.isPlaying)
             {
@@ -137,7 +138,8 @@ public class AudioJackEditor : Editor
 
     int UpdateAndShowChannelOptions ()
     {
-        var count = AudioJack.AudioJackCountChannels ();
+        AudioJackInitialize ();
+        var count = AudioJackCountInputChannels ();
 
         if (propChannelSelect.intValue == (int)AudioJack.ChannelSelect.MixStereo)
             count--;
@@ -176,7 +178,7 @@ public class AudioJackEditor : Editor
         {
             for (var i = 0; i < levels.Length; i++)
             {
-                var db = levels[i];
+                var db = levels [i];
                 var width = Mathf.Clamp (1.0f + db / 40, 0.01f, 1.0f);
                 var text = db.ToString ("0.0") + " dB";
                 // Show the channel number.
@@ -193,6 +195,16 @@ public class AudioJackEditor : Editor
             EditorGUILayout.HelpBox ("You can view the sutatus only on Play Mode.", MessageType.None);
         }
     }
+
+    #endregion
+
+    #region Native plugin import
+    
+    [DllImport ("AudioJackPlugin")]
+    static extern void AudioJackInitialize ();
+    
+    [DllImport ("AudioJackPlugin")]
+    static extern uint AudioJackCountInputChannels ();
 
     #endregion
 }

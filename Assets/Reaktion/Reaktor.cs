@@ -115,15 +115,15 @@ public class Reaktor : MonoBehaviour
         {
             if (audioMode == AudioMode.MonoLevel)
             {
-                rawInput = AudioJack.instance.ChannelLevels [audioIndex];
+                rawInput = AudioJack.instance.ChannelRmsLevels [audioIndex];
             }
             else if (audioMode == AudioMode.StereoLevel)
             {
-                rawInput = 0.5f * (AudioJack.instance.ChannelLevels [audioIndex] + AudioJack.instance.ChannelLevels [audioIndex + 1]);
+                rawInput = 0.5f * (AudioJack.instance.ChannelRmsLevels [audioIndex] + AudioJack.instance.ChannelRmsLevels [audioIndex + 1]);
             }
             else
             {
-                rawInput = AudioJack.instance.BandLevels [audioIndex];
+                rawInput = AudioJack.instance.OctaveBandSpectrum [audioIndex];
             }
 
             // Check the peak level.
