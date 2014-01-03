@@ -30,6 +30,7 @@ public class ReaktorToParticleSystem : MonoBehaviour
     // Burst options.
     public bool enableBurst;
     public float burstThreshold = 0.9f;
+    public float burstInterval = 0.1f;
     public int burstEmissionNumber = 10;
 
     // Emission rate options.
@@ -43,6 +44,7 @@ public class ReaktorToParticleSystem : MonoBehaviour
 
     Reaktor reaktor;
     float previousOutput;
+    float burstTimer;
 
     #endregion
 
@@ -57,10 +59,11 @@ public class ReaktorToParticleSystem : MonoBehaviour
     {
         if (enableBurst)
         {
-            if (previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
+            if (burstTimer > burstInterval && previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
             {
                 particleSystem.Emit (burstEmissionNumber);
                 particleSystem.Play ();
+                burstTimer = 0.0f;
             }
         }
         
@@ -70,6 +73,7 @@ public class ReaktorToParticleSystem : MonoBehaviour
         }
         
         previousOutput = reaktor.Output;
+        burstTimer += Time.deltaTime;
     }
 
     #endregion

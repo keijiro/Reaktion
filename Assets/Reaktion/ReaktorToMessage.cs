@@ -40,6 +40,7 @@ public class ReaktorToMessage : MonoBehaviour
     // Trigger message.
     public bool enableTrigger;
     public float triggerThreshold = 0.9f;
+    public float triggerInterval = 0.1f;
     public string triggerMessage = "OnReaktorTrigger";
     
     // Input message.
@@ -53,6 +54,7 @@ public class ReaktorToMessage : MonoBehaviour
 
     Reaktor reaktor;
     float previousOutput = MinValue;
+    float triggerTimer;
 
     #endregion
 
@@ -71,7 +73,7 @@ public class ReaktorToMessage : MonoBehaviour
         // Trigger message.
         if (enableTrigger)
         {
-            if (previousOutput < triggerThreshold && level >= triggerThreshold)
+            if (triggerTimer > triggerInterval && previousOutput < triggerThreshold && level >= triggerThreshold)
             {
                 if (broadcast)
                 {
@@ -81,6 +83,7 @@ public class ReaktorToMessage : MonoBehaviour
                 {
                     sendTo.SendMessage (triggerMessage, true);
                 }
+                triggerTimer = 0.0f;
             }
         }
         
@@ -98,6 +101,7 @@ public class ReaktorToMessage : MonoBehaviour
         }
 
         previousOutput = level;
+        triggerTimer += Time.deltaTime;
     }
 
     #endregion

@@ -29,14 +29,26 @@ public class ReaktorEditor : Editor
 {
     #region References to the properties
 
-    // Basic settings.
-    SerializedProperty propInputMode;
-	SerializedProperty propInputIndex;
-	SerializedProperty propSensibility;
-    SerializedProperty propCurve;
+    // Audio input settings.
+    SerializedProperty propAudioMode;
+    SerializedProperty propAudioIndex;
+    SerializedProperty propAudioCurve;
+
+    // Gain control.
+    SerializedProperty propGainEnabled;
+    SerializedProperty propGainKnobIndex;
+    SerializedProperty propGainCurve;
+
+    // Offset control.
+    SerializedProperty propOffsetEnabled;
+    SerializedProperty propOffsetKnobIndex;
+    SerializedProperty propOffsetCurve;
+
+    // General option.
+    SerializedProperty propSensibility;
 
     // Audio input options.
-    SerializedProperty propShowOptions;
+    SerializedProperty propShowAudioOptions;
     SerializedProperty propHeadroom;
     SerializedProperty propDynamicRange;
     SerializedProperty propLowerBound;
@@ -51,19 +63,45 @@ public class ReaktorEditor : Editor
 
     #endregion
 
+    #region UI constants
+
+    static string[] sourceLabels = {
+        "No Input",
+        "RMS Level (mono)",
+        "RMS Level (L+R)",
+        "Frequency Band"
+    };
+    static int[] sourceOptions = {
+        0, 1, 2, 3
+    };
+    
+    #endregion
+
     #region Editor functions
 
     // On Enable (initialization)
     void OnEnable ()
     {
-        // Basic settings.
-        propInputMode = serializedObject.FindProperty ("inputMode");
-		propInputIndex = serializedObject.FindProperty ("inputIndex");
-		propSensibility = serializedObject.FindProperty ("sensibility");
-        propCurve = serializedObject.FindProperty ("curve");
+        // Audio input settings.
+        propAudioMode = serializedObject.FindProperty ("audioMode");
+        propAudioIndex = serializedObject.FindProperty ("audioIndex");
+        propAudioCurve = serializedObject.FindProperty ("audioCurve");
+
+        // Gain control.
+        propGainEnabled = serializedObject.FindProperty ("gainEnabled");
+        propGainKnobIndex = serializedObject.FindProperty ("gainKnobIndex");
+        propGainCurve = serializedObject.FindProperty ("gainCurve");
+
+        // Offset control.
+        propOffsetEnabled = serializedObject.FindProperty ("offsetEnabled");
+        propOffsetKnobIndex = serializedObject.FindProperty ("offsetKnobIndex");
+        propOffsetCurve = serializedObject.FindProperty ("offsetCurve");
+
+        // General option.
+        propSensibility = serializedObject.FindProperty ("sensibility");
         
         // Audio input options.
-        propShowOptions = serializedObject.FindProperty ("showOptions");
+        propShowAudioOptions = serializedObject.FindProperty ("showAudioOptions");
         propHeadroom = serializedObject.FindProperty ("headroom");
         propDynamicRange = serializedObject.FindProperty ("dynamicRange");
         propLowerBound = serializedObject.FindProperty ("lowerBound");
@@ -88,27 +126,61 @@ public class ReaktorEditor : Editor
         // Update the references.
         serializedObject.Update ();
 
-        // Basic settings.
-        propInputMode.intValue = (int)(Reaktor.InputMode)EditorGUILayout.EnumPopup ("Input Mode", (Reaktor.InputMode)propInputMode.intValue);
-        if (propInputMode.intValue == (int)Reaktor.InputMode.SpecturmBand)
+        // Audio input settings.
+        propAudioMode.intValue = EditorGUILayout.IntPopup ("Audio Source", propAudioMode.intValue, sourceLabels, sourceOptions);
+        if (propAudioMode.intValue > 0)
         {
-            propInputIndex.intValue = EditorGUILayout.IntField ("Band Index", propInputIndex.intValue);
+            var label = (propAudioMode.intValue == (int)Reaktor.AudioMode.SpecturmBand) ? "Band" : "Channel";
+            propAudioIndex.intValue = EditorGUILayout.IntField (label, propAudioIndex.intValue);
+            propAudioCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propAudioCurve.animationCurveValue);
         }
-        else
+
+        // Gain control.
+        if (propAudioMode.intValue > 0)
         {
-            propInputIndex.intValue = EditorGUILayout.IntField ("Channel", propInputIndex.intValue);
+            if (propGainEnabled.boolValue || propOffsetEnabled.boolValue)
+                EditorGUILayout.Space ();
+
+            if (propGainEnabled.boolValue = EditorGUILayout.Toggle ("Gain Control", propGainEnabled.boolValue))
+            {
+                propGainKnobIndex.intValue = EditorGUILayout.IntField ("MIDI CC #", propGainKnobIndex.intValue);
+                propGainCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propGainCurve.animationCurveValue);
+            }
         }
-		EditorGUILayout.Slider (propSensibility, 0.1f, 40.0f);
-        propCurve.animationCurveValue = EditorGUILayout.CurveField ("Output Curve", propCurve.animationCurveValue);
+
+        // Offset control.
+        if (propGainEnabled.boolValue || propOffsetEnabled.boolValue)
+            EditorGUILayout.Space ();
+
+        if (propOffsetEnabled.boolValue = EditorGUILayout.Toggle ("Offset Control", propOffsetEnabled.boolValue))
+        {
+            propOffsetKnobIndex.intValue = EditorGUILayout.IntField ("MIDI CC #", propOffsetKnobIndex.intValue);
+            propOffsetCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propOffsetCurve.animationCurveValue);
+        }
+        
+        if (propGainEnabled.boolValue || propOffsetEnabled.boolValue)
+            EditorGUILayout.Space ();
+
+        // General option.
+        {
+            var value = propSensibility.floatValue;
+            if (value > 0.0f)
+                value = EditorGUILayout.Slider ("Sensibility", (value - 0.1f) / 30, 0.0f, 1.0f);
+            else
+                value = EditorGUILayout.Slider ("(Filter Off)", 1.0f, 0.0f, 1.0f);
+            propSensibility.floatValue = (value == 1.0f) ? 0.0f : value * 30 + 0.1f;
+        }
 
         // Audio input options.
-        propShowOptions.boolValue = EditorGUILayout.Foldout (propShowOptions.boolValue, "Audio Input Options");
-        if (propShowOptions.boolValue)
+        if (propAudioMode.intValue > 0)
         {
-            EditorGUILayout.Slider (propHeadroom, 0.0f, 20.0f, "Headroom [dB]");
-            EditorGUILayout.Slider (propDynamicRange, 1.0f, 60.0f, "Dynamic Range [dB]");
-            EditorGUILayout.Slider (propLowerBound, -100.0f, -10.0f, "Lower Bound [dB]");
-            EditorGUILayout.Slider (propFalldown, 0.0f, 10.0f, "Falldown [dB/Sec]");
+            if (propShowAudioOptions.boolValue = EditorGUILayout.Foldout (propShowAudioOptions.boolValue, "Audio Input Options"))
+            {
+                EditorGUILayout.Slider (propHeadroom, 0.0f, 20.0f, "Headroom [dB]");
+                EditorGUILayout.Slider (propDynamicRange, 1.0f, 60.0f, "Dynamic Range [dB]");
+                EditorGUILayout.Slider (propLowerBound, -100.0f, -10.0f, "Lower Bound [dB]");
+                EditorGUILayout.Slider (propFalldown, 0.0f, 10.0f, "Falldown [dB/Sec]");
+            }
         }
 
         // Apply modifications.
@@ -117,6 +189,7 @@ public class ReaktorEditor : Editor
         // Draw the level bar on play mode.
         if (EditorApplication.isPlaying && !serializedObject.isEditingMultipleObjects)
         {
+            EditorGUILayout.Space ();
             DrawLevelBar (target as Reaktor);
             EditorUtility.SetDirty (target); // Make it dirty to update the view.
         }
@@ -142,37 +215,47 @@ public class ReaktorEditor : Editor
         {
             // Make textures for drawing level bars.
             barTextures = new Texture2D[] {
-                NewBarTexture (Color.red),
-                NewBarTexture (Color.green),
-                NewBarTexture (Color.blue),
-                NewBarTexture (Color.gray)
+                NewBarTexture (new Color (55.0f / 255, 53.0f / 255, 45.0f / 255)),
+                NewBarTexture (new Color (250.0f / 255, 249.0f / 255, 248.0f / 255)),
+                NewBarTexture (new Color (110.0f / 255, 192.0f / 255, 91.0f / 255, 0.8f)),
+                NewBarTexture (new Color (226.0f / 255, 0, 7.0f / 255, 0.8f)),
+                NewBarTexture (new Color (249.0f / 255, 185.0f / 255, 22.0f / 255))
             };
         }
         
-        // Peak level label.
-        EditorGUILayout.LabelField ("Peak Level", reaktor.Peak.ToString ("0.0") + " dB");
-        
-        // Get a rectangle as a text field.
-        var rect = GUILayoutUtility.GetRect (18, 10, "TextField");
-        var width = rect.width;
-        
-        // Fill the rectangle with gray.
-        GUI.DrawTexture (rect, barTextures [3]);
-        
-        // Draw the range bar with red.
-        rect.x += width * (reaktor.Peak - reaktor.lowerBound - reaktor.dynamicRange - reaktor.headroom) / (3 - reaktor.lowerBound);
-        rect.width = width * (reaktor.dynamicRange + reaktor.headroom) / (3 - reaktor.lowerBound);
+        // Get a rectangle as a text field and fill it.
+        var rect = GUILayoutUtility.GetRect (18, 16, "TextField");
         GUI.DrawTexture (rect, barTextures [0]);
+
+        // Draw the raw input bar.
+        var temp = rect;
+        temp.width *= Mathf.Clamp01 ((reaktor.RawInput - reaktor.lowerBound) / (3 - reaktor.lowerBound));
+        GUI.DrawTexture (temp, barTextures [1]);
+
+        // Draw the dynamic range.
+        temp.x += rect.width * (reaktor.Peak - reaktor.lowerBound - reaktor.dynamicRange - reaktor.headroom) / (3 - reaktor.lowerBound);
+        temp.width = rect.width * reaktor.dynamicRange / (3 - reaktor.lowerBound);
+        GUI.DrawTexture (temp, barTextures [2]);
+
+        // Draw the headroom.
+        temp.x += temp.width;
+        temp.width = rect.width * reaktor.headroom / (3 - reaktor.lowerBound);
+        GUI.DrawTexture (temp, barTextures [3]);
+
+        // Display the peak level value.
+        EditorGUI.LabelField (rect, "Peak: " + reaktor.Peak.ToString ("0.0") + " dB");
         
-        // Draw the effective range bar with green.
-        rect.width = width * (reaktor.dynamicRange) / (3 - reaktor.lowerBound);
-        GUI.DrawTexture (rect, barTextures [1]);
-        
-        // Draw the output level bar with blue.
-        rect.width = width * reaktor.dynamicRange * reaktor.Output / (3 - reaktor.lowerBound);
-        rect.y += rect.height / 2;
-        rect.height /= 2;
-        GUI.DrawTexture (rect, barTextures [2]);
+        // Get a rectangle as a text field and fill it.
+        rect = GUILayoutUtility.GetRect (18, 16, "TextField");
+        GUI.DrawTexture (rect, barTextures [0]);
+
+        // Draw the output level.
+        temp = rect;
+        temp.width *= reaktor.Output;
+        GUI.DrawTexture (temp, barTextures [4]);
+
+        // Display the output value.
+        EditorGUI.LabelField (rect, "Out: " + (reaktor.Output * 100).ToString ("0.0") + " %");
     }
 
     #endregion
