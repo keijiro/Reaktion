@@ -162,6 +162,32 @@ Receiver functions must be implemented as follows:
 
 The names of the receiver functions can be changed with the *Message* options.
 
+Making custom controllers
+————————————
+
+You can make your own custom controller in a few steps.
+
+#### Searching a Reaktor
+
+You can use *SearchAvailableFrom* function to get a reference to the closest
+Reaktor component from a game object.
+
+    Reaktor reaktor;
+   
+    void Start() {
+        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+    }
+
+#### Getting the Reaktor output
+
+You can get the output from the Reaktor with the *Output* property.
+
+    void Update() {
+        Debug.Log(“Output = ” + reaktor.Output);
+    }
+
+Basically that’s all!
+
 License
 -------
 
