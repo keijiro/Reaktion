@@ -10,10 +10,11 @@ Reaktion
 It provides several components for reacting to audio signals.
 
 - *Reaktor* - processes audio signals and provides information to other components.
-- *ReaktorToTransform* - controls Transform with information from a Reaktor.
-- *ReaktorToParticleSystem* - controls ParticleSystem with information from a Reaktor.
-- *ReaktorToAnimator* - controls Animator with information from a Reaktor.
-- *ReaktorToMessage* - sends messages with information from a Reaktor.
+- *ReaktorToTransform* - controls a Transform component with information from a Reaktor.
+- *ReaktorToParticleSystem* - controls a Particle System component with information from
+  a Reaktor.
+- *ReaktorToAnimator* - controls an Animator component with information from a Reaktor.
+- *ReaktorToMessage* - sends messages to Game Objects with information from a Reaktor.
 
 ![Chart](http://keijiro.github.io/Reaktion/abstract.png)
 
@@ -22,10 +23,48 @@ Reaktor Component
 
 ![Reaktor](http://keijiro.github.io/Reaktion/inspector-reaktor.png)
 
-The *Reaktor* component is a kind of audio level meter that processes audio
-signals and provides the level information to other components. It uses an
-adaptive level detection algorithm to process wide range of input signals,
-and it allows apps to receive several types of signals without calibrations.
+Basically the *Reaktor* component is a kind of audio level meter with an adaptive level
+detection algorithm. It allows controller components to react to a wide range of audio
+signals without requiring calibrations.
+
+The Reaktor component has several options.
+
+### Audio Source
+
+It supports two types of audio sources -- RMS Level and Frequency Band. If the
+controller needs to react to the audio level of a specific channel, use RMS Level. If it
+needs to react to the level of a specific frequency band (which is provided from the
+frequency spectrum analyzer), use Frequency Band
+
+### Curve
+
+The Curve option gives a response curve to the output from the Reacktor component.
+
+### Gain Control
+
+The Reaktor component supports external MIDI controllers. In Gain Control option, it
+allows to assign a CC value to the gain of the output from the Reaktor component.
+
+### Offset Control
+
+The Offset Control option is another way to control the Reaktor with external MIDI
+controllers. It offsets the output (i.e. simply add the offset value to the output
+value) with a CC value.
+
+### Sensibility
+
+The Sensibility option gives a coefficient to the output low-pass filter in the Reaktor.
+The lower the value is set, the smoother and slower it reacts. The filter can be disabled
+when the value is set to 1.
+
+### Audio Input Options
+
+These options control the adaptive level detection algorithm.
+
+- Headroom [dB] - gives a headroom to the dynamic range window.
+- Dynamic Range [dB] - the width of the dynamic range window.
+- Lower Bound [dB] - the dynamic range window can move down to this level.
+- Falldown [dB/Sec] - the fall-down speed of the dynamic range window.
 
 Reaktor To Transform Component
 ------------------------------
