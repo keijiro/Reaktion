@@ -67,6 +67,7 @@ public class ReaktorToAnimatorEditor : Editor
         {
             propMaxSpeed.floatValue = EditorGUILayout.FloatField ("Max Speed", propMaxSpeed.floatValue);
             propSpeedCurve.animationCurveValue = EditorGUILayout.CurveField ("Speed Curve", propSpeedCurve.animationCurveValue);
+            EditorGUILayout.Space ();
         }
 
         // Trigger control.
