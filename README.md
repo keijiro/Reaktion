@@ -163,7 +163,7 @@ Receiver functions must be implemented as follows:
 The names of the receiver functions can be changed with the *Message* options.
 
 Making custom controllers
-————————————
+-------------------------
 
 You can make your own custom controller in a few steps.
 
