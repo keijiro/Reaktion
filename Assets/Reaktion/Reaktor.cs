@@ -89,6 +89,14 @@ public class Reaktor : MonoBehaviour
         get { return rawInput; }
     }
 
+    public float Gain {
+        get { return gain; }
+    }
+
+    public float Offset {
+        get { return offset; }
+    }
+
     #endregion
 
     #region Private variables
@@ -96,6 +104,8 @@ public class Reaktor : MonoBehaviour
     float output;
     float peak;
     float rawInput;
+    float gain;
+    float offset;
 
     #endregion
 
@@ -106,6 +116,7 @@ public class Reaktor : MonoBehaviour
         // Begins with the lowest level.
         peak = lowerBound + dynamicRange + headroom;
         rawInput = -1e12f;
+        gain = 1.0f;
     }
 
     void Update ()
@@ -140,11 +151,13 @@ public class Reaktor : MonoBehaviour
         // MIDI CC input.
         if (gainEnabled)
         {
-            input *= gainCurve.Evaluate (MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f));
+            gain = gainCurve.Evaluate (MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f));
+            input *= gain;
         }
         if (offsetEnabled)
         {
-            input += offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex));
+            offset = offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex));
+            input += offset;
         }
 
         // Make output.

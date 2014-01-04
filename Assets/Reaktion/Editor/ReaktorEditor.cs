@@ -218,7 +218,7 @@ public class ReaktorEditor : Editor
         if (EditorApplication.isPlaying && !serializedObject.isEditingMultipleObjects)
         {
             EditorGUILayout.Space ();
-            DrawLevelBar (target as Reaktor);
+            DrawInputLevelBars (target as Reaktor);
             EditorUtility.SetDirty (target); // Make it dirty to update the view.
         }
     }
@@ -237,7 +237,7 @@ public class ReaktorEditor : Editor
     }
 
     // Draw the input level bar.
-    void DrawLevelBar (Reaktor reaktor)
+    void DrawInputLevelBars (Reaktor reaktor)
     {
         if (barTextures == null)
         {
@@ -272,18 +272,32 @@ public class ReaktorEditor : Editor
 
         // Display the peak level value.
         EditorGUI.LabelField (rect, "Peak: " + reaktor.Peak.ToString ("0.0") + " dB");
-        
-        // Get a rectangle as a text field and fill it.
-        rect = GUILayoutUtility.GetRect (18, 16, "TextField");
-        GUI.DrawTexture (rect, barTextures [0]);
+
+        // Draw the gain level.
+        if (reaktor.gainEnabled)
+            DrawLevelBar ("Gain", reaktor.Gain, barTextures [0], barTextures [1]);
+
+        // Draw the offset level.
+        if (reaktor.offsetEnabled)
+            DrawLevelBar ("Offset", reaktor.Offset, barTextures [0], barTextures [1]);
 
         // Draw the output level.
-        temp = rect;
-        temp.width *= reaktor.Output;
-        GUI.DrawTexture (temp, barTextures [4]);
+        DrawLevelBar ("Out", reaktor.Output, barTextures [0], barTextures [4]);
+    }
 
-        // Display the output value.
-        EditorGUI.LabelField (rect, "Out: " + (reaktor.Output * 100).ToString ("0.0") + " %");
+    void DrawLevelBar (string label, float value, Texture bg, Texture fg)
+    {
+        // Get a rectangle as a text field and fill it.
+        var rect = GUILayoutUtility.GetRect (18, 16, "TextField");
+        GUI.DrawTexture (rect, bg);
+        
+        // Draw a level bar.
+        var temp = rect;
+        temp.width *= value;
+        GUI.DrawTexture (temp, fg);
+        
+        // Display the level value in percentage.
+        EditorGUI.LabelField (rect, label + ": " + (value * 100).ToString ("0.0") + " %");
     }
 
     #endregion
