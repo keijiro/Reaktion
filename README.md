@@ -10,13 +10,30 @@ Reaktion
 It provides several components for reacting to audio signals.
 
 - *Reaktor* - processes audio signals and provides information to other components.
-- *ReaktorToTransform* - controls a Transform component with information from a Reaktor.
-- *ReaktorToParticleSystem* - controls a Particle System component with information from
+- *Reaktor To Transform* - controls a Transform component with information from a Reaktor.
+- *Reaktor To ParticleSystem* - controls a Particle System component with information from
   a Reaktor.
-- *ReaktorToAnimator* - controls an Animator component with information from a Reaktor.
-- *ReaktorToMessage* - sends messages to Game Objects with information from a Reaktor.
+- *Reaktor To Animator* - controls an Animator component with information from a Reaktor.
+- *Reaktor To Message* - sends messages to Game Objects with information from a Reaktor.
 
 ![Chart](http://keijiro.github.io/Reaktion/abstract.png)
+
+System Requirements
+-------------------
+
+- Mac OS X
+- Unity Pro
+
+Setting Up
+----------
+
+- Download [the package](http://keijiro.github.io/Reaktion/reaktion-0.5.unitypackage)
+  and import it to a project.
+- Create a game object and add *AudioJack* script component to it. For the detailed
+  information about AudioJack, read [the documentation]
+  (https://github.com/keijiro/AudioJack).
+- Add Reaktor and controller components (Reaktor To XXX) to game objects. Controllers
+  automatically search a Reaktor that is the closest to it.
 
 Reaktor Component
 -----------------
@@ -24,47 +41,47 @@ Reaktor Component
 ![Reaktor](http://keijiro.github.io/Reaktion/inspector-reaktor.png)
 
 Basically the *Reaktor* component is a kind of audio level meter with an adaptive level
-detection algorithm. It allows controller components to react to a wide range of audio
-signals without requiring calibrations.
+detection algorithm. It allows controllers to react to a wide range of audio signals
+without requiring detailed calibrations.
 
-The Reaktor component has several options.
+The Reaktor component has several options below.
 
 ### Audio Source
 
-It supports two types of audio sources -- RMS Level and Frequency Band. If the
-controller needs to react to the audio level of a specific channel, use RMS Level. If it
-needs to react to the level of a specific frequency band (which is provided from the
-frequency spectrum analyzer), use Frequency Band
+It supports two types of audio sources -- *RMS Level* and *Frequency Band*. If the
+controller needs to react to the audio level of a specific channel, use *RMS Level*.
+If it needs to react to the level of a specific frequency band (which is provided from
+the frequency spectrum analyzer in AudioJack), use *Frequency Band*.
 
 ### Curve
 
-The Curve option gives a response curve to the output from the Reacktor component.
+The *Curve* option gives a response curve to the output from the Reacktor.
 
 ### Gain Control
 
-The Reaktor component supports external MIDI controllers. In Gain Control option, it
-allows to assign a CC value to the gain of the output from the Reaktor component.
+The Reaktor supports external MIDI controllers. In *Gain Control* option, it allows
+to assign a MIDI CC value to the gain of the output from the Reaktor.
 
 ### Offset Control
 
-The Offset Control option is another way to control the Reaktor with external MIDI
-controllers. It offsets the output (i.e. simply add the offset value to the output
-value) with a CC value.
+The *Offset Control* option is another way to control the Reaktor with external MIDI
+controllers. It offsets the output with a MIDI CC value (i.e. simply adds the CC value
+to the output value).
 
 ### Sensibility
 
-The Sensibility option gives a coefficient to the output low-pass filter in the Reaktor.
-The lower the value is set, the smoother and slower it reacts. The filter can be disabled
-when the value is set to 1.
+The *Sensibility* option determines the strength of the output low-pass filter in the
+Reaktor. The lower the value is set, the smoother and slower it reacts. The filter can
+be disabled when the value is set to 1.
 
 ### Audio Input Options
 
 These options control the adaptive level detection algorithm.
 
-- Headroom [dB] - gives a headroom to the dynamic range window.
-- Dynamic Range [dB] - the width of the dynamic range window.
-- Lower Bound [dB] - the dynamic range window can move down to this level.
-- Falldown [dB/Sec] - the fall-down speed of the dynamic range window.
+- *Headroom* [dB] - gives a headroom to the dynamic range window.
+- *Dynamic Range* [dB] - the width of the dynamic range window.
+- *Lower Bound* [dB] - the window can move down to this level.
+- *Falldown* [dB/Sec] - the fall-down speed of the window.
 
 Reaktor To Transform Component
 ------------------------------
