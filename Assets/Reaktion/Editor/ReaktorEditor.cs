@@ -37,11 +37,13 @@ public class ReaktorEditor : Editor
     // Gain control.
     SerializedProperty propGainEnabled;
     SerializedProperty propGainKnobIndex;
+    SerializedProperty propGainKnobChannel;
     SerializedProperty propGainCurve;
 
     // Offset control.
     SerializedProperty propOffsetEnabled;
     SerializedProperty propOffsetKnobIndex;
+    SerializedProperty propOffsetKnobChannel;
     SerializedProperty propOffsetCurve;
 
     // General option.
@@ -74,6 +76,28 @@ public class ReaktorEditor : Editor
     static int[] sourceOptions = {
         0, 1, 2, 3
     };
+    static string[] midiChannelLabels = {
+        "Channel 1",
+        "Channel 2",
+        "Channel 3",
+        "Channel 4",
+        "Channel 5",
+        "Channel 6",
+        "Channel 7",
+        "Channel 8",
+        "Channel 9",
+        "Channel 10",
+        "Channel 11",
+        "Channel 12",
+        "Channel 13",
+        "Channel 14",
+        "Channel 15",
+        "Channel 16",
+        "All Channels"
+    };
+    static int[] midiChannelOptions = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+    };
     
     #endregion
 
@@ -90,11 +114,13 @@ public class ReaktorEditor : Editor
         // Gain control.
         propGainEnabled = serializedObject.FindProperty ("gainEnabled");
         propGainKnobIndex = serializedObject.FindProperty ("gainKnobIndex");
+        propGainKnobChannel = serializedObject.FindProperty ("gainKnobChannel");
         propGainCurve = serializedObject.FindProperty ("gainCurve");
 
         // Offset control.
         propOffsetEnabled = serializedObject.FindProperty ("offsetEnabled");
         propOffsetKnobIndex = serializedObject.FindProperty ("offsetKnobIndex");
+        propOffsetKnobChannel = serializedObject.FindProperty ("offsetKnobChannel");
         propOffsetCurve = serializedObject.FindProperty ("offsetCurve");
 
         // General option.
@@ -130,7 +156,7 @@ public class ReaktorEditor : Editor
         propAudioMode.intValue = EditorGUILayout.IntPopup ("Audio Source", propAudioMode.intValue, sourceLabels, sourceOptions);
         if (propAudioMode.intValue > 0)
         {
-            var label = (propAudioMode.intValue == (int)Reaktor.AudioMode.SpecturmBand) ? "Band" : "Channel";
+            var label = (propAudioMode.intValue == (int)Reaktor.AudioMode.SpecturmBand) ? "Band Index" : "Channel";
             propAudioIndex.intValue = EditorGUILayout.IntField (label, propAudioIndex.intValue);
             propAudioCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propAudioCurve.animationCurveValue);
         }
@@ -144,6 +170,7 @@ public class ReaktorEditor : Editor
             if (propGainEnabled.boolValue = EditorGUILayout.Toggle ("Gain Control", propGainEnabled.boolValue))
             {
                 propGainKnobIndex.intValue = EditorGUILayout.IntField ("MIDI CC #", propGainKnobIndex.intValue);
+                propGainKnobChannel.intValue = EditorGUILayout.IntPopup ("MIDI Channel", propGainKnobChannel.intValue, midiChannelLabels, midiChannelOptions);
                 propGainCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propGainCurve.animationCurveValue);
             }
         }
@@ -155,6 +182,7 @@ public class ReaktorEditor : Editor
         if (propOffsetEnabled.boolValue = EditorGUILayout.Toggle ("Offset Control", propOffsetEnabled.boolValue))
         {
             propOffsetKnobIndex.intValue = EditorGUILayout.IntField ("MIDI CC #", propOffsetKnobIndex.intValue);
+            propOffsetKnobChannel.intValue = EditorGUILayout.IntPopup ("MIDI Channel", propOffsetKnobChannel.intValue, midiChannelLabels, midiChannelOptions);
             propOffsetCurve.animationCurveValue = EditorGUILayout.CurveField ("Curve", propOffsetCurve.animationCurveValue);
         }
         

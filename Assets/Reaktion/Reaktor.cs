@@ -45,6 +45,7 @@ public class Reaktor : MonoBehaviour
 
     public bool gainEnabled = false;
     public int gainKnobIndex = 2;
+    public MidiChannel gainKnobChannel = MidiChannel.All;
     public AnimationCurve gainCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -53,6 +54,7 @@ public class Reaktor : MonoBehaviour
 
     public bool offsetEnabled = false;
     public int offsetKnobIndex = 3;
+    public MidiChannel offsetKnobChannel = MidiChannel.All;
     public AnimationCurve offsetCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -138,16 +140,16 @@ public class Reaktor : MonoBehaviour
         // MIDI CC input.
         if (gainEnabled)
         {
-            input *= gainCurve.Evaluate (MidiJack.GetKnob (gainKnobIndex, 1.0f));
+            input *= gainCurve.Evaluate (MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f));
         }
         if (offsetEnabled)
         {
-            input += offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobIndex));
+            input += offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex));
         }
 
         // Make output.
         input = Mathf.Clamp01 (input);
-		
+
         if (sensibility > 0.0f)
         {
             output = input - (input - output) * Mathf.Exp (-sensibility * Time.deltaTime);
