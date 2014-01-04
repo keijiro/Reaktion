@@ -1,6 +1,8 @@
 Reaktion
 ========
 
+![Screenshot](http://keijiro.github.io/Reaktion/screenshot.png)
+
 *Reaktion* is an audio reactive animation toolkit for Unity.
 
 [Demo](https://vine.co/v/h2H5Iqi3e3V)
@@ -25,23 +27,23 @@ signals and provides the level information to other components. It uses an
 adaptive level detection algorithm to process wide range of input signals,
 and it allows apps to receive several types of signals without calibrations.
 
-ReaktorToTransform Component
-----------------------------
+Reaktor To Transform Component
+------------------------------
 
 ![ReaktorToTransform](http://keijiro.github.io/Reaktion/inspector-transform.png)
 
-ReaktorToParticleSystem Component
----------------------------------
+Reaktor To ParticleSystem Component
+-----------------------------------
 
 ![ReaktorToParticleSystem](http://keijiro.github.io/Reaktion/inspector-particle.png)
 
-ReaktorToAnimator Component
----------------------------
+Reaktor To Animator Component
+-----------------------------
 
 ![ReaktorToAnimator](http://keijiro.github.io/Reaktion/inspector-animator.png)
 
-ReaktorToMessage Component
----------------------------
+Reaktor To Message Component
+----------------------------
 
 ![ReaktorToMessage](http://keijiro.github.io/Reaktion/inspector-message.png)
 
