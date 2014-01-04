@@ -61,7 +61,7 @@ public class Reaktor : MonoBehaviour
 
     #region General option
 
-    public float sensibility = 15.1f;
+    public float sensitivity = 15.1f;
 
     #endregion
 
@@ -163,9 +163,9 @@ public class Reaktor : MonoBehaviour
         // Make output.
         input = Mathf.Clamp01 (input);
 
-        if (sensibility > 0.0f)
+        if (sensitivity > 0.0f)
         {
-            output = input - (input - output) * Mathf.Exp (-sensibility * Time.deltaTime);
+            output = input - (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
         }
         else
         {

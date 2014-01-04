@@ -80,9 +80,9 @@ The *Offset Control* option is another way to control the Reaktor with
 external MIDI controllers. It offsets the output with a MIDI CC value
 (i.e. simply adds the CC value to the output value).
 
-#### Sensibility
+#### Sensitivity
 
-The *Sensibility* option determines the strength of the output low-pass filter
+The *Sensitivity* option determines the strength of the output low-pass filter
 in the Reaktor. The lower the value is set, the smoother and slower it reacts.
 The filter can be disabled when the value is set to 1.
 

@@ -47,7 +47,7 @@ public class ReaktorEditor : Editor
     SerializedProperty propOffsetCurve;
 
     // General option.
-    SerializedProperty propSensibility;
+    SerializedProperty propSensitivity;
 
     // Audio input options.
     SerializedProperty propShowAudioOptions;
@@ -124,7 +124,7 @@ public class ReaktorEditor : Editor
         propOffsetCurve = serializedObject.FindProperty ("offsetCurve");
 
         // General option.
-        propSensibility = serializedObject.FindProperty ("sensibility");
+        propSensitivity = serializedObject.FindProperty ("sensitivity");
         
         // Audio input options.
         propShowAudioOptions = serializedObject.FindProperty ("showAudioOptions");
@@ -191,12 +191,12 @@ public class ReaktorEditor : Editor
 
         // General option.
         {
-            var value = propSensibility.floatValue;
+            var value = propSensitivity.floatValue;
             if (value > 0.0f)
-                value = EditorGUILayout.Slider ("Sensibility", (value - 0.1f) / 30, 0.0f, 1.0f);
+                value = EditorGUILayout.Slider ("Sensitivity", (value - 0.1f) / 30, 0.0f, 1.0f);
             else
                 value = EditorGUILayout.Slider ("(Filter Off)", 1.0f, 0.0f, 1.0f);
-            propSensibility.floatValue = (value == 1.0f) ? 0.0f : value * 30 + 0.1f;
+            propSensitivity.floatValue = (value == 1.0f) ? 0.0f : value * 30 + 0.1f;
         }
 
         // Audio input options.

@@ -333,7 +333,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  sensibility: 0
+  sensitivity: 0
   showAudioOptions: 0
   headroom: 6
   dynamicRange: 20
@@ -1886,7 +1886,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  sensibility: 0
+  sensitivity: 0
   showAudioOptions: 0
   headroom: 8
   dynamicRange: 12
@@ -1972,7 +1972,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  sensibility: 0
+  sensitivity: 0
   showAudioOptions: 0
   headroom: 6
   dynamicRange: 20
@@ -2237,7 +2237,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  sensibility: 15.1000004
+  sensitivity: 15.1000004
   showAudioOptions: 0
   headroom: 6
   dynamicRange: 20
@@ -2419,7 +2419,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  sensibility: 18
+  sensitivity: 18
   showAudioOptions: 0
   headroom: 6
   dynamicRange: 20
