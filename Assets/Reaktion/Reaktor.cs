@@ -186,7 +186,7 @@ public class Reaktor : MonoBehaviour
             r = go.transform.parent.GetComponent<Reaktor> ();
             if (r == null)
             {
-                r = go.transform.parent.GetComponent<Reaktor> ();
+                r = go.transform.parent.parent.GetComponent<Reaktor> ();
                 if (r == null)
                 {
                     r = go.GetComponentInChildren<Reaktor> ();
