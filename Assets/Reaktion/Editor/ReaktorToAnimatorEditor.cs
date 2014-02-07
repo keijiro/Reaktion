@@ -24,7 +24,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToAnimator)), CanEditMultipleObjects]
+[CustomEditor(typeof(ReaktorToAnimator))]
 public class ReaktorToAnimatorEditor : Editor
 {
     #region References to the properties

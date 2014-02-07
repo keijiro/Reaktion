@@ -24,7 +24,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToMessage)), CanEditMultipleObjects]
+[CustomEditor(typeof(ReaktorToMessage))]
 public class ReaktorToMessageEditor : Editor
 {
     #region References to the properties

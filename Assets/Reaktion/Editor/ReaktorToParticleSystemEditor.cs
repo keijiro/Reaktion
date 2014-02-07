@@ -24,7 +24,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToParticleSystem)), CanEditMultipleObjects]
+[CustomEditor(typeof(ReaktorToParticleSystem))]
 public class ReaktorToParticleSystemEditor : Editor
 {
     #region References to the properties
