@@ -36,7 +36,7 @@ Setting Up
 ----------
 
 1. Download [the package]
-   (http://keijiro.github.io/Reaktion/reaktion-0.5.unitypackage)
+   (https://github.com/keijiro/Reaktion/raw/master/Reaktion.unitypackage)
    and import it to a project.
 
 2. Create a game object and add *AudioJack* script component to it.
