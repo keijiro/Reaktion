@@ -62,6 +62,7 @@ public class Reaktor : MonoBehaviour
     #region General option
 
     public float sensitivity = 15.1f;
+    public float decaySpeed = 5.5f;
 
     #endregion
 
@@ -165,12 +166,10 @@ public class Reaktor : MonoBehaviour
 
         if (sensitivity > 0.0f)
         {
-            output = input - (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
+            input -= (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
         }
-        else
-        {
-            output = input;
-        }
+
+        output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
     }
 
     // Search an available Reaktor placed close to the game object.

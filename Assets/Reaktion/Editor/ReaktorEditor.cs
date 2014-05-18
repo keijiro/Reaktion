@@ -48,6 +48,7 @@ public class ReaktorEditor : Editor
 
     // General option.
     SerializedProperty propSensitivity;
+    SerializedProperty propDecaySpeed;
 
     // Audio input options.
     SerializedProperty propShowAudioOptions;
@@ -125,6 +126,7 @@ public class ReaktorEditor : Editor
 
         // General option.
         propSensitivity = serializedObject.FindProperty ("sensitivity");
+        propDecaySpeed = serializedObject.FindProperty ("decaySpeed");
         
         // Audio input options.
         propShowAudioOptions = serializedObject.FindProperty ("showAudioOptions");
@@ -197,6 +199,15 @@ public class ReaktorEditor : Editor
             else
                 value = EditorGUILayout.Slider ("(Filter Off)", 1.0f, 0.0f, 1.0f);
             propSensitivity.floatValue = (value == 1.0f) ? 0.0f : value * 30 + 0.1f;
+        }
+
+        {
+            var value = propDecaySpeed.floatValue;
+            if (value < 10.5f)
+                value = EditorGUILayout.Slider ("Decay Speed", (value - 0.5f) / 10, 0.0f, 1.0f);
+            else
+                value = EditorGUILayout.Slider ("(Infinite)", 1.0f, 0.0f, 1.0f);
+            propDecaySpeed.floatValue = (value == 1.0f) ? 100.0f : value * 10f + 0.5f;
         }
 
         // Audio input options.
