@@ -175,23 +175,18 @@ public class Reaktor : MonoBehaviour
     // Search an available Reaktor placed close to the game object.
     public static Reaktor SearchAvailableFrom (GameObject go)
     {
-        // 1. Look for a component from the parent.
-        // 2. From the grandparent.
-        // 3. From the childlen.
-        // 4. Give up.
         var r = go.GetComponent<Reaktor> ();
-        if (r == null)
+        if (r) return r;
+
+        // Look for a Reaktor component within the upper hierarchy.
+        for (var t = go.transform.parent; t != null; t = t.parent)
         {
-            r = go.transform.parent.GetComponent<Reaktor> ();
-            if (r == null)
-            {
-                r = go.transform.parent.parent.GetComponent<Reaktor> ();
-                if (r == null)
-                {
-                    r = go.GetComponentInChildren<Reaktor> ();
-                }
-            }
+            r = t.GetComponent<Reaktor> ();
+            if (r) return r;
         }
+
+        // Search the lower hierarchy.
+        r = go.GetComponentInChildren<Reaktor> ();
         return r;
     }
 
