@@ -45,7 +45,7 @@ public class ReaktorToMessage : MonoBehaviour
     
     // Input message.
     public bool enableInput;
-	public AnimationCurve inputCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve inputCurve = AnimationCurve.Linear (0, 0, 1, 1);
     public string inputMessage = "OnReaktorInput";
 
     #endregion
