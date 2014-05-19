@@ -62,12 +62,18 @@ public class ReaktionWindow : EditorWindow
         }
     }
 
+    static int CompareReaktor (Reaktor a, Reaktor b)
+    {
+        return a.name.CompareTo(b.name);
+    }
+
     void FindAndCacheReaktors ()
     {
         if (!EditorApplication.isPlaying || cachedReaktors == null ||
             activeReaktorCount != Reaktor.ActiveInstanceCount)
         {
             cachedReaktors = FindObjectsOfType<Reaktor> ();
+            System.Array.Sort (cachedReaktors, CompareReaktor);
             activeReaktorCount = Reaktor.ActiveInstanceCount;
         }
     }
