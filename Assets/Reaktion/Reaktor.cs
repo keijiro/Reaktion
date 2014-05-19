@@ -98,6 +98,14 @@ public class Reaktor : MonoBehaviour
         get { return offset; }
     }
 
+    public bool Overridden {
+        get { return overridden; }
+    }
+
+    public static int ActiveInstanceCount {
+        get { return activeInstanceCount; }
+    }
+
     #endregion
 
     #region Private variables
@@ -107,6 +115,9 @@ public class Reaktor : MonoBehaviour
     float rawInput;
     float gain;
     float offset;
+    bool overridden;
+
+    static int activeInstanceCount;
 
     #endregion
 
@@ -169,7 +180,37 @@ public class Reaktor : MonoBehaviour
             input -= (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
         }
 
-        output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
+        if (!overridden) 
+        {
+            output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
+        }
+    }
+
+    void OnEnable ()
+    {
+        activeInstanceCount++;
+    }
+
+    void OnDisable ()
+    {
+        activeInstanceCount--;
+    }
+
+    #endregion
+
+    #region Public functions
+
+    // Override the output.
+    public void OverrideOutput (float value)
+    {
+        overridden = true;
+        output = value;
+    }
+
+    // Stop overriding.
+    public void StopOverriding ()
+    {
+        overridden = false;
     }
 
     // Search an available Reaktor placed close to the game object.
