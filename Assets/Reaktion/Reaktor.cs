@@ -102,6 +102,10 @@ public class Reaktor : MonoBehaviour
         get { return overridden; }
     }
 
+    public static int ActiveInstanceCount {
+        get { return activeInstanceCount; }
+    }
+
     #endregion
 
     #region Private variables
@@ -112,6 +116,8 @@ public class Reaktor : MonoBehaviour
     float gain;
     float offset;
     bool overridden;
+
+    static int activeInstanceCount;
 
     #endregion
 
@@ -178,6 +184,16 @@ public class Reaktor : MonoBehaviour
         {
             output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
         }
+    }
+
+    void OnEnable ()
+    {
+        activeInstanceCount++;
+    }
+
+    void OnDisable ()
+    {
+        activeInstanceCount--;
     }
 
     #endregion

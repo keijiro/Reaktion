@@ -26,9 +26,12 @@ using UnityEditor;
 public class ReaktionWindow : EditorWindow
 {
     const int updateInterval = 15;
+    int updateCounter;
+
+    Reaktor[] cachedReaktors;
+    int activeReaktorCount;
 
     Vector2 scrollPosition;
-    int updateCounter;
 
     [MenuItem ("Window/Reaktion")]
     static void Init ()
@@ -51,18 +54,33 @@ public class ReaktionWindow : EditorWindow
     {
         if (EditorApplication.isPlaying)
         {
-            if (updateCounter % updateInterval == 0) Repaint ();
-            updateCounter++;
+            if (++updateCounter >= updateInterval)
+            {
+                Repaint ();
+                updateCounter = 0;
+            }
+        }
+    }
+
+    void FindAndCacheReaktors ()
+    {
+        if (!EditorApplication.isPlaying || cachedReaktors == null ||
+            activeReaktorCount != Reaktor.ActiveInstanceCount)
+        {
+            cachedReaktors = FindObjectsOfType<Reaktor> ();
+            activeReaktorCount = Reaktor.ActiveInstanceCount;
         }
     }
 
     void OnGUI ()
     {
+        FindAndCacheReaktors();
+
         scrollPosition = EditorGUILayout.BeginScrollView (scrollPosition);
 
         GUILayout.Label ("Reaktor List", EditorStyles.boldLabel);
 
-        foreach (var reaktor in FindObjectsOfType<Reaktor> ())
+        foreach (var reaktor in cachedReaktors)
         {
             EditorGUILayout.BeginHorizontal ();
 
