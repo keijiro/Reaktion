@@ -84,24 +84,47 @@ public class ReaktionWindow : EditorWindow
         {
             EditorGUILayout.BeginHorizontal ();
 
+            // Slider
             if (EditorApplication.isPlaying)
             {
-                var value = EditorGUILayout.Slider (reaktor.name, reaktor.Output, 0, 1);
-                if (value != reaktor.Output) reaktor.OverrideOutput (value);
+                if (reaktor.IsOverridden)
+                {
+                    // Already overridden: show the override value.
+                    var value = EditorGUILayout.Slider (reaktor.name, reaktor.Override, 0, 1);
+                    if (!reaktor.Bang) reaktor.Override = value;
+                }
+                else
+                {
+                    // Not overridden: show the output value and begin override when touched.
+                    var value = EditorGUILayout.Slider (reaktor.name, reaktor.Output, 0, 1);
+                    if (value != reaktor.Output) reaktor.Override = value;
+                }
             }
             else
             {
+                // Not playing: show a dummy slider.
                 EditorGUILayout.Slider (reaktor.name, 0, 0, 1);
             }
 
-            if (reaktor.Overridden)
+            // Bang button
+            if (GUILayout.RepeatButton ("!", EditorStyles.miniButtonLeft, GUILayout.Width (18)))
             {
-                if (GUILayout.Button ("Release", EditorStyles.miniButtonRight, GUILayout.Width (48)))
-                    reaktor.StopOverriding();
+                reaktor.Bang = true;
+            }
+            else if (reaktor.Bang && Event.current.type == EventType.Repaint)
+            {
+                reaktor.Override = 0;
+            }
+
+            // Release/Select button
+            if (reaktor.IsOverridden)
+            {
+                if (GUILayout.Button ("Release", EditorStyles.miniButtonRight, GUILayout.Width (46)))
+                    reaktor.StopOverride();
             }
             else
             {
-                if (GUILayout.Button ("Select", EditorStyles.miniButtonRight, GUILayout.Width (48)))
+                if (GUILayout.Button ("Select", EditorStyles.miniButtonRight, GUILayout.Width (46)))
                     Selection.activeGameObject = reaktor.gameObject;
             }
 

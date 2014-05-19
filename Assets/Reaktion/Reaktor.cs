@@ -98,8 +98,18 @@ public class Reaktor : MonoBehaviour
         get { return offset; }
     }
 
-    public bool Overridden {
-        get { return overridden; }
+    public float Override {
+        get { return Mathf.Clamp01 (fakeInput); }
+        set { fakeInput = value; }
+    }
+
+    public bool IsOverridden {
+        get { return fakeInput >= 0.0f; }
+    }
+
+    public bool Bang {
+        get { return fakeInput > 1.0f; }
+        set { fakeInput = value ? 10.0f : -1.0f; }
     }
 
     public static int ActiveInstanceCount {
@@ -115,7 +125,7 @@ public class Reaktor : MonoBehaviour
     float rawInput;
     float gain;
     float offset;
-    bool overridden;
+    float fakeInput;
 
     static int activeInstanceCount;
 
@@ -129,6 +139,7 @@ public class Reaktor : MonoBehaviour
         peak = lowerBound + dynamicRange + headroom;
         rawInput = -1e12f;
         gain = 1.0f;
+        fakeInput = -1.0f;
     }
 
     void Update ()
@@ -173,17 +184,14 @@ public class Reaktor : MonoBehaviour
         }
 
         // Make output.
-        input = Mathf.Clamp01 (input);
+        input = Mathf.Clamp01 (fakeInput < 0.0f ? input : fakeInput);
 
         if (sensitivity > 0.0f)
         {
             input -= (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
         }
 
-        if (!overridden) 
-        {
-            output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
-        }
+        output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
     }
 
     void OnEnable ()
@@ -200,17 +208,10 @@ public class Reaktor : MonoBehaviour
 
     #region Public functions
 
-    // Override the output.
-    public void OverrideOutput (float value)
-    {
-        overridden = true;
-        output = value;
-    }
-
     // Stop overriding.
-    public void StopOverriding ()
+    public void StopOverride ()
     {
-        overridden = false;
+        fakeInput = -1.0f;
     }
 
     // Search an available Reaktor placed close to the game object.
