@@ -25,17 +25,24 @@ using System.Collections;
 
 public class ReaktorToMaterial : MonoBehaviour
 {
-    public string colorName = "_Color";
+    public enum TargetType { Color, Float, Vector, Texture }
+
+    public string targetName = "_Color";
+    public TargetType targetType = TargetType.Color;
+
+    public float threshold = 0.5f;
+
     public Color colorFrom = Color.black;
     public Color colorTo = Color.white;
 
-    public string floatName;
     public float floatFrom = 0.0f;
     public float floatTo = 1.0f;
 
-    public string vectorName;
     public Vector4 vectorFrom = Vector4.zero;
     public Vector4 vectorTo = Vector4.one;
+
+    public Texture textureLow;
+    public Texture textureHigh;
 
     Reaktor reaktor;
     Material material;
@@ -54,11 +61,20 @@ public class ReaktorToMaterial : MonoBehaviour
 
     void UpdateMaterial(float param)
     {
-        if (colorName.Length > 0)
-            material.SetColor(colorName, Color.Lerp(colorFrom, colorTo, param));
-        if (floatName.Length > 0)
-            material.SetFloat(floatName, Mathf.Lerp(floatFrom, floatTo, param));
-        if (vectorName.Length > 0)
-            material.SetVector(vectorName, Vector4.Lerp(vectorFrom, vectorTo, param));
+        switch (targetType)
+        {
+        case TargetType.Color:
+            material.SetColor(targetName, Color.Lerp(colorFrom, colorTo, param));
+            break;
+        case TargetType.Float:
+            material.SetFloat(targetName, Mathf.Lerp(floatFrom, floatTo, param));
+            break;
+        case TargetType.Vector:
+            material.SetVector(targetName, Vector4.Lerp(vectorFrom, vectorTo, param));
+            break;
+        case TargetType.Texture:
+            material.SetTexture(targetName, param < threshold ? textureLow : textureHigh);
+            break;
+        }
     }
 }

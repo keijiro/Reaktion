@@ -235,7 +235,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1337910076}
   - {fileID: 1015581105}
+  - {fileID: 1765375703}
   m_Father: {fileID: 0}
   m_RootOrder: 8
 --- !u!114 &200722478
@@ -945,7 +947,7 @@ GameObject:
   - 114: {fileID: 1015581106}
   - 114: {fileID: 1015581107}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -963,7 +965,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 3435738e684114bcab75721c3db6408e, type: 2}
+  - {fileID: 2100000, guid: 87b8fa68c36754686a45be2315bb3656, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -989,7 +991,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 200722477}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &1015581106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,15 +1003,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorName: _Color
-  colorFrom: {r: .29411763, g: .29411763, b: .29411763, a: 0}
+  targetName: _Color
+  targetType: 0
+  threshold: .5
+  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
   colorTo: {r: 1, g: .433823526, b: .433823526, a: 0}
-  floatName: _Shininess
   floatFrom: .899999976
   floatTo: .100000001
-  vectorName: 
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 0, y: 0, z: 0, w: 0}
+  textureLow: {fileID: 0}
+  textureHigh: {fileID: 0}
 --- !u!114 &1015581107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,15 +1025,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorName: _SpecColor
-  colorFrom: {r: 1, g: 1, b: 1, a: 1}
-  colorTo: {r: .264705896, g: .361054689, b: 1, a: 1}
-  floatName: 
-  floatFrom: 0
-  floatTo: 0
-  vectorName: 
+  targetName: _Shininess
+  targetType: 1
+  threshold: .5
+  colorFrom: {r: 0, g: 0, b: 0, a: 1}
+  colorTo: {r: 1, g: 1, b: 1, a: 1}
+  floatFrom: .949999988
+  floatTo: .0500000007
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
-  vectorTo: {x: 0, y: 0, z: 0, w: 0}
+  vectorTo: {x: 1, y: 1, z: 1, w: 1}
+  textureLow: {fileID: 0}
+  textureHigh: {fileID: 0}
 --- !u!1 &1080750198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2568,6 +2574,108 @@ MonoBehaviour:
   enableTrigger: 1
   triggerThreshold: .899999976
   triggerName: Jump
+--- !u!1 &1337910071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1337910076}
+  - 33: {fileID: 1337910075}
+  - 23: {fileID: 1337910074}
+  - 114: {fileID: 1337910073}
+  - 114: {fileID: 1337910072}
+  m_Layer: 0
+  m_Name: Sphere 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1337910072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1337910071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: _MainTex
+  targetType: 3
+  threshold: .5
+  colorFrom: {r: 0, g: 0, b: 0, a: 1}
+  colorTo: {r: 1, g: 1, b: 1, a: 1}
+  floatFrom: 0
+  floatTo: 1
+  vectorFrom: {x: 0, y: 0, z: 0, w: 0}
+  vectorTo: {x: 1, y: 1, z: 1, w: 1}
+  textureLow: {fileID: 2800000, guid: 381ae16dafc064fc987566c3b5b8e5a2, type: 3}
+  textureHigh: {fileID: 2800000, guid: 8315f37f7cee143119fea32dffb1fbfb, type: 3}
+--- !u!114 &1337910073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1337910071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: _Color
+  targetType: 0
+  threshold: .5
+  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
+  colorTo: {r: .433823526, g: .437728167, b: 1, a: 0}
+  floatFrom: .899999976
+  floatTo: .100000001
+  vectorFrom: {x: 0, y: 0, z: 0, w: 0}
+  vectorTo: {x: 0, y: 0, z: 0, w: 0}
+  textureLow: {fileID: 0}
+  textureHigh: {fileID: 0}
+--- !u!23 &1337910074
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1337910071}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 3435738e684114bcab75721c3db6408e, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &1337910075
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1337910071}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1337910076
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1337910071}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 200722477}
+  m_RootOrder: 0
 --- !u!1 &1438092069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3006,6 +3114,108 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1575360840}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1765375702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1765375703}
+  - 33: {fileID: 1765375706}
+  - 23: {fileID: 1765375705}
+  - 114: {fileID: 1765375704}
+  - 114: {fileID: 1765375707}
+  m_Layer: 0
+  m_Name: Sphere 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1765375703
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765375702}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 200722477}
+  m_RootOrder: 2
+--- !u!114 &1765375704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765375702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: _Color
+  targetType: 0
+  threshold: .5
+  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
+  colorTo: {r: .433823526, g: 1, b: .578296065, a: 0}
+  floatFrom: .899999976
+  floatTo: .100000001
+  vectorFrom: {x: 0, y: 0, z: 0, w: 0}
+  vectorTo: {x: 0, y: 0, z: 0, w: 0}
+  textureLow: {fileID: 0}
+  textureHigh: {fileID: 0}
+--- !u!23 &1765375705
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765375702}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 87b8fa68c36754686a45be2315bb3656, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &1765375706
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765375702}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1765375707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765375702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: _SpecColor
+  targetType: 0
+  threshold: .5
+  colorFrom: {r: .0758619308, g: 0, b: 1, a: 1}
+  colorTo: {r: 1, g: 1, b: 1, a: 1}
+  floatFrom: 0
+  floatTo: 1
+  vectorFrom: {x: 0, y: 0, z: 0, w: 0}
+  vectorTo: {x: 1, y: 1, z: 1, w: 1}
+  textureLow: {fileID: 0}
+  textureHigh: {fileID: 0}
 --- !u!1 &1782383564
 GameObject:
   m_ObjectHideFlags: 0

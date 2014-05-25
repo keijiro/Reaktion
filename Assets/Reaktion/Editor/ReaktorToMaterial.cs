@@ -27,64 +27,87 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToMaterial)), CanEditMultipleObjects]
 public class ReaktorToMaterialEditor : Editor
 {
-    SerializedProperty propColorName;
+    SerializedProperty propTargetType;
+    SerializedProperty propTargetName;
+
+    SerializedProperty propThreshold;
+
     SerializedProperty propColorFrom;
     SerializedProperty propColorTo;
 
-    SerializedProperty propFloatName;
     SerializedProperty propFloatFrom;
     SerializedProperty propFloatTo;
 
-    SerializedProperty propVectorName;
     SerializedProperty propVectorFrom;
     SerializedProperty propVectorTo;
 
+    SerializedProperty propTextureLow;
+    SerializedProperty propTextureHigh;
+
     GUIContent labelFrom;
     GUIContent labelTo;
+    GUIContent labelLow;
+    GUIContent labelHigh;
 
     void OnEnable()
     {
-        propColorName = serializedObject.FindProperty("colorName");
-        propColorFrom = serializedObject.FindProperty("colorFrom");
-        propColorTo   = serializedObject.FindProperty("colorTo");
+        propTargetType  = serializedObject.FindProperty("targetType");
+        propTargetName  = serializedObject.FindProperty("targetName");
 
-        propFloatName = serializedObject.FindProperty("floatName");
-        propFloatFrom = serializedObject.FindProperty("floatFrom");
-        propFloatTo   = serializedObject.FindProperty("floatTo");
+        propThreshold   = serializedObject.FindProperty("threshold");
 
-        propVectorName = serializedObject.FindProperty("vectorName");
-        propVectorFrom = serializedObject.FindProperty("vectorFrom");
-        propVectorTo   = serializedObject.FindProperty("vectorTo");
+        propColorFrom   = serializedObject.FindProperty("colorFrom");
+        propColorTo     = serializedObject.FindProperty("colorTo");
+
+        propFloatFrom   = serializedObject.FindProperty("floatFrom");
+        propFloatTo     = serializedObject.FindProperty("floatTo");
+
+        propVectorFrom  = serializedObject.FindProperty("vectorFrom");
+        propVectorTo    = serializedObject.FindProperty("vectorTo");
+
+        propTextureLow  = serializedObject.FindProperty("textureLow");
+        propTextureHigh = serializedObject.FindProperty("textureHigh");
 
         labelFrom = new GUIContent("From");
         labelTo   = new GUIContent("To");
+        labelLow  = new GUIContent("Low");
+        labelHigh = new GUIContent("High");
     }
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update ();
+        serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propColorName);
-        if (propColorName.hasMultipleDifferentValues || propColorName.stringValue.Length > 0)
+        EditorGUILayout.PropertyField(propTargetType);
+        EditorGUILayout.PropertyField(propTargetName);
+
+        if (!propTargetType.hasMultipleDifferentValues &&
+            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Color)
         {
             EditorGUILayout.PropertyField(propColorFrom, labelFrom);
             EditorGUILayout.PropertyField(propColorTo, labelTo);
-            EditorGUILayout.Space();
         }
 
-        EditorGUILayout.PropertyField(propFloatName);
-        if (propFloatName.hasMultipleDifferentValues || propFloatName.stringValue.Length > 0)
+        if (!propTargetType.hasMultipleDifferentValues &&
+            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Float)
         {
             EditorGUILayout.PropertyField(propFloatFrom, labelFrom);
             EditorGUILayout.PropertyField(propFloatTo, labelTo);
-            EditorGUILayout.Space();
         }
 
-        EditorGUILayout.PropertyField(propVectorName);
-        if (propVectorName.hasMultipleDifferentValues || propVectorName.stringValue.Length > 0)
+        if (!propTargetType.hasMultipleDifferentValues &&
+            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Vector)
         {
             EditorGUILayout.PropertyField(propVectorFrom, labelFrom, true);
             EditorGUILayout.PropertyField(propVectorTo, labelTo, true);
+        }
+
+        if (!propTargetType.hasMultipleDifferentValues &&
+            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Texture)
+        {
+            EditorGUILayout.PropertyField(propThreshold);
+            EditorGUILayout.PropertyField(propTextureLow, labelLow);
+            EditorGUILayout.PropertyField(propTextureHigh, labelHigh);
         }
 
         serializedObject.ApplyModifiedProperties ();
