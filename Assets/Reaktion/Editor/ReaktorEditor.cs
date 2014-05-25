@@ -36,12 +36,14 @@ public class ReaktorEditor : Editor
     SerializedProperty propGainEnabled;
     SerializedProperty propGainKnobIndex;
     SerializedProperty propGainKnobChannel;
+    SerializedProperty propGainInputAxis;
     SerializedProperty propGainCurve;
 
     // Offset control.
     SerializedProperty propOffsetEnabled;
     SerializedProperty propOffsetKnobIndex;
     SerializedProperty propOffsetKnobChannel;
+    SerializedProperty propOffsetInputAxis;
     SerializedProperty propOffsetCurve;
 
     // General option.
@@ -65,6 +67,7 @@ public class ReaktorEditor : Editor
     GUIContent labelCurve;
     GUIContent labelMidiCC;
     GUIContent labelMidiChannel;
+    GUIContent labelInputAxis;
 
     // Texutres for drawing level bars.
     Texture2D[] barTextures;
@@ -114,12 +117,14 @@ public class ReaktorEditor : Editor
         propGainEnabled       = serializedObject.FindProperty("gainEnabled");
         propGainKnobIndex     = serializedObject.FindProperty("gainKnobIndex");
         propGainKnobChannel   = serializedObject.FindProperty("gainKnobChannel");
+        propGainInputAxis     = serializedObject.FindProperty("gainInputAxis");
         propGainCurve         = serializedObject.FindProperty("gainCurve");
 
         // Offset control.
         propOffsetEnabled     = serializedObject.FindProperty("offsetEnabled");
         propOffsetKnobIndex   = serializedObject.FindProperty("offsetKnobIndex");
         propOffsetKnobChannel = serializedObject.FindProperty("offsetKnobChannel");
+        propOffsetInputAxis   = serializedObject.FindProperty("offsetInputAxis");
         propOffsetCurve       = serializedObject.FindProperty("offsetCurve");
 
         // General option.
@@ -143,6 +148,7 @@ public class ReaktorEditor : Editor
         labelCurve         = new GUIContent("Curve");
         labelMidiCC        = new GUIContent("MIDI CC#");
         labelMidiChannel   = new GUIContent("MIDI Channel");
+        labelInputAxis     = new GUIContent("Input Axis");
     }
     
     // On Disable (cleanup)
@@ -200,6 +206,7 @@ public class ReaktorEditor : Editor
             {
                 EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
                 EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+                EditorGUILayout.PropertyField(propGainInputAxis, labelInputAxis);
                 EditorGUILayout.PropertyField(propGainCurve, labelCurve);
             }
         }
@@ -212,6 +219,7 @@ public class ReaktorEditor : Editor
         {
             EditorGUILayout.PropertyField(propOffsetKnobIndex, labelMidiCC);
             EditorGUILayout.IntPopup(propOffsetKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            EditorGUILayout.PropertyField(propOffsetInputAxis, labelInputAxis);
             EditorGUILayout.PropertyField(propOffsetCurve, labelCurve);
         }
         

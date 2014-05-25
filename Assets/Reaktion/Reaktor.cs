@@ -46,6 +46,7 @@ public class Reaktor : MonoBehaviour
     public bool gainEnabled = false;
     public int gainKnobIndex = 2;
     public MidiChannel gainKnobChannel = MidiChannel.All;
+    public string gainInputAxis;
     public AnimationCurve gainCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -55,6 +56,7 @@ public class Reaktor : MonoBehaviour
     public bool offsetEnabled = false;
     public int offsetKnobIndex = 3;
     public MidiChannel offsetKnobChannel = MidiChannel.All;
+    public string offsetInputAxis;
     public AnimationCurve offsetCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -174,12 +176,18 @@ public class Reaktor : MonoBehaviour
         // MIDI CC input.
         if (gainEnabled)
         {
-            gain = gainCurve.Evaluate (MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f));
+            gain = MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f);
+            if (!string.IsNullOrEmpty(gainInputAxis))
+                gain = Mathf.Clamp01 (gain + Input.GetAxis (gainInputAxis));
+            gain = gainCurve.Evaluate (gain);
             input *= gain;
         }
         if (offsetEnabled)
         {
-            offset = offsetCurve.Evaluate (MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex));
+            offset = MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex);
+            if (!string.IsNullOrEmpty(offsetInputAxis))
+                offset = Mathf.Clamp01 (offset + Input.GetAxis (offsetInputAxis));
+            offset = offsetCurve.Evaluate (offset);
             input += offset;
         }
 
