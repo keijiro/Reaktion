@@ -26,13 +26,13 @@ using System.Collections;
 public class ReaktorToMovement : MonoBehaviour
 {
     public bool enableTranslation;
-    public Vector3 minVelocity;
-    public Vector3 maxVelocity;
+    public Vector3 minVelocity = Vector3.zero;
+    public Vector3 maxVelocity = Vector3.one;
 
     public bool enableRotation;
-    public Vector3 rotationAxis;
-    public float minAngularVelocity;
-    public float maxAngularVelocity;
+    public Vector3 rotationAxis = Vector3.up;
+    public float minAngularVelocity = 0.0f;
+    public float maxAngularVelocity = 360.0f;
 
     public bool useLocal = true;
 
