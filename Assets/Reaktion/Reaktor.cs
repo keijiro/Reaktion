@@ -127,7 +127,7 @@ public class Reaktor : MonoBehaviour
     float rawInput;
     float gain;
     float offset;
-    float fakeInput;
+    float fakeInput = -1.0f;
 
     static int activeInstanceCount;
 
@@ -141,7 +141,6 @@ public class Reaktor : MonoBehaviour
         peak = lowerBound + dynamicRange + headroom;
         rawInput = -1e12f;
         gain = 1.0f;
-        fakeInput = -1.0f;
     }
 
     void Update ()
