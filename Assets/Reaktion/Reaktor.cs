@@ -1,7 +1,7 @@
 ﻿//
 // Reaktion - An audio reactive animation toolkit for Unity.
 //
-// Copyright (C) 2013 Keijiro Takahashi
+// Copyright (C) 2013, 2014 Keijiro Takahashi
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
