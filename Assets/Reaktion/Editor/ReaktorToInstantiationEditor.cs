@@ -29,6 +29,7 @@ public class ReaktorToInstantiationEditor : Editor
 {
     SerializedProperty propPrefabs;
     SerializedProperty propRandomRotation;
+    SerializedProperty propParent;
 
     SerializedProperty propEnableBurst;
     SerializedProperty propBurstThreshold;
@@ -58,6 +59,7 @@ public class ReaktorToInstantiationEditor : Editor
     {
         propPrefabs        = serializedObject.FindProperty("prefabs");
         propRandomRotation = serializedObject.FindProperty("randomRotation");
+        propParent         = serializedObject.FindProperty("parent");
 
         propEnableBurst    = serializedObject.FindProperty("enableBurst");
         propBurstThreshold = serializedObject.FindProperty("burstThreshold");
@@ -120,6 +122,7 @@ public class ReaktorToInstantiationEditor : Editor
             if (!isSphere || showBoth) EditorGUILayout.PropertyField(propRangeVector, labelRangeVector);
         }
         EditorGUILayout.PropertyField(propRandomRotation);
+        EditorGUILayout.PropertyField(propParent);
         serializedObject.ApplyModifiedProperties ();
     }
 }

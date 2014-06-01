@@ -28,6 +28,7 @@ public class ReaktorToInstantiation : MonoBehaviour
     // General options.
     public GameObject[] prefabs;
     public bool randomRotation = true;
+    public Transform parent;
 
     // Options for burst instantiation.
     public bool enableBurst;
@@ -113,6 +114,7 @@ public class ReaktorToInstantiation : MonoBehaviour
         var prefab = prefabs[Random.Range(0, prefabs.Length)];
         var position = transform.TransformPoint(GetRandomPositionInRange());
         var rotation = randomRotation ? Random.rotation : prefab.transform.rotation * transform.rotation;
-        Instantiate(prefab, position, rotation);
+        var instance = Instantiate(prefab, position, rotation) as GameObject;
+        if (parent != null) instance.transform.parent = parent;
     }
 }
