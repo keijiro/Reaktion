@@ -120,7 +120,7 @@ public class Reaktor : MonoBehaviour
 
     #endregion
 
-    #region Private variables
+    #region Private variables and functions
 
     float output;
     float peak;
@@ -130,6 +130,12 @@ public class Reaktor : MonoBehaviour
     float fakeInput = -1.0f;
 
     static int activeInstanceCount;
+
+    float GetChannelRmsLevel(int channelOffset)
+    {
+        var ch = (channelOffset + audioIndex) % AudioJack.instance.ChannelRmsLevels.Length;
+        return AudioJack.instance.ChannelRmsLevels [ch];
+    }
 
     #endregion
 
@@ -152,11 +158,11 @@ public class Reaktor : MonoBehaviour
         {
             if (audioMode == AudioMode.MonoLevel)
             {
-                rawInput = AudioJack.instance.ChannelRmsLevels [audioIndex];
+                rawInput = GetChannelRmsLevel (0);
             }
             else if (audioMode == AudioMode.StereoLevel)
             {
-                rawInput = 0.5f * (AudioJack.instance.ChannelRmsLevels [audioIndex] + AudioJack.instance.ChannelRmsLevels [audioIndex + 1]);
+                rawInput = 0.5f * (GetChannelRmsLevel (0) + GetChannelRmsLevel (1));
             }
             else
             {
