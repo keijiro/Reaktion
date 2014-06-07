@@ -27,22 +27,49 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToLight)), CanEditMultipleObjects]
 public class ReaktorToLightEditor : Editor
 {
+    SerializedProperty propEnableIntensity;
     SerializedProperty propIntensityCurve;
+    SerializedProperty propEnableColor;
     SerializedProperty propColorGradient;
+
+    GUIContent labelIntensity;
+    GUIContent labelCurve;
+    GUIContent labelColor;
+    GUIContent labelGradient;
 
     void OnEnable()
     {
-        propIntensityCurve = serializedObject.FindProperty("intensityCurve");
-        propColorGradient  = serializedObject.FindProperty("colorGradient");
+        propEnableIntensity = serializedObject.FindProperty("enableIntensity");
+        propIntensityCurve  = serializedObject.FindProperty("intensityCurve");
+        propEnableColor     = serializedObject.FindProperty("enableColor");
+        propColorGradient   = serializedObject.FindProperty("colorGradient");
+
+        labelIntensity = new GUIContent("Intensity");
+        labelCurve     = new GUIContent("Curve");
+        labelColor     = new GUIContent("Color");
+        labelGradient  = new GUIContent("Gradient");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propIntensityCurve);
-        EditorGUILayout.PropertyField(propColorGradient);
+        bool shouldSpace =
+            propEnableIntensity.hasMultipleDifferentValues ||
+            propEnableIntensity.boolValue ||
+            propEnableColor.hasMultipleDifferentValues ||
+            propEnableColor.boolValue;
 
-        serializedObject.ApplyModifiedProperties ();
+        EditorGUILayout.PropertyField(propEnableIntensity, labelIntensity);
+        if (propEnableIntensity.hasMultipleDifferentValues || propEnableIntensity.boolValue)
+            EditorGUILayout.PropertyField(propIntensityCurve, labelCurve);
+
+        if (shouldSpace) EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propEnableColor, labelColor);
+        if (propEnableColor.hasMultipleDifferentValues || propEnableColor.boolValue)
+            EditorGUILayout.PropertyField(propColorGradient, labelGradient);
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

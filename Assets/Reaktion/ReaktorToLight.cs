@@ -25,7 +25,10 @@ using System.Collections;
 
 public class ReaktorToLight : MonoBehaviour
 {
-    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0.1f, 1, 0.5f);
+    public bool enableIntensity;
+    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    public bool enableColor;
     public Gradient colorGradient;
 
     Reaktor reaktor;
@@ -43,7 +46,9 @@ public class ReaktorToLight : MonoBehaviour
 
     void UpdateLight(float param)
     {
-        light.intensity = intensityCurve.Evaluate(param);
-        light.color = colorGradient.Evaluate(param);
+        if (enableIntensity)
+            light.intensity = intensityCurve.Evaluate(param);
+        if (enableColor)
+            light.color = colorGradient.Evaluate(param);
     }
 }
