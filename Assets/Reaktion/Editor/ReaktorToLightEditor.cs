@@ -30,24 +30,18 @@ public class ReaktorToLightEditor : Editor
     SerializedProperty propIntensityCurve;
     SerializedProperty propColorGradient;
 
-    GUIContent labelIntensity;
-    GUIContent labelColor;
-
     void OnEnable()
     {
         propIntensityCurve = serializedObject.FindProperty("intensityCurve");
         propColorGradient  = serializedObject.FindProperty("colorGradient");
-
-        labelIntensity = new GUIContent("Intensity Curve");
-        labelColor     = new GUIContent("Color Gradient");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propIntensityCurve, labelIntensity);
-        EditorGUILayout.PropertyField(propColorGradient, labelColor);
+        EditorGUILayout.PropertyField(propIntensityCurve);
+        EditorGUILayout.PropertyField(propColorGradient);
 
         serializedObject.ApplyModifiedProperties ();
     }
