@@ -27,53 +27,27 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToLight)), CanEditMultipleObjects]
 public class ReaktorToLightEditor : Editor
 {
-    SerializedProperty propEnableIntensity;
-    SerializedProperty propIntensityFrom;
-    SerializedProperty propIntensityTo;
-
-    SerializedProperty propEnableColor;
-    SerializedProperty propColorFrom;
-    SerializedProperty propColorTo;
+    SerializedProperty propIntensityCurve;
+    SerializedProperty propColorGradient;
 
     GUIContent labelIntensity;
     GUIContent labelColor;
-    GUIContent labelFrom;
-    GUIContent labelTo;
 
     void OnEnable()
     {
-        propEnableIntensity = serializedObject.FindProperty("enableIntensity");
-        propIntensityFrom   = serializedObject.FindProperty("intensityFrom");
-        propIntensityTo     = serializedObject.FindProperty("intensityTo");
+        propIntensityCurve = serializedObject.FindProperty("intensityCurve");
+        propColorGradient  = serializedObject.FindProperty("colorGradient");
 
-        propEnableColor     = serializedObject.FindProperty("enableColor");
-        propColorFrom       = serializedObject.FindProperty("colorFrom");
-        propColorTo         = serializedObject.FindProperty("colorTo");
-
-        labelIntensity = new GUIContent("Intensity");
-        labelColor     = new GUIContent("Color");
-        labelFrom      = new GUIContent("From");
-        labelTo        = new GUIContent("To");
+        labelIntensity = new GUIContent("Intensity Curve");
+        labelColor     = new GUIContent("Color Gradient");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propEnableIntensity, labelIntensity);
-        if (propEnableIntensity.hasMultipleDifferentValues || propEnableIntensity.boolValue)
-        {
-            EditorGUILayout.PropertyField(propIntensityFrom, labelFrom);
-            EditorGUILayout.PropertyField(propIntensityTo, labelTo);
-            EditorGUILayout.Space();
-        }
-
-        EditorGUILayout.PropertyField(propEnableColor, labelColor);
-        if (propEnableColor.hasMultipleDifferentValues || propEnableColor.boolValue)
-        {
-            EditorGUILayout.PropertyField(propColorFrom, labelFrom);
-            EditorGUILayout.PropertyField(propColorTo, labelTo);
-        }
+        EditorGUILayout.PropertyField(propIntensityCurve, labelIntensity);
+        EditorGUILayout.PropertyField(propColorGradient, labelColor);
 
         serializedObject.ApplyModifiedProperties ();
     }

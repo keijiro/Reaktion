@@ -25,13 +25,8 @@ using System.Collections;
 
 public class ReaktorToLight : MonoBehaviour
 {
-    public bool enableIntensity;
-    public float intensityFrom = 0.1f;
-    public float intensityTo = 0.5f;
-
-    public bool enableColor;
-    public Color colorFrom = Color.black;
-    public Color colorTo = Color.white;
+    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0.1f, 1, 0.5f);
+    public Gradient colorGradient;
 
     Reaktor reaktor;
 
@@ -48,10 +43,7 @@ public class ReaktorToLight : MonoBehaviour
 
     void UpdateLight(float param)
     {
-        if (enableIntensity)
-            light.intensity = Mathf.Lerp(intensityFrom, intensityTo, param);
-
-        if (enableColor)
-            light.color = Color.Lerp(colorFrom, colorTo, param);
+        light.intensity = intensityCurve.Evaluate(param);
+        light.color = colorGradient.Evaluate(param);
     }
 }
