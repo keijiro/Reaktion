@@ -210,6 +210,17 @@ public class AudioJack : MonoBehaviour
 
     void Update ()
     {
+		if (minimumInterval > 0.0f)
+        {
+            if (timer > 0.0f)
+            {
+                timer -= Time.deltaTime;
+                return;
+            }
+            while (timer <= 0.0f)
+                timer += minimumInterval;
+		}
+
         dftPointNumber = GetRecommendedDftPointNumber ();
         AudioJackSetDftPointNumber (analyzer, dftPointNumber);
         AudioJackSetOctaveBandType (analyzer, (uint)octaveBandType);
