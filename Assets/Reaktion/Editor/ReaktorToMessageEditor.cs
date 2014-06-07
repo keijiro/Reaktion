@@ -78,10 +78,7 @@ public class ReaktorToMessageEditor : Editor
         {
             EditorGUILayout.HelpBox ("Leave None to send messages to itself (loopback)", MessageType.None);
         }
-        else
-        {
-            propBroadcast.boolValue = EditorGUILayout.Toggle ("Broadcast", propBroadcast.boolValue);
-        }
+        propBroadcast.boolValue = EditorGUILayout.Toggle ("Broadcast", propBroadcast.boolValue);
         EditorGUILayout.Space ();
 
         // Trigger message.
