@@ -224,7 +224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &200722477
 Transform:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339349486
 Transform:
   m_ObjectHideFlags: 0
@@ -1245,10 +1245,64 @@ MonoBehaviour:
   targetName: _Color
   targetType: 0
   threshold: .5
-  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
-  colorTo: {r: 1, g: .433823526, b: .433823526, a: 0}
-  floatFrom: .899999976
-  floatTo: .100000001
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4278255360
+    key1:
+      serializedVersion: 2
+      rgba: 4278255615
+    key2:
+      serializedVersion: 2
+      rgba: 0
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 0, y: 0, z: 0, w: 0}
   textureLow: {fileID: 0}
@@ -1267,10 +1321,64 @@ MonoBehaviour:
   targetName: _Shininess
   targetType: 1
   threshold: .5
-  colorFrom: {r: 0, g: 0, b: 0, a: 1}
-  colorTo: {r: 1, g: 1, b: 1, a: 1}
-  floatFrom: .949999988
-  floatTo: .0500000007
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4294967295
+    key1:
+      serializedVersion: 2
+      rgba: 4294967295
+    key2:
+      serializedVersion: 2
+      rgba: 0
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: -.0164705887
+      value: .99090898
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1.02150869
+      value: .613927662
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 1, y: 1, z: 1, w: 1}
   textureLow: {fileID: 0}
@@ -2953,10 +3061,64 @@ MonoBehaviour:
   targetName: _MainTex
   targetType: 3
   threshold: .5
-  colorFrom: {r: 0, g: 0, b: 0, a: 1}
-  colorTo: {r: 1, g: 1, b: 1, a: 1}
-  floatFrom: 0
-  floatTo: 1
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4294967295
+    key1:
+      serializedVersion: 2
+      rgba: 4294967295
+    key2:
+      serializedVersion: 2
+      rgba: 0
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 1, y: 1, z: 1, w: 1}
   textureLow: {fileID: 2800000, guid: 381ae16dafc064fc987566c3b5b8e5a2, type: 3}
@@ -2975,10 +3137,64 @@ MonoBehaviour:
   targetName: _Color
   targetType: 0
   threshold: .5
-  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
-  colorTo: {r: .433823526, g: .437728167, b: 1, a: 0}
-  floatFrom: .899999976
-  floatTo: .100000001
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4278190335
+    key1:
+      serializedVersion: 2
+      rgba: 4294901760
+    key2:
+      serializedVersion: 2
+      rgba: 0
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 0, y: 0, z: 0, w: 0}
   textureLow: {fileID: 0}
@@ -3586,10 +3802,64 @@ MonoBehaviour:
   targetName: _Color
   targetType: 0
   threshold: .5
-  colorFrom: {r: .16911763, g: .16911763, b: .16911763, a: 0}
-  colorTo: {r: .433823526, g: 1, b: .578296065, a: 0}
-  floatFrom: .899999976
-  floatTo: .100000001
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4284835173
+    key1:
+      serializedVersion: 2
+      rgba: 4294967295
+    key2:
+      serializedVersion: 2
+      rgba: 16777215
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 0, y: 0, z: 0, w: 0}
   textureLow: {fileID: 0}
@@ -3635,10 +3905,64 @@ MonoBehaviour:
   targetName: _SpecColor
   targetType: 0
   threshold: .5
-  colorFrom: {r: .0758619308, g: 0, b: 1, a: 1}
-  colorTo: {r: 1, g: 1, b: 1, a: 1}
-  floatFrom: 0
-  floatTo: 1
+  colorGradient:
+    key0:
+      serializedVersion: 2
+      rgba: 4278190335
+    key1:
+      serializedVersion: 2
+      rgba: 4294967295
+    key2:
+      serializedVersion: 2
+      rgba: 0
+    key3:
+      serializedVersion: 2
+      rgba: 0
+    key4:
+      serializedVersion: 2
+      rgba: 0
+    key5:
+      serializedVersion: 2
+      rgba: 0
+    key6:
+      serializedVersion: 2
+      rgba: 0
+    key7:
+      serializedVersion: 2
+      rgba: 0
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  floatCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   vectorFrom: {x: 0, y: 0, z: 0, w: 0}
   vectorTo: {x: 1, y: 1, z: 1, w: 1}
   textureLow: {fileID: 0}

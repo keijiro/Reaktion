@@ -29,18 +29,11 @@ public class ReaktorToMaterialEditor : Editor
 {
     SerializedProperty propTargetType;
     SerializedProperty propTargetName;
-
     SerializedProperty propThreshold;
-
-    SerializedProperty propColorFrom;
-    SerializedProperty propColorTo;
-
-    SerializedProperty propFloatFrom;
-    SerializedProperty propFloatTo;
-
+    SerializedProperty propColorGradient;
+    SerializedProperty propFloatCurve;
     SerializedProperty propVectorFrom;
     SerializedProperty propVectorTo;
-
     SerializedProperty propTextureLow;
     SerializedProperty propTextureHigh;
 
@@ -51,22 +44,15 @@ public class ReaktorToMaterialEditor : Editor
 
     void OnEnable()
     {
-        propTargetType  = serializedObject.FindProperty("targetType");
-        propTargetName  = serializedObject.FindProperty("targetName");
-
-        propThreshold   = serializedObject.FindProperty("threshold");
-
-        propColorFrom   = serializedObject.FindProperty("colorFrom");
-        propColorTo     = serializedObject.FindProperty("colorTo");
-
-        propFloatFrom   = serializedObject.FindProperty("floatFrom");
-        propFloatTo     = serializedObject.FindProperty("floatTo");
-
-        propVectorFrom  = serializedObject.FindProperty("vectorFrom");
-        propVectorTo    = serializedObject.FindProperty("vectorTo");
-
-        propTextureLow  = serializedObject.FindProperty("textureLow");
-        propTextureHigh = serializedObject.FindProperty("textureHigh");
+        propTargetType    = serializedObject.FindProperty("targetType");
+        propTargetName    = serializedObject.FindProperty("targetName");
+        propThreshold     = serializedObject.FindProperty("threshold");
+        propColorGradient = serializedObject.FindProperty("colorGradient");
+        propFloatCurve    = serializedObject.FindProperty("floatCurve");
+        propVectorFrom    = serializedObject.FindProperty("vectorFrom");
+        propVectorTo      = serializedObject.FindProperty("vectorTo");
+        propTextureLow    = serializedObject.FindProperty("textureLow");
+        propTextureHigh   = serializedObject.FindProperty("textureHigh");
 
         labelFrom = new GUIContent("From");
         labelTo   = new GUIContent("To");
@@ -84,15 +70,13 @@ public class ReaktorToMaterialEditor : Editor
         if (!propTargetType.hasMultipleDifferentValues &&
             propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Color)
         {
-            EditorGUILayout.PropertyField(propColorFrom, labelFrom);
-            EditorGUILayout.PropertyField(propColorTo, labelTo);
+            EditorGUILayout.PropertyField(propColorGradient);
         }
 
         if (!propTargetType.hasMultipleDifferentValues &&
             propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Float)
         {
-            EditorGUILayout.PropertyField(propFloatFrom, labelFrom);
-            EditorGUILayout.PropertyField(propFloatTo, labelTo);
+            EditorGUILayout.PropertyField(propFloatCurve);
         }
 
         if (!propTargetType.hasMultipleDifferentValues &&
@@ -110,6 +94,6 @@ public class ReaktorToMaterialEditor : Editor
             EditorGUILayout.PropertyField(propTextureHigh, labelHigh);
         }
 
-        serializedObject.ApplyModifiedProperties ();
+        serializedObject.ApplyModifiedProperties();
     }
 }

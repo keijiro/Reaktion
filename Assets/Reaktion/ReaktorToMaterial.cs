@@ -32,11 +32,9 @@ public class ReaktorToMaterial : MonoBehaviour
 
     public float threshold = 0.5f;
 
-    public Color colorFrom = Color.black;
-    public Color colorTo = Color.white;
+    public Gradient colorGradient;
 
-    public float floatFrom = 0.0f;
-    public float floatTo = 1.0f;
+    public AnimationCurve floatCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public Vector4 vectorFrom = Vector4.zero;
     public Vector4 vectorTo = Vector4.one;
@@ -64,10 +62,10 @@ public class ReaktorToMaterial : MonoBehaviour
         switch (targetType)
         {
         case TargetType.Color:
-            material.SetColor(targetName, Color.Lerp(colorFrom, colorTo, param));
+            material.SetColor(targetName, colorGradient.Evaluate(param));
             break;
         case TargetType.Float:
-            material.SetFloat(targetName, Mathf.Lerp(floatFrom, floatTo, param));
+            material.SetFloat(targetName, floatCurve.Evaluate(param));
             break;
         case TargetType.Vector:
             material.SetVector(targetName, Vector4.Lerp(vectorFrom, vectorTo, param));
