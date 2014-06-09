@@ -69,13 +69,20 @@ public class ReaktionWindow : EditorWindow
 
     void FindAndCacheReaktors ()
     {
-        if (!EditorApplication.isPlaying || cachedReaktors == null ||
-            activeReaktorCount != Reaktor.ActiveInstanceCount)
+        // Cache validity check.
+        if (EditorApplication.isPlaying && cachedReaktors != null &&
+            activeReaktorCount == Reaktor.ActiveInstanceCount)
         {
-            cachedReaktors = FindObjectsOfType<Reaktor> ();
-            System.Array.Sort (cachedReaktors, CompareReaktor);
-            activeReaktorCount = Reaktor.ActiveInstanceCount;
+            bool validity = true;
+            foreach (var r in cachedReaktors) validity &= (r!= null);
+            // No update if the cache is valid.
+            if (validity) return;
         }
+
+        // Update the cache.
+        cachedReaktors = FindObjectsOfType<Reaktor> ();
+        System.Array.Sort (cachedReaktors, CompareReaktor);
+        activeReaktorCount = Reaktor.ActiveInstanceCount;
     }
 
     void OnGUI ()
