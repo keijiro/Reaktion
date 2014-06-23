@@ -28,8 +28,8 @@ using System.Collections;
 public class ReaktorEditor : Editor
 {
     // Audio input settings.
-    SerializedProperty propAudioMode;
-    SerializedProperty propAudioIndex;
+    SerializedProperty propAutoBind;
+    SerializedProperty propSource;
     SerializedProperty propAudioCurve;
 
     // Gain control.
@@ -58,12 +58,8 @@ public class ReaktorEditor : Editor
     SerializedProperty propFalldown;
 
     // String labels.
-    GUIContent labelAudioSource;
     GUIContent labelGainControl;
     GUIContent labelOffsetControl;
-    GUIContent labelIndex;
-    GUIContent labelChannel;
-    GUIContent labelBandIndex;
     GUIContent labelCurve;
     GUIContent labelMidiCC;
     GUIContent labelMidiChannel;
@@ -73,15 +69,6 @@ public class ReaktorEditor : Editor
     Texture2D[] barTextures;
 
     // UI contents.
-    static GUIContent[] sourceLabels = {
-        new GUIContent("No Input"),
-        new GUIContent("RMS Level (mono)"),
-        new GUIContent("RMS Level (L+R)"),
-        new GUIContent("Frequency Band")
-    };
-    static int[] sourceOptions = {
-        0, 1, 2, 3
-    };
     static GUIContent[] midiChannelLabels = {
         new GUIContent("Channel 1"),
         new GUIContent("Channel 2"),
@@ -109,8 +96,8 @@ public class ReaktorEditor : Editor
     void OnEnable()
     {
         // Audio input settings.
-        propAudioMode         = serializedObject.FindProperty("audioMode");
-        propAudioIndex        = serializedObject.FindProperty("audioIndex");
+        propAutoBind          = serializedObject.FindProperty("autoBind");
+        propSource            = serializedObject.FindProperty("source");
         propAudioCurve        = serializedObject.FindProperty("audioCurve");
 
         // Gain control.
@@ -139,12 +126,8 @@ public class ReaktorEditor : Editor
         propFalldown          = serializedObject.FindProperty("falldown");
 
         // String labels.
-        labelAudioSource   = new GUIContent("Audio Source");
         labelGainControl   = new GUIContent("Gain Control");
         labelOffsetControl = new GUIContent("Offset Control");
-        labelIndex         = new GUIContent("Index");
-        labelChannel       = new GUIContent("Channel");
-        labelBandIndex     = new GUIContent("Band Index");
         labelCurve         = new GUIContent("Curve");
         labelMidiCC        = new GUIContent("MIDI CC#");
         labelMidiChannel   = new GUIContent("MIDI Channel");
@@ -163,22 +146,6 @@ public class ReaktorEditor : Editor
         }
     }
 
-    GUIContent GetAudioIndexLabel()
-    {
-        if (propAudioMode.hasMultipleDifferentValues)
-        {
-            return labelIndex;
-        }
-        else if (propAudioMode.intValue == (int)Reaktor.AudioMode.SpecturmBand)
-        {
-            return labelBandIndex;
-        }
-        else
-        {
-            return labelChannel;
-        }
-    }
-
     // Shows the inspector.
     public override void OnInspectorGUI()
     {
@@ -186,29 +153,26 @@ public class ReaktorEditor : Editor
         serializedObject.Update();
 
         // Audio input settings.
-        EditorGUILayout.IntPopup(propAudioMode, sourceLabels, sourceOptions, labelAudioSource);
-        if (propAudioMode.hasMultipleDifferentValues || propAudioMode.intValue > 0)
-        {
-            EditorGUILayout.PropertyField(propAudioIndex, GetAudioIndexLabel());
-            EditorGUILayout.PropertyField(propAudioCurve, labelCurve);
-        }
+        EditorGUILayout.PropertyField(propAutoBind);
+
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propSource);
+
+        EditorGUILayout.PropertyField(propAudioCurve, labelCurve);
 
         var shouldInsertSpace = propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue ||
                                 propOffsetEnabled.hasMultipleDifferentValues || propOffsetEnabled.boolValue;
 
         // Gain control.
-        if (propAudioMode.hasMultipleDifferentValues || propAudioMode.intValue > 0)
-        {
-            if (shouldInsertSpace) EditorGUILayout.Space();
+        if (shouldInsertSpace) EditorGUILayout.Space();
 
-            EditorGUILayout.PropertyField(propGainEnabled, labelGainControl);
-            if (propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue)
-            {
-                EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
-                EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
-                EditorGUILayout.PropertyField(propGainInputAxis, labelInputAxis);
-                EditorGUILayout.PropertyField(propGainCurve, labelCurve);
-            }
+        EditorGUILayout.PropertyField(propGainEnabled, labelGainControl);
+        if (propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue)
+        {
+            EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
+            EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            EditorGUILayout.PropertyField(propGainInputAxis, labelInputAxis);
+            EditorGUILayout.PropertyField(propGainCurve, labelCurve);
         }
 
         // Offset control.
@@ -255,20 +219,17 @@ public class ReaktorEditor : Editor
         }
 
         // Audio input options.
-        if (propAudioMode.hasMultipleDifferentValues || propAudioMode.intValue > 0)
+        if (!propShowAudioOptions.hasMultipleDifferentValues)
         {
-            if (!propShowAudioOptions.hasMultipleDifferentValues)
-            {
-                propShowAudioOptions.boolValue = EditorGUILayout.Foldout(propShowAudioOptions.boolValue, "Audio Input Options");
-            }
+            propShowAudioOptions.boolValue = EditorGUILayout.Foldout(propShowAudioOptions.boolValue, "Audio Input Options");
+        }
 
-            if (propShowAudioOptions.hasMultipleDifferentValues || propShowAudioOptions.boolValue)
-            {
-                EditorGUILayout.Slider(propHeadroom, 0.0f, 20.0f, "Headroom [dB]");
-                EditorGUILayout.Slider(propDynamicRange, 1.0f, 60.0f, "Dynamic Range [dB]");
-                EditorGUILayout.Slider(propLowerBound, -100.0f, -10.0f, "Lower Bound [dB]");
-                EditorGUILayout.Slider(propFalldown, 0.0f, 10.0f, "Falldown [dB/Sec]");
-            }
+        if (propShowAudioOptions.hasMultipleDifferentValues || propShowAudioOptions.boolValue)
+        {
+            EditorGUILayout.Slider(propHeadroom, 0.0f, 20.0f, "Headroom [dB]");
+            EditorGUILayout.Slider(propDynamicRange, 1.0f, 60.0f, "Dynamic Range [dB]");
+            EditorGUILayout.Slider(propLowerBound, -100.0f, -10.0f, "Lower Bound [dB]");
+            EditorGUILayout.Slider(propFalldown, 0.0f, 10.0f, "Falldown [dB/Sec]");
         }
 
         // Apply modifications.

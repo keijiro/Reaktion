@@ -251,8 +251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 328707819}
   - 114: {fileID: 328707818}
+  - 114: {fileID: 328707820}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -440,16 +441,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 328707817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e348696e07834f7eaf63f425358adeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 233880db483cd48d49a6c8f99785b36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  octaveBandType: 3
-  channelToAnalyze: 0
-  channelSelect: 1
-  minimumInterval: 0
-  useAudioListener: 0
-  showLevels: 1
-  showSpectrum: 1
 --- !u!4 &328707819
 Transform:
   m_ObjectHideFlags: 0
@@ -462,6 +456,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &328707820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 328707817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ea4934aecd74a0ba1244d2dee655d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mute: 1
 --- !u!1 &339349485
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,8 +510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -593,8 +599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -2873,8 +2879,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -2989,8 +2995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3078,8 +3084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3619,8 +3625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3748,8 +3754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4339,8 +4345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4462,8 +4468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 1
-  audioIndex: 0
+  autoBind: 1
+  source: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:

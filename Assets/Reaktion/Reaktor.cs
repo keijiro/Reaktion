@@ -27,16 +27,8 @@ public class Reaktor : MonoBehaviour
 {
     #region Audio input settings
 
-    public enum AudioMode
-    {
-        NoInput,
-        MonoLevel,
-        StereoLevel,
-        SpecturmBand
-    }
-
-    public AudioMode audioMode = AudioMode.SpecturmBand;
-    public int audioIndex = 1;
+    public bool autoBind = true;
+    public ReaktorSource source;
     public AnimationCurve audioCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -131,18 +123,24 @@ public class Reaktor : MonoBehaviour
 
     static int activeInstanceCount;
 
-    float GetChannelRmsLevel(int channelOffset)
-    {
-        var ch = (channelOffset + audioIndex) % AudioJack.instance.ChannelRmsLevels.Length;
-        return AudioJack.instance.ChannelRmsLevels [ch];
-    }
-
     #endregion
 
     #region MonoBehaviour functions
 
     void Start ()
     {
+        // Search for a Reaktor source.
+        if (autoBind)
+        {
+            source = GetComponentInChildren<ReaktorSource>();
+            if (source == null)
+            {
+                source = GetComponentInParent<ReaktorSource>();
+                if (source == null)
+                    source= FindObjectOfType<ReaktorSource>();
+            }
+        }
+
         // Begins with the lowest level.
         peak = lowerBound + dynamicRange + headroom;
         rawInput = -1e12f;
@@ -154,29 +152,15 @@ public class Reaktor : MonoBehaviour
         float input = 0.0f;
 
         // Audio input.
-        if (audioMode != AudioMode.NoInput)
-        {
-            if (audioMode == AudioMode.MonoLevel)
-            {
-                rawInput = GetChannelRmsLevel (0);
-            }
-            else if (audioMode == AudioMode.StereoLevel)
-            {
-                rawInput = 0.5f * (GetChannelRmsLevel (0) + GetChannelRmsLevel (1));
-            }
-            else
-            {
-                rawInput = AudioJack.instance.OctaveBandSpectrum [audioIndex];
-            }
+        rawInput = source ? source.DbLevel : -1e12f;
 
-            // Check the peak level.
-            peak -= Time.deltaTime * falldown;
-            peak = Mathf.Max (peak, Mathf.Max (rawInput, lowerBound + dynamicRange + headroom));
-            
-            // Normalize the input level.
-            input = (rawInput - peak + headroom + dynamicRange) / dynamicRange;
-            input = audioCurve.Evaluate (Mathf.Clamp01 (input));
-        }
+        // Check the peak level.
+        peak -= Time.deltaTime * falldown;
+        peak = Mathf.Max (peak, Mathf.Max (rawInput, lowerBound + dynamicRange + headroom));
+        
+        // Normalize the input level.
+        input = (rawInput - peak + headroom + dynamicRange) / dynamicRange;
+        input = audioCurve.Evaluate (Mathf.Clamp01 (input));
 
         // MIDI CC input.
         if (gainEnabled)
