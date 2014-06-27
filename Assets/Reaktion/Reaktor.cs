@@ -233,14 +233,9 @@ public class Reaktor : MonoBehaviour
         var r = go.GetComponent<Reaktor> ();
         if (r) return r;
 
-        // Look for a Reaktor component within the upper hierarchy.
-        for (var t = go.transform.parent; t != null; t = t.parent)
-        {
-            r = t.GetComponent<Reaktor> ();
-            if (r) return r;
-        }
+        r = go.GetComponentInParent<Reaktor> ();
+        if (r) return r;
 
-        // Search the lower hierarchy.
         r = go.GetComponentInChildren<Reaktor> ();
         return r;
     }
