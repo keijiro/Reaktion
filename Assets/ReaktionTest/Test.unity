@@ -450,7 +450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339349486
 Transform:
   m_ObjectHideFlags: 0
@@ -2900,7 +2900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1218292059
 Transform:
   m_ObjectHideFlags: 0
@@ -3145,7 +3145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpeed: 0
-  maxSpeed: 1
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -3163,6 +3162,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   enableTrigger: 1
   triggerThreshold: .899999976
+  triggerInterval: .400000006
   triggerName: Jump
 --- !u!1 &1337910071
 GameObject:
@@ -4145,34 +4145,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpeed: 1
-  maxSpeed: 8
   speedCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -.0333333351
-      value: .0440624952
+    - time: .000263899565
+      value: .504560709
       inSlope: 0
-      outSlope: .157830879
+      outSlope: 2.49198294
       tangentMode: 21
-    - time: .574059844
-      value: .139927894
-      inSlope: .157830879
-      outSlope: 2.89141726
+    - time: .599869668
+      value: 1.99876809
+      inSlope: 2.49198294
+      outSlope: 19.9848289
       tangentMode: 21
-    - time: .869617462
-      value: .994508266
-      inSlope: 2.89141726
-      outSlope: .0421201624
-      tangentMode: 21
-    - time: 1
-      value: 1
-      inSlope: .0421201624
-      outSlope: 0
+    - time: .900195658
+      value: 8.00073147
+      inSlope: 19.9848289
+      outSlope: .0421165042
       tangentMode: 21
     m_PreInfinity: 2
     m_PostInfinity: 2
   enableTrigger: 0
   triggerThreshold: .899999976
+  triggerInterval: .100000001
   triggerName: 
 --- !u!95 &1782383568
 Animator:
@@ -4352,7 +4347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1929463375
 Transform:
   m_ObjectHideFlags: 0

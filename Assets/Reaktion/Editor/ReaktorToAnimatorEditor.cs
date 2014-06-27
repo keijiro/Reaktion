@@ -24,63 +24,61 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToAnimator))]
+[CustomEditor(typeof(ReaktorToAnimator)), CanEditMultipleObjects]
 public class ReaktorToAnimatorEditor : Editor
 {
-    #region References to the properties
-
-    // Speed control.
     SerializedProperty propEnableSpeed;
-    SerializedProperty propMaxSpeed;
     SerializedProperty propSpeedCurve;
 
-    // Trigger control.
     SerializedProperty propEnableTrigger;
     SerializedProperty propTriggerThreshold;
+    SerializedProperty propTriggerInterval;
     SerializedProperty propTriggerName;
 
-    #endregion
+    GUIContent labelSpeed;
+    GUIContent labelCurve;
+    GUIContent labelTrigger;
+    GUIContent labelThreshold;
+    GUIContent labelInterval;
 
-    #region Editor functions
-
-    void OnEnable ()
+    void OnEnable()
     {
-        // Speed control.
-        propEnableSpeed = serializedObject.FindProperty ("enableSpeed");
-        propMaxSpeed = serializedObject.FindProperty ("maxSpeed");
-        propSpeedCurve = serializedObject.FindProperty ("speedCurve");
+        propEnableSpeed = serializedObject.FindProperty("enableSpeed");
+        propSpeedCurve  = serializedObject.FindProperty("speedCurve");
 
-        // Trigger control.
-        propEnableTrigger = serializedObject.FindProperty ("enableTrigger");
-        propTriggerThreshold = serializedObject.FindProperty ("triggerThreshold");
-        propTriggerName = serializedObject.FindProperty ("triggerName");
+        propEnableTrigger    = serializedObject.FindProperty("enableTrigger");
+        propTriggerThreshold = serializedObject.FindProperty("triggerThreshold");
+        propTriggerInterval  = serializedObject.FindProperty("triggerInterval");
+        propTriggerName      = serializedObject.FindProperty("triggerName");
+
+        labelSpeed     = new GUIContent("Speed");
+        labelCurve     = new GUIContent("Curve");
+        labelTrigger   = new GUIContent("Trigger");
+        labelThreshold = new GUIContent("Threshold");
+        labelInterval  = new GUIContent("Minimum Interval");
     }
 
-    public override void OnInspectorGUI ()
+    public override void OnInspectorGUI()
     {
-        // Update the properties.
-        serializedObject.Update ();
+        serializedObject.Update();
         
-        // Speed control.
-        propEnableSpeed.boolValue = EditorGUILayout.Toggle ("Speed Control", propEnableSpeed.boolValue);
-        if (propEnableSpeed.boolValue)
+        EditorGUILayout.PropertyField(propEnableSpeed, labelSpeed);
+
+        if (propEnableSpeed.hasMultipleDifferentValues || propEnableSpeed.boolValue)
         {
-            propMaxSpeed.floatValue = EditorGUILayout.FloatField ("Max Speed", propMaxSpeed.floatValue);
-            propSpeedCurve.animationCurveValue = EditorGUILayout.CurveField ("Speed Curve", propSpeedCurve.animationCurveValue);
-            EditorGUILayout.Space ();
+            EditorGUILayout.PropertyField(propSpeedCurve, labelCurve);
+            EditorGUILayout.Space();
         }
 
-        // Trigger control.
-        propEnableTrigger.boolValue = EditorGUILayout.Toggle ("Trigger", propEnableTrigger.boolValue);
-        if (propEnableTrigger.boolValue)
+        EditorGUILayout.PropertyField(propEnableTrigger, labelTrigger);
+
+        if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
         {
-            EditorGUILayout.Slider (propTriggerThreshold, 0.0f, 1.0f, "Threshold");
-            propTriggerName.stringValue = EditorGUILayout.TextField ("Trigger Name", propTriggerName.stringValue);
+            EditorGUILayout.Slider(propTriggerThreshold, 0.0f, 1.0f, labelThreshold);
+            EditorGUILayout.PropertyField(propTriggerInterval, labelInterval);
+            EditorGUILayout.PropertyField(propTriggerName);
         }
 
-        // Apply modifications.
-        serializedObject.ApplyModifiedProperties ();
+        serializedObject.ApplyModifiedProperties();
     }
-
-    #endregion
 }

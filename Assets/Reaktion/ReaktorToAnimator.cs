@@ -25,53 +25,40 @@ using System.Collections;
 
 public class ReaktorToAnimator : MonoBehaviour
 {
-    #region Public properties
-
-    // Speed control.
     public bool enableSpeed;
-    public float maxSpeed = 1.0f;
-    public AnimationCurve speedCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    // Trigger control.
     public bool enableTrigger;
     public float triggerThreshold = 0.9f;
+    public float triggerInterval = 0.1f;
     public string triggerName;
-
-    #endregion
-
-    #region Private variables
 
     Reaktor reaktor;
     Animator animator;
-    float previousOutput;
+    float triggerTimer;
 
-    #endregion
-
-    #region MonoBehaviour functions
-
-    void Start ()
+    void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom (gameObject);
-        animator = GetComponent<Animator> ();
+        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        animator = GetComponent<Animator>();
     }
 
-    void Update ()
+    void Update()
     {
+        if (enableSpeed)
+            animator.speed = speedCurve.Evaluate(reaktor.Output);
+
         if (enableTrigger)
         {
-            if (previousOutput < triggerThreshold && reaktor.Output >= triggerThreshold)
+            if (triggerTimer <= 0.0f && reaktor.Output >= triggerThreshold)
             {
-                animator.SetTrigger (triggerName);
+                animator.SetTrigger(triggerName);
+                triggerTimer = triggerInterval;
+            }
+            else
+            {
+                triggerTimer -= Time.deltaTime;
             }
         }
-
-        if (enableSpeed)
-        {
-            animator.speed = maxSpeed * speedCurve.Evaluate (reaktor.Output);
-        }
-
-        previousOutput = reaktor.Output;
     }
-
-    #endregion
 }
