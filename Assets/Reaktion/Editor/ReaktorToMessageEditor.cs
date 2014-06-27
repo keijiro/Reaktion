@@ -24,84 +24,76 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToMessage))]
+[CustomEditor(typeof(ReaktorToMessage)), CanEditMultipleObjects]
 public class ReaktorToMessageEditor : Editor
 {
-    #region References to the properties
-
-    // Target settings.
     SerializedProperty propTarget;
     SerializedProperty propBroadcast;
 
-    // Trigger message.
     SerializedProperty propEnableTrigger;
     SerializedProperty propTriggerThreshold;
     SerializedProperty propTriggerInterval;
     SerializedProperty propTriggerMessage;
     
-    // Input message.
     SerializedProperty propEnableInput;
     SerializedProperty propInputCurve;
     SerializedProperty propMaxInput;
     SerializedProperty propInputMessage;
 
-    #endregion
+    GUIContent labelSendTo;
+    GUIContent labelTriggerMessage;
+    GUIContent labelInputMessage;
+    GUIContent labelMessage;
+    GUIContent labelCurve;
 
-    #region Editor functions
-
-    void OnEnable ()
+    void OnEnable()
     {
-        // Target settings.
-        propTarget = serializedObject.FindProperty ("target");
-        propBroadcast = serializedObject.FindProperty ("broadcast");
+        propTarget    = serializedObject.FindProperty("target");
+        propBroadcast = serializedObject.FindProperty("broadcast");
 
-        // Trigger message.
-        propEnableTrigger = serializedObject.FindProperty ("enableTrigger");
-        propTriggerThreshold = serializedObject.FindProperty ("triggerThreshold");
-        propTriggerInterval = serializedObject.FindProperty ("triggerInterval");
-        propTriggerMessage = serializedObject.FindProperty ("triggerMessage");
+        propEnableTrigger    = serializedObject.FindProperty("enableTrigger");
+        propTriggerThreshold = serializedObject.FindProperty("triggerThreshold");
+        propTriggerInterval  = serializedObject.FindProperty("triggerInterval");
+        propTriggerMessage   = serializedObject.FindProperty("triggerMessage");
 
-        // Input message.
-        propEnableInput = serializedObject.FindProperty ("enableInput");
-        propInputCurve = serializedObject.FindProperty ("inputCurve");
-        propInputMessage = serializedObject.FindProperty ("inputMessage");
+        propEnableInput  = serializedObject.FindProperty("enableInput");
+        propInputCurve   = serializedObject.FindProperty("inputCurve");
+        propInputMessage = serializedObject.FindProperty("inputMessage");
+
+        labelSendTo         = new GUIContent("Send To");
+        labelTriggerMessage = new GUIContent("Trigger Message");
+        labelInputMessage   = new GUIContent("Input Message");
+        labelMessage        = new GUIContent("Message");
+        labelCurve          = new GUIContent("Curve");
     }
 
-    public override void OnInspectorGUI ()
+    public override void OnInspectorGUI()
     {
-        // Update the references.
-        serializedObject.Update ();
+        serializedObject.Update();
 
-        // Target settings.
-        propTarget.objectReferenceValue = EditorGUILayout.ObjectField ("Send To", propTarget.objectReferenceValue, typeof(GameObject), true);
+        EditorGUILayout.PropertyField(propTarget, labelSendTo);
+        EditorGUILayout.PropertyField(propBroadcast);
         if (propTarget.objectReferenceValue == null)
-        {
-            EditorGUILayout.HelpBox ("Leave None to send messages to itself (loopback)", MessageType.None);
-        }
-        propBroadcast.boolValue = EditorGUILayout.Toggle ("Broadcast", propBroadcast.boolValue);
-        EditorGUILayout.Space ();
+            EditorGUILayout.HelpBox("Leave None to send messages to itself (loopback)", MessageType.None);
 
-        // Trigger message.
-        propEnableTrigger.boolValue = EditorGUILayout.Toggle ("Trigger Message", propEnableTrigger.boolValue);
-        if (propEnableTrigger.boolValue)
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propEnableTrigger, labelTriggerMessage);
+        if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
         {
-            EditorGUILayout.Slider (propTriggerThreshold, 0.0f, 1.0f, "Threahold");
-            EditorGUILayout.Slider (propTriggerInterval, 0.0f, 1.0f, "Interval");
-            propTriggerMessage.stringValue = EditorGUILayout.TextField ("Message", propTriggerMessage.stringValue);
-            EditorGUILayout.Space ();
-        }
-        
-        // Input message.
-        propEnableInput.boolValue = EditorGUILayout.Toggle ("Input Message", propEnableInput.boolValue);
-        if (propEnableInput.boolValue)
-        {
-            propInputCurve.animationCurveValue = EditorGUILayout.CurveField ("Input Curve", propInputCurve.animationCurveValue);
-            propInputMessage.stringValue = EditorGUILayout.TextField ("Message", propInputMessage.stringValue);
+            EditorGUILayout.Slider(propTriggerThreshold, 0.0f, 1.0f, "Threahold");
+            EditorGUILayout.Slider(propTriggerInterval, 0.0f, 1.0f, "Interval");
+            EditorGUILayout.PropertyField(propTriggerMessage, labelMessage);
+            EditorGUILayout.Space();
         }
 
-        // Apply modifications.
-        serializedObject.ApplyModifiedProperties ();
+        EditorGUILayout.PropertyField(propEnableInput, labelInputMessage);
+        if (propEnableInput.hasMultipleDifferentValues || propEnableInput.boolValue)
+        {
+            EditorGUILayout.PropertyField(propInputCurve, labelCurve);
+            EditorGUILayout.PropertyField(propInputMessage, labelMessage);
+        }
+
+        serializedObject.ApplyModifiedProperties();
     }
-
-    #endregion
 }

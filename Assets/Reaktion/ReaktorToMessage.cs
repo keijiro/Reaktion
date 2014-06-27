@@ -25,14 +25,6 @@ using System.Collections;
 
 public class ReaktorToMessage : MonoBehaviour
 {
-    #region Public properties
-
-    const float MinValue = 1e-6f;
-
-    #endregion
-
-    #region Public properties
-
     // Target settings.
     public GameObject target;
     public bool broadcast;
@@ -45,64 +37,56 @@ public class ReaktorToMessage : MonoBehaviour
     
     // Input message.
     public bool enableInput;
-    public AnimationCurve inputCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve inputCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public string inputMessage = "OnReaktorInput";
 
-    #endregion
-
-    #region Private variables
-
     Reaktor reaktor;
-    float previousOutput = MinValue;
+    float previousOutput;
     float triggerTimer;
 
-    #endregion
-
-    #region MonoBehaviour functions
-
-    void Start ()
+    void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom (gameObject);
+        reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
-    void Update ()
+    void Update()
     {
         var sendTo = (target == null) ? gameObject : target;
-        var level = Mathf.Max (reaktor.Output, MinValue);
 
         // Trigger message.
         if (enableTrigger)
         {
-            if (triggerTimer > triggerInterval && previousOutput < triggerThreshold && level >= triggerThreshold)
+            if (triggerTimer <= 0 && reaktor.Output >= triggerThreshold && previousOutput < triggerThreshold)
             {
                 if (broadcast)
                 {
-                    sendTo.BroadcastMessage (triggerMessage, true);
+                    sendTo.BroadcastMessage(triggerMessage, true);
                 }
                 else
                 {
-                    sendTo.SendMessage (triggerMessage, true);
+                    sendTo.SendMessage(triggerMessage, true);
                 }
-                triggerTimer = 0.0f;
+                triggerTimer = triggerInterval;
+            }
+            else
+            {
+                triggerTimer -= Time.deltaTime;
             }
         }
         
         // Input message.
-        if (enableInput && level != previousOutput)
+        if (enableInput && reaktor.Output != previousOutput)
         {
             if (broadcast)
             {
-                sendTo.BroadcastMessage (inputMessage, inputCurve.Evaluate (level));
+                sendTo.BroadcastMessage(inputMessage, inputCurve.Evaluate(reaktor.Output));
             }
             else
             {
-                sendTo.SendMessage (inputMessage, inputCurve.Evaluate (level));
+                sendTo.SendMessage(inputMessage, inputCurve.Evaluate(reaktor.Output));
             }
         }
 
-        previousOutput = level;
-        triggerTimer += Time.deltaTime;
+        previousOutput = reaktor.Output;
     }
-
-    #endregion
 }
