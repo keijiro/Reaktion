@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToAnimator)), CanEditMultipleObjects]
 public class ReaktorToAnimatorEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propEnableSpeed;
     SerializedProperty propSpeedCurve;
 
@@ -43,6 +46,9 @@ public class ReaktorToAnimatorEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
         propEnableSpeed = serializedObject.FindProperty("enableSpeed");
         propSpeedCurve  = serializedObject.FindProperty("speedCurve");
 
@@ -62,13 +68,19 @@ public class ReaktorToAnimatorEditor : Editor
     {
         serializedObject.Update();
         
+        EditorGUILayout.PropertyField(propAutoBind);
+
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.Space();
+
         EditorGUILayout.PropertyField(propEnableSpeed, labelSpeed);
 
         if (propEnableSpeed.hasMultipleDifferentValues || propEnableSpeed.boolValue)
-        {
             EditorGUILayout.PropertyField(propSpeedCurve, labelCurve);
-            EditorGUILayout.Space();
-        }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableTrigger, labelTrigger);
 

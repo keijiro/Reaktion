@@ -27,6 +27,8 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToLight)), CanEditMultipleObjects]
 public class ReaktorToLightEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
     SerializedProperty propEnableIntensity;
     SerializedProperty propIntensityCurve;
     SerializedProperty propEnableColor;
@@ -39,6 +41,8 @@ public class ReaktorToLightEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind        = serializedObject.FindProperty("autoBind");
+        propReaktor         = serializedObject.FindProperty("reaktor");
         propEnableIntensity = serializedObject.FindProperty("enableIntensity");
         propIntensityCurve  = serializedObject.FindProperty("intensityCurve");
         propEnableColor     = serializedObject.FindProperty("enableColor");
@@ -54,17 +58,17 @@ public class ReaktorToLightEditor : Editor
     {
         serializedObject.Update();
 
-        bool shouldSpace =
-            propEnableIntensity.hasMultipleDifferentValues ||
-            propEnableIntensity.boolValue ||
-            propEnableColor.hasMultipleDifferentValues ||
-            propEnableColor.boolValue;
+        EditorGUILayout.PropertyField(propAutoBind);
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableIntensity, labelIntensity);
         if (propEnableIntensity.hasMultipleDifferentValues || propEnableIntensity.boolValue)
             EditorGUILayout.PropertyField(propIntensityCurve, labelCurve);
 
-        if (shouldSpace) EditorGUILayout.Space();
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableColor, labelColor);
         if (propEnableColor.hasMultipleDifferentValues || propEnableColor.boolValue)

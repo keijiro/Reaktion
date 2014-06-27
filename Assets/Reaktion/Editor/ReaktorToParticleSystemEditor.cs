@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToParticleSystem)), CanEditMultipleObjects]
 public class ReaktorToParticleSystemEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propEnableBurst;
     SerializedProperty propBurstThreshold;
     SerializedProperty propBurstInterval;
@@ -42,6 +45,9 @@ public class ReaktorToParticleSystemEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
         propEnableBurst         = serializedObject.FindProperty("enableBurst");
         propBurstThreshold      = serializedObject.FindProperty("burstThreshold");
         propBurstInterval       = serializedObject.FindProperty("burstInterval");
@@ -60,14 +66,21 @@ public class ReaktorToParticleSystemEditor : Editor
     {
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(propAutoBind);
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.Space();
+
         EditorGUILayout.PropertyField(propEnableBurst, labelBurst);
         if (propEnableBurst.boolValue || propEnableBurst.hasMultipleDifferentValues)
         {
             EditorGUILayout.Slider(propBurstThreshold, 0.0f, 1.0f, "Threshold");
             EditorGUILayout.Slider(propBurstInterval, 0.0f, 1.0f, "Interval");
             EditorGUILayout.PropertyField(propBurstEmissionNumber, labelParticles);
-            EditorGUILayout.Space();
         }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableEmissionRate, labelEmissionRate);
         if (propEnableEmissionRate.boolValue || propEnableEmissionRate.hasMultipleDifferentValues)

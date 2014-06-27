@@ -27,6 +27,9 @@ public class ReaktorToMaterial : MonoBehaviour
 {
     public enum TargetType { Color, Float, Vector, Texture }
 
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public string targetName = "_Color";
     public TargetType targetType = TargetType.Color;
 
@@ -42,13 +45,15 @@ public class ReaktorToMaterial : MonoBehaviour
     public Texture textureLow;
     public Texture textureHigh;
 
-    Reaktor reaktor;
     Material material;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+
         material = renderer.material;
+
         UpdateMaterial(0);
     }
 

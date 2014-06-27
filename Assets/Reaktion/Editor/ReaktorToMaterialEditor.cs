@@ -27,6 +27,8 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToMaterial)), CanEditMultipleObjects]
 public class ReaktorToMaterialEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
     SerializedProperty propTargetType;
     SerializedProperty propTargetName;
     SerializedProperty propThreshold;
@@ -44,6 +46,8 @@ public class ReaktorToMaterialEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind      = serializedObject.FindProperty("autoBind");
+        propReaktor       = serializedObject.FindProperty("reaktor");
         propTargetType    = serializedObject.FindProperty("targetType");
         propTargetName    = serializedObject.FindProperty("targetName");
         propThreshold     = serializedObject.FindProperty("threshold");
@@ -63,6 +67,10 @@ public class ReaktorToMaterialEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        EditorGUILayout.PropertyField(propAutoBind);
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propTargetType);
         EditorGUILayout.PropertyField(propTargetName);

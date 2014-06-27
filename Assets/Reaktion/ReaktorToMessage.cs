@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToMessage : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     // Target settings.
     public GameObject target;
     public bool broadcast;
@@ -40,13 +43,13 @@ public class ReaktorToMessage : MonoBehaviour
     public AnimationCurve inputCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public string inputMessage = "OnReaktorInput";
 
-    Reaktor reaktor;
     float previousOutput;
     float triggerTimer;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
     void Update()

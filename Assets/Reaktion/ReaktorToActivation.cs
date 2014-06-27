@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToActivation : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public enum TargetType { GameObject, Component };
     public TargetType targetType;
     public GameObject[] targetGameObjects;
@@ -34,13 +37,14 @@ public class ReaktorToActivation : MonoBehaviour
     public float interval = 0.1f;
     public bool invert;
     
-    Reaktor reaktor;
     bool previousState;
     float timer;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+
         SwitchTargetState(false);
     }
 	

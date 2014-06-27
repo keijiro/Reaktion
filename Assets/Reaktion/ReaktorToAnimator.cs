@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToAnimator : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public bool enableSpeed;
     public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
@@ -33,7 +36,6 @@ public class ReaktorToAnimator : MonoBehaviour
     public float triggerInterval = 0.1f;
     public string triggerName;
 
-    Reaktor reaktor;
     Animator animator;
 
     float previousOutput;
@@ -41,7 +43,8 @@ public class ReaktorToAnimator : MonoBehaviour
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
         animator = GetComponent<Animator>();
     }
 

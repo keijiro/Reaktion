@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToMovement)), CanEditMultipleObjects]
 public class ReaktorToMovementEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propEnableTranslation;
     SerializedProperty propTranslationVector;
     SerializedProperty propVelocityCurve;
@@ -46,6 +49,9 @@ public class ReaktorToMovementEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
         propEnableTranslation = serializedObject.FindProperty("enableTranslation");
         propTranslationVector = serializedObject.FindProperty("translationVector");
         propVelocityCurve     = serializedObject.FindProperty("velocityCurve");
@@ -68,9 +74,14 @@ public class ReaktorToMovementEditor : Editor
     {
         serializedObject.Update();
 
-        bool shouldSpace = 
-            propEnableTranslation.hasMultipleDifferentValues ||
-            propEnableTranslation.boolValue || propEnableRotation.boolValue;
+        EditorGUILayout.PropertyField(propAutoBind);
+
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.PropertyField(propUseLocal, labelUseLocal);
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableTranslation, labelTranslation);
         if (propEnableTranslation.hasMultipleDifferentValues || propEnableTranslation.boolValue)
@@ -79,7 +90,7 @@ public class ReaktorToMovementEditor : Editor
             EditorGUILayout.PropertyField(propVelocityCurve, labelVelocityCurve);
         }
 
-        if (shouldSpace) EditorGUILayout.Space();
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableRotation, labelRotation);
         if (propEnableRotation.hasMultipleDifferentValues || propEnableRotation.boolValue)
@@ -87,10 +98,6 @@ public class ReaktorToMovementEditor : Editor
             EditorGUILayout.PropertyField(propRotationAxis, labelAxis);
             EditorGUILayout.PropertyField(propAngularVelocityCurve, labelVelocityCurve);
         }
-
-        if (shouldSpace) EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propUseLocal, labelUseLocal);
 
         serializedObject.ApplyModifiedProperties();
     }

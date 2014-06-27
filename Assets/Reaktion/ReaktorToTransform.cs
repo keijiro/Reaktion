@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToTransform : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public bool enableTranslation;
     public Vector3 translationVector = Vector3.up;
     public AnimationCurve translationCurve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -37,15 +40,14 @@ public class ReaktorToTransform : MonoBehaviour
     public Vector3 scalingVector = Vector3.one;
     public AnimationCurve scalingCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    Reaktor reaktor;
-
     Vector3 initialPosition;
     Quaternion initialRotation;
     Vector3 initialScale;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom (gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
     void Start()

@@ -27,6 +27,8 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToActivation)), CanEditMultipleObjects]
 public class ReaktorToActivationEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
     SerializedProperty propTargetType;
     SerializedProperty propTargetGameObjects;
     SerializedProperty propTargetComponents;
@@ -41,6 +43,8 @@ public class ReaktorToActivationEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind          = serializedObject.FindProperty("autoBind");
+        propReaktor           = serializedObject.FindProperty("reaktor");
         propTargetType        = serializedObject.FindProperty("targetType");
         propTargetGameObjects = serializedObject.FindProperty("targetGameObjects");
         propTargetComponents  = serializedObject.FindProperty("targetComponents");
@@ -58,6 +62,11 @@ public class ReaktorToActivationEditor : Editor
     {
         serializedObject.Update ();
 
+        EditorGUILayout.PropertyField(propAutoBind);
+
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
         EditorGUILayout.PropertyField(propTargetType, labelTargetType);
 
         if (propTargetType.hasMultipleDifferentValues)
@@ -73,8 +82,6 @@ public class ReaktorToActivationEditor : Editor
         {
             EditorGUILayout.PropertyField(propTargetComponents, labelTargetList, true);
         }
-
-        EditorGUILayout.Space();
 
         EditorGUILayout.Slider(propThreshold, 0.01f, 0.99f, "Threshold");
         EditorGUILayout.PropertyField(propInterval, labelInterval);

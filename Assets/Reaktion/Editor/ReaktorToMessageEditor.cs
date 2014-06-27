@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToMessage)), CanEditMultipleObjects]
 public class ReaktorToMessageEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propTarget;
     SerializedProperty propBroadcast;
 
@@ -48,6 +51,9 @@ public class ReaktorToMessageEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
         propTarget    = serializedObject.FindProperty("target");
         propBroadcast = serializedObject.FindProperty("broadcast");
 
@@ -71,10 +77,15 @@ public class ReaktorToMessageEditor : Editor
     {
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(propAutoBind);
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
         EditorGUILayout.PropertyField(propTarget, labelSendTo);
-        EditorGUILayout.PropertyField(propBroadcast);
         if (propTarget.objectReferenceValue == null)
             EditorGUILayout.HelpBox("Leave None to send messages to itself (loopback)", MessageType.None);
+
+        EditorGUILayout.PropertyField(propBroadcast);
 
         EditorGUILayout.Space();
 
@@ -84,8 +95,9 @@ public class ReaktorToMessageEditor : Editor
             EditorGUILayout.Slider(propTriggerThreshold, 0.0f, 1.0f, "Threahold");
             EditorGUILayout.Slider(propTriggerInterval, 0.0f, 1.0f, "Interval");
             EditorGUILayout.PropertyField(propTriggerMessage, labelMessage);
-            EditorGUILayout.Space();
         }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableInput, labelInputMessage);
         if (propEnableInput.hasMultipleDifferentValues || propEnableInput.boolValue)

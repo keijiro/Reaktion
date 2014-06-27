@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToParticleSystem : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     // Burst options.
     public bool enableBurst;
     public float burstThreshold = 0.9f;
@@ -35,13 +38,13 @@ public class ReaktorToParticleSystem : MonoBehaviour
     public bool enableEmissionRate;
     public AnimationCurve emissionRateCurve = AnimationCurve.Linear(0, 0, 1, 20);
     
-    Reaktor reaktor;
     float previousOutput;
     float burstTimer;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
     void Update()

@@ -25,17 +25,20 @@ using System.Collections;
 
 public class ReaktorToLight : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public bool enableIntensity;
     public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public bool enableColor;
     public Gradient colorGradient;
 
-    Reaktor reaktor;
-
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+
         UpdateLight(0);
     }
 

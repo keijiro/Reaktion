@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToInstantiation : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     // General options.
     public GameObject[] prefabs;
     public bool randomRotation = true;
@@ -47,14 +50,14 @@ public class ReaktorToInstantiation : MonoBehaviour
     public Vector3 rangeVector = Vector3.one;
 
     // Private variables
-    Reaktor reaktor;
     float previousOutput;
     float burstIntervalTimer;
     float timer;
 
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
     void Update()

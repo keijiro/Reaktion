@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToTransform)), CanEditMultipleObjects]
 public class ReaktorToTransformEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propEnableTranslation;
     SerializedProperty propTranslationVector;
     SerializedProperty propTranslationCurve;
@@ -48,6 +51,9 @@ public class ReaktorToTransformEditor : Editor
 
     void OnEnable()
     {
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
         propEnableTranslation = serializedObject.FindProperty("enableTranslation");
         propTranslationVector = serializedObject.FindProperty("translationVector");
         propTranslationCurve  = serializedObject.FindProperty("translationCurve");
@@ -72,21 +78,29 @@ public class ReaktorToTransformEditor : Editor
     {
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(propAutoBind);
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.Space();
+
         EditorGUILayout.PropertyField(propEnableTranslation, labelTranslation);
         if (propEnableTranslation.hasMultipleDifferentValues || propEnableTranslation.boolValue)
         {
             EditorGUILayout.PropertyField(propTranslationVector, labelVector);
             EditorGUILayout.PropertyField(propTranslationCurve, labelCurve);
-            EditorGUILayout.Space();
         }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableRotation, labelRotation);
         if (propEnableRotation.hasMultipleDifferentValues || propEnableRotation.boolValue)
         {
             EditorGUILayout.PropertyField(propRotationAxis, labelAxis);
             EditorGUILayout.PropertyField(propRotationCurve, labelCurve);
-            EditorGUILayout.Space();
         }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propEnableScaling, labelScaling);
         if (propEnableScaling.hasMultipleDifferentValues || propEnableScaling.boolValue)

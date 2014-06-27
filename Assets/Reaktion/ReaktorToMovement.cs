@@ -25,6 +25,9 @@ using System.Collections;
 
 public class ReaktorToMovement : MonoBehaviour
 {
+    public bool autoBind = true;
+    public Reaktor reaktor;
+
     public bool enableTranslation;
     public Vector3 translationVector = Vector3.up;
     public AnimationCurve velocityCurve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -35,11 +38,10 @@ public class ReaktorToMovement : MonoBehaviour
 
     public bool useLocal = true;
 
-    Reaktor reaktor;
-
     void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        if (autoBind || reaktor == null)
+            reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
     void Update()

@@ -27,6 +27,9 @@ using System.Collections;
 [CustomEditor(typeof(ReaktorToInstantiation)), CanEditMultipleObjects]
 public class ReaktorToInstantiationEditor : Editor
 {
+    SerializedProperty propAutoBind;
+    SerializedProperty propReaktor;
+
     SerializedProperty propPrefabs;
     SerializedProperty propRandomRotation;
     SerializedProperty propParent;
@@ -53,8 +56,11 @@ public class ReaktorToInstantiationEditor : Editor
     GUIContent labelRangeRadius;
     GUIContent labelRangeVector;
 
-    void OnEnable ()
+    void OnEnable()
     {
+        propAutoBind       = serializedObject.FindProperty("autoBind");
+        propReaktor        = serializedObject.FindProperty("reaktor");
+
         propPrefabs        = serializedObject.FindProperty("prefabs");
         propRandomRotation = serializedObject.FindProperty("randomRotation");
         propParent         = serializedObject.FindProperty("parent");
@@ -82,25 +88,34 @@ public class ReaktorToInstantiationEditor : Editor
         labelRangeVector    = new GUIContent("Extent");
     }
 
-    public override void OnInspectorGUI ()
+    public override void OnInspectorGUI()
     {
         serializedObject.Update ();
 
+        EditorGUILayout.PropertyField(propAutoBind);
+
+        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
+            EditorGUILayout.PropertyField(propReaktor);
+
         EditorGUILayout.PropertyField(propPrefabs, true);
+
         EditorGUILayout.Space();
 
         // Burst instantiation
         EditorGUILayout.PropertyField(propEnableBurst, labelEnableBurst);
+
         if (propEnableBurst.boolValue || propEnableBurst.hasMultipleDifferentValues)
         {
             EditorGUILayout.Slider(propBurstThreshold, 0.0f, 1.0f, labelBurstThreshold);
             EditorGUILayout.PropertyField(propBurstInterval, labelBurstInterval);
             EditorGUILayout.PropertyField(propBurstNumber, labelBurstNumber);
-            EditorGUILayout.Space();
         }
+
+        EditorGUILayout.Space();
 
         // Time-based instantiation
         EditorGUILayout.PropertyField(propEnableTimer, labelEnableTimer);
+
         if (propEnableTimer.boolValue || propEnableTimer.hasMultipleDifferentValues)
             EditorGUILayout.PropertyField(propRateCurve);
 
