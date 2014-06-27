@@ -74,7 +74,7 @@ public class ReaktorToAnimatorEditor : Editor
 
         if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
         {
-            EditorGUILayout.Slider(propTriggerThreshold, 0.0f, 1.0f, labelThreshold);
+            EditorGUILayout.Slider(propTriggerThreshold, 0.01f, 0.99f, labelThreshold);
             EditorGUILayout.PropertyField(propTriggerInterval, labelInterval);
             EditorGUILayout.PropertyField(propTriggerName);
         }
