@@ -355,12 +355,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableTranslation: 1
-  minVelocity: {x: -1, y: 0, z: 0}
-  maxVelocity: {x: 1, y: 0, z: 0}
+  translationVector: {x: 1, y: 0, z: 0}
+  velocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: .00320905447
+      value: -.0136473179
+      inSlope: 2.02022386
+      outSlope: 2.02022386
+      tangentMode: 10
+    - time: .999958813
+      value: 2.00001025
+      inSlope: 2.02022386
+      outSlope: 2.02022386
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   enableRotation: 0
   rotationAxis: {x: 0, y: 1, z: 0}
-  minAngularVelocity: -1800
-  maxAngularVelocity: 1800
+  angularVelocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 360
+      tangentMode: 0
+    - time: 1
+      value: 360
+      inSlope: 360
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   useLocal: 1
 --- !u!23 &307014378
 Renderer:
@@ -2834,7 +2861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1153192218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2902,7 +2929,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   sensitivity: 0
-  decaySpeed: 100
+  decaySpeed: 4.5
   showAudioOptions: 1
   headroom: 0
   dynamicRange: 16
@@ -3566,7 +3593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1513266361
 Transform:
   m_ObjectHideFlags: 0
@@ -3895,12 +3922,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableTranslation: 0
-  minVelocity: {x: -1, y: 0, z: 0}
-  maxVelocity: {x: 1, y: 0, z: 0}
+  translationVector: {x: 0, y: 1, z: 0}
+  velocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   enableRotation: 1
   rotationAxis: {x: 0, y: 1, z: 0}
-  minAngularVelocity: -1800
-  maxAngularVelocity: 1800
+  angularVelocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 360
+      tangentMode: 0
+    - time: 1
+      value: 360
+      inSlope: 360
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   useLocal: 1
 --- !u!23 &1614488842
 Renderer:

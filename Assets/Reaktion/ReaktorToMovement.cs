@@ -26,19 +26,18 @@ using System.Collections;
 public class ReaktorToMovement : MonoBehaviour
 {
     public bool enableTranslation;
-    public Vector3 minVelocity = Vector3.zero;
-    public Vector3 maxVelocity = Vector3.one;
+    public Vector3 translationVector = Vector3.up;
+    public AnimationCurve velocityCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public bool enableRotation;
     public Vector3 rotationAxis = Vector3.up;
-    public float minAngularVelocity = 0.0f;
-    public float maxAngularVelocity = 360.0f;
+    public AnimationCurve angularVelocityCurve = AnimationCurve.Linear(0, 0, 1, 360);
 
     public bool useLocal = true;
 
     Reaktor reaktor;
 
-    void Start()
+    void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
@@ -47,7 +46,7 @@ public class ReaktorToMovement : MonoBehaviour
     {
         if (enableTranslation)
         {
-            var delta = Vector3.Lerp(minVelocity, maxVelocity, reaktor.Output) * Time.deltaTime;
+            var delta = translationVector * velocityCurve.Evaluate(reaktor.Output) * Time.deltaTime;
             if (useLocal)
                 transform.localPosition += delta;
             else
@@ -56,7 +55,7 @@ public class ReaktorToMovement : MonoBehaviour
 
         if (enableRotation)
         {
-            var omega = Mathf.Lerp(minAngularVelocity, maxAngularVelocity, reaktor.Output);
+            var omega = angularVelocityCurve.Evaluate(reaktor.Output);
             var delta = Quaternion.AngleAxis(omega * Time.deltaTime, rotationAxis);
             if (useLocal)
                 transform.localRotation = delta * transform.localRotation;

@@ -28,42 +28,40 @@ using System.Collections;
 public class ReaktorToMovementEditor : Editor
 {
     SerializedProperty propEnableTranslation;
-    SerializedProperty propMinVelocity;
-    SerializedProperty propMaxVelocity;
+    SerializedProperty propTranslationVector;
+    SerializedProperty propVelocityCurve;
 
     SerializedProperty propEnableRotation;
     SerializedProperty propRotationAxis;
-    SerializedProperty propMinAngularVelocity;
-    SerializedProperty propMaxAngularVelocity;
+    SerializedProperty propAngularVelocityCurve;
 
     SerializedProperty propUseLocal;
 
     GUIContent labelTranslation;
     GUIContent labelRotation;
-    GUIContent labelMinVelocity;
-    GUIContent labelMaxVelocity;
+    GUIContent labelVector;
     GUIContent labelAxis;
+    GUIContent labelVelocityCurve;
     GUIContent labelUseLocal;
 
     void OnEnable()
     {
-        propEnableTranslation  = serializedObject.FindProperty("enableTranslation");
-        propMinVelocity        = serializedObject.FindProperty("minVelocity");
-        propMaxVelocity        = serializedObject.FindProperty("maxVelocity");
+        propEnableTranslation = serializedObject.FindProperty("enableTranslation");
+        propTranslationVector = serializedObject.FindProperty("translationVector");
+        propVelocityCurve     = serializedObject.FindProperty("velocityCurve");
 
-        propEnableRotation     = serializedObject.FindProperty("enableRotation");
-        propRotationAxis       = serializedObject.FindProperty("rotationAxis");
-        propMinAngularVelocity = serializedObject.FindProperty("minAngularVelocity");
-        propMaxAngularVelocity = serializedObject.FindProperty("maxAngularVelocity");
+        propEnableRotation       = serializedObject.FindProperty("enableRotation");
+        propRotationAxis         = serializedObject.FindProperty("rotationAxis");
+        propAngularVelocityCurve = serializedObject.FindProperty("angularVelocityCurve");
 
-        propUseLocal           = serializedObject.FindProperty("useLocal");
+        propUseLocal = serializedObject.FindProperty("useLocal");
 
-        labelTranslation  = new GUIContent("Translation");
-        labelRotation     = new GUIContent("Rotation");
-        labelMinVelocity  = new GUIContent("Minimum Velocity");
-        labelMaxVelocity  = new GUIContent("Maximum Velocity");
-        labelAxis         = new GUIContent("Axis");
-        labelUseLocal     = new GUIContent("Local Coordinate");
+        labelTranslation   = new GUIContent("Translation");
+        labelRotation      = new GUIContent("Rotation");
+        labelVector        = new GUIContent("Vector");
+        labelAxis          = new GUIContent("Axis");
+        labelVelocityCurve = new GUIContent("Velocity Curve");
+        labelUseLocal      = new GUIContent("Local Coordinate");
     }
 
     public override void OnInspectorGUI()
@@ -77,8 +75,8 @@ public class ReaktorToMovementEditor : Editor
         EditorGUILayout.PropertyField(propEnableTranslation, labelTranslation);
         if (propEnableTranslation.hasMultipleDifferentValues || propEnableTranslation.boolValue)
         {
-            EditorGUILayout.PropertyField(propMinVelocity, labelMinVelocity);
-            EditorGUILayout.PropertyField(propMaxVelocity, labelMaxVelocity);
+            EditorGUILayout.PropertyField(propTranslationVector, labelVector);
+            EditorGUILayout.PropertyField(propVelocityCurve, labelVelocityCurve);
         }
 
         if (shouldSpace) EditorGUILayout.Space();
@@ -87,14 +85,13 @@ public class ReaktorToMovementEditor : Editor
         if (propEnableRotation.hasMultipleDifferentValues || propEnableRotation.boolValue)
         {
             EditorGUILayout.PropertyField(propRotationAxis, labelAxis);
-            EditorGUILayout.PropertyField(propMinAngularVelocity, labelMinVelocity);
-            EditorGUILayout.PropertyField(propMaxAngularVelocity, labelMaxVelocity);
+            EditorGUILayout.PropertyField(propAngularVelocityCurve, labelVelocityCurve);
         }
 
         if (shouldSpace) EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propUseLocal, labelUseLocal);
 
-        serializedObject.ApplyModifiedProperties ();
+        serializedObject.ApplyModifiedProperties();
     }
 }
