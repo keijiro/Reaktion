@@ -71,10 +71,10 @@ public class Reaktor : MonoBehaviour
     #region Audio input options
 
     public bool showAudioOptions = false;
-    public float headroom = 6.0f;
-    public float dynamicRange = 20.0f;
+    public float headroom = 2.0f;
+    public float dynamicRange = 16.0f;
     public float lowerBound = -60.0f;
-    public float falldown = 0.4f;
+    public float falldown = 0.5f;
 
     #endregion
 
