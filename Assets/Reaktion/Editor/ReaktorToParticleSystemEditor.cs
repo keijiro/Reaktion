@@ -24,66 +24,55 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToParticleSystem))]
+[CustomEditor(typeof(ReaktorToParticleSystem)), CanEditMultipleObjects]
 public class ReaktorToParticleSystemEditor : Editor
 {
-    #region References to the properties
-
-    // Emission rate options.
-    SerializedProperty propEnableEmissionRate;
-    SerializedProperty propMaxEmissionRate;
-    SerializedProperty propEmissionRateCurve;
-
-    // Burst options.
     SerializedProperty propEnableBurst;
     SerializedProperty propBurstThreshold;
     SerializedProperty propBurstInterval;
     SerializedProperty propBurstEmissionNumber;
 
-    #endregion
+    SerializedProperty propEnableEmissionRate;
+    SerializedProperty propEmissionRateCurve;
 
-    #region Editor functions
+    GUIContent labelBurst;
+    GUIContent labelParticles;
+    GUIContent labelEmissionRate;
+    GUIContent labelCurve;
 
-    void OnEnable ()
+    void OnEnable()
     {
-        // Emission rate options.
-        propEnableEmissionRate = serializedObject.FindProperty ("enableEmissionRate");
-        propMaxEmissionRate = serializedObject.FindProperty ("maxEmissionRate");
-        propEmissionRateCurve = serializedObject.FindProperty ("emissionRateCurve");
+        propEnableBurst         = serializedObject.FindProperty("enableBurst");
+        propBurstThreshold      = serializedObject.FindProperty("burstThreshold");
+        propBurstInterval       = serializedObject.FindProperty("burstInterval");
+        propBurstEmissionNumber = serializedObject.FindProperty("burstEmissionNumber");
 
-        // Burst options.
-        propEnableBurst = serializedObject.FindProperty ("enableBurst");
-        propBurstThreshold = serializedObject.FindProperty ("burstThreshold");
-        propBurstInterval = serializedObject.FindProperty ("burstInterval");
-        propBurstEmissionNumber = serializedObject.FindProperty ("burstEmissionNumber");
+        propEnableEmissionRate = serializedObject.FindProperty("enableEmissionRate");
+        propEmissionRateCurve  = serializedObject.FindProperty("emissionRateCurve");
+
+        labelBurst        = new GUIContent("Burst");
+        labelParticles    = new GUIContent("Particles");
+        labelEmissionRate = new GUIContent("Emission Rate");
+        labelCurve        = new GUIContent("Curve");
     }
 
-    public override void OnInspectorGUI ()
+    public override void OnInspectorGUI()
     {
-        // Update the references.
-        serializedObject.Update ();
+        serializedObject.Update();
 
-        // Burst options.
-        propEnableBurst.boolValue = EditorGUILayout.Toggle ("Burst", propEnableBurst.boolValue);
-        if (propEnableBurst.boolValue)
+        EditorGUILayout.PropertyField(propEnableBurst, labelBurst);
+        if (propEnableBurst.boolValue || propEnableBurst.hasMultipleDifferentValues)
         {
-            EditorGUILayout.Slider (propBurstThreshold, 0.0f, 1.0f, "Threshold");
-            EditorGUILayout.Slider (propBurstInterval, 0.0f, 1.0f, "Interval");
-            propBurstEmissionNumber.intValue = EditorGUILayout.IntField ("Particles", propBurstEmissionNumber.intValue);
-            EditorGUILayout.Space ();
+            EditorGUILayout.Slider(propBurstThreshold, 0.0f, 1.0f, "Threshold");
+            EditorGUILayout.Slider(propBurstInterval, 0.0f, 1.0f, "Interval");
+            EditorGUILayout.PropertyField(propBurstEmissionNumber, labelParticles);
+            EditorGUILayout.Space();
         }
 
-        // Emission rate options.
-        propEnableEmissionRate.boolValue = EditorGUILayout.Toggle ("Emission Rate", propEnableEmissionRate.boolValue);
-        if (propEnableEmissionRate.boolValue)
-        {
-            propMaxEmissionRate.floatValue = EditorGUILayout.FloatField ("Max Rate", propMaxEmissionRate.floatValue);
-            propEmissionRateCurve.animationCurveValue = EditorGUILayout.CurveField ("Rate Curve", propEmissionRateCurve.animationCurveValue);
-        }
+        EditorGUILayout.PropertyField(propEnableEmissionRate, labelEmissionRate);
+        if (propEnableEmissionRate.boolValue || propEnableEmissionRate.hasMultipleDifferentValues)
+            EditorGUILayout.PropertyField(propEmissionRateCurve, labelCurve);
 
-        // Apply modifications.
-        serializedObject.ApplyModifiedProperties ();
+        serializedObject.ApplyModifiedProperties();
     }
-
-    #endregion
 }

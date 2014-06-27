@@ -554,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &368835010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,11 +623,11 @@ MonoBehaviour:
     m_PostInfinity: 2
   sensitivity: 0
   decaySpeed: 5.5
-  showAudioOptions: 0
-  headroom: 6
-  dynamicRange: 20
+  showAudioOptions: 1
+  headroom: 1
+  dynamicRange: 16
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!4 &368835011
 Transform:
   m_ObjectHideFlags: 0
@@ -1625,33 +1625,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableBurst: 1
-  burstThreshold: .899999976
-  burstInterval: .100000001
+  burstThreshold: .100000001
+  burstInterval: .400000006
   burstEmissionNumber: 5
   enableEmissionRate: 1
-  maxEmissionRate: 40
   emissionRateCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
       inSlope: 0
-      outSlope: .174298435
+      outSlope: 8.336236
       tangentMode: 21
-    - time: .650961518
-      value: .113461576
-      inSlope: .174298435
-      outSlope: 3.93911815
+    - time: .599972665
+      value: 5.00151396
+      inSlope: 8.336236
+      outSlope: 83.3177567
       tangentMode: 21
-    - time: .869416475
-      value: .97398144
-      inSlope: 3.93911815
+    - time: .899997711
+      value: 29.9989281
+      inSlope: 83.3177567
       outSlope: .199248418
-      tangentMode: 21
-    - time: 1
-      value: 1
-      inSlope: .199248418
-      outSlope: 0
       tangentMode: 21
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1929,7 +1923,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 10
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3002,7 +2996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1251885462
 MonoBehaviour:
   m_ObjectHideFlags: 0

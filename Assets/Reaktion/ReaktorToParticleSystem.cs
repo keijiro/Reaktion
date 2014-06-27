@@ -25,8 +25,6 @@ using System.Collections;
 
 public class ReaktorToParticleSystem : MonoBehaviour
 {
-    #region Public properties
-
     // Burst options.
     public bool enableBurst;
     public float burstThreshold = 0.9f;
@@ -35,46 +33,35 @@ public class ReaktorToParticleSystem : MonoBehaviour
 
     // Emission rate options.
     public bool enableEmissionRate;
-    public float maxEmissionRate = 30.0f;
-    public AnimationCurve emissionRateCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve emissionRateCurve = AnimationCurve.Linear(0, 0, 1, 20);
     
-    #endregion
-
-    #region Private variables
-
     Reaktor reaktor;
     float previousOutput;
     float burstTimer;
 
-    #endregion
-
-    #region MonoBehaviour functions
-
-    void Start ()
+    void Awake()
     {
-        reaktor = Reaktor.SearchAvailableFrom (gameObject);
+        reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
-    void Update ()
+    void Update()
     {
         if (enableBurst)
         {
-            if (burstTimer > burstInterval && previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
+            if (burstTimer <= 0.0f && previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
             {
-                particleSystem.Emit (burstEmissionNumber);
-                particleSystem.Play ();
-                burstTimer = 0.0f;
+                particleSystem.Emit(burstEmissionNumber);
+                particleSystem.Play();
+                burstTimer = burstInterval;
             }
+            burstTimer -= Time.deltaTime;
         }
         
         if (enableEmissionRate)
         {
-            particleSystem.emissionRate = maxEmissionRate * emissionRateCurve.Evaluate (reaktor.Output);
+            particleSystem.emissionRate = emissionRateCurve.Evaluate(reaktor.Output);
         }
         
         previousOutput = reaktor.Output;
-        burstTimer += Time.deltaTime;
     }
-
-    #endregion
 }
