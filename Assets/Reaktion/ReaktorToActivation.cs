@@ -41,6 +41,7 @@ public class ReaktorToActivation : MonoBehaviour
     void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        SwitchTargetState(false);
     }
 	
     void Update()
@@ -50,20 +51,25 @@ public class ReaktorToActivation : MonoBehaviour
             var state = (reaktor.Output >= threshold);
             if (state != previousState)
             {
-                if (targetType == TargetType.GameObject)
-                {
-                    foreach (var go in targetGameObjects)
-                        go.SetActive(state ^ invert);
-                }
-                else
-                {
-                    foreach (var c in targetComponents)
-                        c.GetType().GetProperty("enabled").SetValue(c, state ^ invert, null);
-                }
+                SwitchTargetState(state);
                 previousState = state;
                 timer = interval;
             }
         }
         timer -= Time.deltaTime;
+    }
+
+    void SwitchTargetState(bool state)
+    {
+        if (targetType == TargetType.GameObject)
+        {
+            foreach (var go in targetGameObjects)
+                go.SetActive(state ^ invert);
+        }
+        else
+        {
+            foreach (var c in targetComponents)
+                c.GetType().GetProperty("enabled").SetValue(c, state ^ invert, null);
+        }
     }
 }

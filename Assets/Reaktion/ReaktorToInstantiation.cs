@@ -52,7 +52,7 @@ public class ReaktorToInstantiation : MonoBehaviour
     float burstIntervalTimer;
     float timer;
 
-    void Start()
+    void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }

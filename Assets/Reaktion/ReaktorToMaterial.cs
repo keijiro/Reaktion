@@ -45,7 +45,7 @@ public class ReaktorToMaterial : MonoBehaviour
     Reaktor reaktor;
     Material material;
 
-    void Start()
+    void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom(gameObject);
         material = renderer.material;

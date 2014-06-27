@@ -33,7 +33,7 @@ public class ReaktorToLight : MonoBehaviour
 
     Reaktor reaktor;
 
-    void Start()
+    void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom(gameObject);
         UpdateLight(0);
