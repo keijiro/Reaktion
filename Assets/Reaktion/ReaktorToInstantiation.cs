@@ -38,7 +38,7 @@ public class ReaktorToInstantiation : MonoBehaviour
 
     // Options for time-based instantiation
     public bool enableTimer;
-    public AnimationCurve rateCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    public AnimationCurve rateCurve = AnimationCurve.Linear(0, 0, 1, 10);
 
     // Instantiation range information
     public enum RangeType { Sphere, Box };
