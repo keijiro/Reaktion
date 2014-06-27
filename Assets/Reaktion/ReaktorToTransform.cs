@@ -25,61 +25,45 @@ using System.Collections;
 
 public class ReaktorToTransform : MonoBehaviour
 {
-    #region Public properties
+    public bool enableTranslation;
+    public Vector3 translationVector = Vector3.up;
+    public AnimationCurve translationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    // Position control.
-    public bool enablePosition;
-    public Vector3 position = Vector3.up;
-
-    // Rotation control.
     public bool enableRotation;
     public Vector3 rotationAxis = Vector3.up;
-    public float minAngle = -90.0f;
-    public float maxAngle = 90.0f;
+    public AnimationCurve rotationCurve = AnimationCurve.Linear(0, -90, 1, 90);
 
-    // Scale control.
-    public bool enableScale;
-    public Vector3 scale = Vector3.one;
-
-    #endregion
-
-    #region Private variables
+    public bool enableScaling;
+    public Vector3 scalingVector = Vector3.one;
+    public AnimationCurve scalingCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     Reaktor reaktor;
+
     Vector3 initialPosition;
     Quaternion initialRotation;
     Vector3 initialScale;
 
-    #endregion
-
-    #region MonoBehaviour functions
-
-    void Start ()
+    void Awake()
     {
         reaktor = Reaktor.SearchAvailableFrom (gameObject);
+    }
+
+    void Start()
+    {
         initialPosition = transform.localPosition;
         initialRotation = transform.localRotation;
         initialScale = transform.localScale;
     }
 
-    void Update ()
+    void Update()
     {
-        if (enablePosition)
-        {
-            transform.localPosition = initialPosition + position * reaktor.Output;
-        }
+        if (enableTranslation)
+            transform.localPosition = initialPosition + translationVector * translationCurve.Evaluate(reaktor.Output);
 
         if (enableRotation)
-        {
-            var angle = Mathf.Lerp (minAngle, maxAngle, reaktor.Output);
-            transform.localRotation = Quaternion.AngleAxis (angle, rotationAxis) * initialRotation;
-        }
+            transform.localRotation = Quaternion.AngleAxis(rotationCurve.Evaluate(reaktor.Output), rotationAxis) * initialRotation;
 
-        if (enableScale)
-        {
-            transform.localScale = initialScale + scale * reaktor.Output;
-        }
+        if (enableScaling)
+            transform.localScale = initialScale + scalingVector * scalingCurve.Evaluate(reaktor.Output);
     }
-
-    #endregion
 }

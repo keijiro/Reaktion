@@ -554,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &368835010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1587,14 +1587,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c73495c07c574c8888398de99a9c523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enablePosition: 1
-  position: {x: 0, y: 1, z: 0}
+  enableTranslation: 1
+  translationVector: {x: 0, y: 1, z: 0}
+  translationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2.65187526
+      outSlope: 2.65187526
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 4.00109229e-06
+      outSlope: 4.00109229e-06
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   enableRotation: 1
   rotationAxis: {x: 0, y: 1, z: 0}
-  minAngle: 0
-  maxAngle: 90
-  enableScale: 1
-  scale: {x: 1, y: 1, z: 1}
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: -90
+      inSlope: 26.3306808
+      outSlope: 26.3306808
+      tangentMode: 0
+    - time: 1
+      value: 90
+      inSlope: 430.448486
+      outSlope: 430.448486
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  enableScaling: 1
+  scalingVector: {x: 1, y: 1, z: 1}
+  scalingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .0912641436
+      outSlope: .0912641436
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: -.103124522
+      outSlope: -.103124522
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1100653357
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,7 +3566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1513266361
 Transform:
   m_ObjectHideFlags: 0
@@ -3549,8 +3592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMode: 3
-  audioIndex: 3
+  audioMode: 1
+  audioIndex: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:

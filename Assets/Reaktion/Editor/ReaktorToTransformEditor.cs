@@ -24,79 +24,77 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToTransform))]
+[CustomEditor(typeof(ReaktorToTransform)), CanEditMultipleObjects]
 public class ReaktorToTransformEditor : Editor
 {
-    #region References to the properties
+    SerializedProperty propEnableTranslation;
+    SerializedProperty propTranslationVector;
+    SerializedProperty propTranslationCurve;
 
-    // Position control.
-    SerializedProperty propEnablePosition;
-    SerializedProperty propPosition;
-
-    // Rotation control.
     SerializedProperty propEnableRotation;
     SerializedProperty propRotationAxis;
-    SerializedProperty propMinAngle;
-    SerializedProperty propMaxAngle;
+    SerializedProperty propRotationCurve;
 
-    // Scale control.
-    SerializedProperty propEnableScale;
-    SerializedProperty propScale;
+    SerializedProperty propEnableScaling;
+    SerializedProperty propScalingVector;
+    SerializedProperty propScalingCurve;
 
-    #endregion
+    GUIContent labelTranslation;
+    GUIContent labelRotation;
+    GUIContent labelScaling;
+    GUIContent labelVector;
+    GUIContent labelAxis;
+    GUIContent labelCurve;
 
-    #region Editor functions
-
-    void OnEnable ()
+    void OnEnable()
     {
-        // Position control.
-        propEnablePosition = serializedObject.FindProperty ("enablePosition");
-        propPosition = serializedObject.FindProperty ("position");
+        propEnableTranslation = serializedObject.FindProperty("enableTranslation");
+        propTranslationVector = serializedObject.FindProperty("translationVector");
+        propTranslationCurve  = serializedObject.FindProperty("translationCurve");
 
-        // Rotation control.
-        propEnableRotation = serializedObject.FindProperty ("enableRotation");
-        propRotationAxis = serializedObject.FindProperty ("rotationAxis");
-        propMinAngle = serializedObject.FindProperty ("minAngle");
-        propMaxAngle = serializedObject.FindProperty ("maxAngle");
+        propEnableRotation = serializedObject.FindProperty("enableRotation");
+        propRotationAxis   = serializedObject.FindProperty("rotationAxis");
+        propRotationCurve  = serializedObject.FindProperty("rotationCurve");
 
-        // Scale control.
-        propEnableScale = serializedObject.FindProperty ("enableScale");
-        propScale = serializedObject.FindProperty ("scale");
+        propEnableScaling = serializedObject.FindProperty("enableScaling");
+        propScalingVector = serializedObject.FindProperty("scalingVector");
+        propScalingCurve  = serializedObject.FindProperty("scalingCurve");
+
+        labelTranslation = new GUIContent("Translation");
+        labelRotation    = new GUIContent("Rotation");
+        labelScaling     = new GUIContent("Scaling");
+        labelVector      = new GUIContent("Vector");
+        labelAxis        = new GUIContent("Axis");
+        labelCurve       = new GUIContent("Curve");
     }
 
-    public override void OnInspectorGUI ()
+    public override void OnInspectorGUI()
     {
-        // Update the references.
-        serializedObject.Update ();
-        
-        // Position control.
-        propEnablePosition.boolValue = EditorGUILayout.Toggle ("Translation", propEnablePosition.boolValue);
-        if (propEnablePosition.boolValue)
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(propEnableTranslation, labelTranslation);
+        if (propEnableTranslation.hasMultipleDifferentValues || propEnableTranslation.boolValue)
         {
-            propPosition.vector3Value = EditorGUILayout.Vector3Field("Vector", propPosition.vector3Value);
-            EditorGUILayout.Space ();
+            EditorGUILayout.PropertyField(propTranslationVector, labelVector);
+            EditorGUILayout.PropertyField(propTranslationCurve, labelCurve);
+            EditorGUILayout.Space();
         }
 
-        // Rotation control.
-        propEnableRotation.boolValue = EditorGUILayout.Toggle ("Rotation", propEnableRotation.boolValue);
-        if (propEnableRotation.boolValue)
+        EditorGUILayout.PropertyField(propEnableRotation, labelRotation);
+        if (propEnableRotation.hasMultipleDifferentValues || propEnableRotation.boolValue)
         {
-            propRotationAxis.vector3Value = EditorGUILayout.Vector3Field("Axis", propRotationAxis.vector3Value);
-            propMinAngle.floatValue = EditorGUILayout.FloatField("Min Angle", propMinAngle.floatValue);
-            propMaxAngle.floatValue = EditorGUILayout.FloatField("Max Angle", propMaxAngle.floatValue);
-            EditorGUILayout.Space ();
+            EditorGUILayout.PropertyField(propRotationAxis, labelAxis);
+            EditorGUILayout.PropertyField(propRotationCurve, labelCurve);
+            EditorGUILayout.Space();
         }
 
-        // Scale control.
-        propEnableScale.boolValue = EditorGUILayout.Toggle ("Scaling", propEnableScale.boolValue);
-        if (propEnableScale.boolValue)
+        EditorGUILayout.PropertyField(propEnableScaling, labelScaling);
+        if (propEnableScaling.hasMultipleDifferentValues || propEnableScaling.boolValue)
         {
-            propScale.vector3Value = EditorGUILayout.Vector3Field("Vector", propScale.vector3Value);
+            EditorGUILayout.PropertyField(propScalingVector, labelVector);
+            EditorGUILayout.PropertyField(propScalingCurve, labelCurve);
         }
 
-        // Apply modifications.
-        serializedObject.ApplyModifiedProperties ();
+        serializedObject.ApplyModifiedProperties();
     }
-
-    #endregion
 }
