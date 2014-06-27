@@ -38,7 +38,6 @@ public class ReaktorToInstantiation : MonoBehaviour
 
     // Options for time-based instantiation
     public bool enableTimer;
-    public float maxRate = 10.0f;
     public AnimationCurve rateCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     // Instantiation range information
@@ -75,7 +74,7 @@ public class ReaktorToInstantiation : MonoBehaviour
         // Time-based instantiation
         if (enableTimer)
         {
-            timer += maxRate * rateCurve.Evaluate(reaktor.Output) * Time.deltaTime;
+            timer += rateCurve.Evaluate(reaktor.Output) * Time.deltaTime;
             for (; timer > 1.0f; timer -= 1.0f) Spawn();
         }
 

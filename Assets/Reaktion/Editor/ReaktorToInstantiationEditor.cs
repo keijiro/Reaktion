@@ -37,7 +37,6 @@ public class ReaktorToInstantiationEditor : Editor
     SerializedProperty propBurstNumber;
 
     SerializedProperty propEnableTimer;
-    SerializedProperty propMaxRate;
     SerializedProperty propRateCurve;
 
     SerializedProperty propRangeType;
@@ -50,7 +49,6 @@ public class ReaktorToInstantiationEditor : Editor
     GUIContent labelBurstNumber;
 
     GUIContent labelEnableTimer;
-    GUIContent labelMaxRate;
 
     GUIContent labelRangeRadius;
     GUIContent labelRangeVector;
@@ -67,7 +65,6 @@ public class ReaktorToInstantiationEditor : Editor
         propBurstNumber    = serializedObject.FindProperty("burstNumber");
 
         propEnableTimer    = serializedObject.FindProperty("enableTimer");
-        propMaxRate        = serializedObject.FindProperty("maxRate");
         propRateCurve      = serializedObject.FindProperty("rateCurve");
 
         propRangeType      = serializedObject.FindProperty("rangeType");
@@ -80,7 +77,6 @@ public class ReaktorToInstantiationEditor : Editor
         labelBurstNumber    = new GUIContent("Instance Count");
 
         labelEnableTimer    = new GUIContent("Time-Based");
-        labelMaxRate        = new GUIContent("Maximum Rate");
 
         labelRangeRadius    = new GUIContent("Radius");
         labelRangeVector    = new GUIContent("Extent");
@@ -106,10 +102,7 @@ public class ReaktorToInstantiationEditor : Editor
         // Time-based instantiation
         EditorGUILayout.PropertyField(propEnableTimer, labelEnableTimer);
         if (propEnableTimer.boolValue || propEnableTimer.hasMultipleDifferentValues)
-        {
-            EditorGUILayout.PropertyField(propMaxRate, labelMaxRate);
             EditorGUILayout.PropertyField(propRateCurve);
-        }
 
         EditorGUILayout.Space();
 

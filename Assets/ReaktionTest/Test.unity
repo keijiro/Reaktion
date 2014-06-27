@@ -3633,7 +3633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1569667045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3655,20 +3655,19 @@ MonoBehaviour:
   burstInterval: .100000001
   burstNumber: 5
   enableTimer: 1
-  maxRate: 30
   rateCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
       inSlope: 0
-      outSlope: 1
-      tangentMode: 0
+      outSlope: 29.9962521
+      tangentMode: 21
     - time: 1
-      value: 1
-      inSlope: 1
+      value: 29.9962521
+      inSlope: 29.9962521
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 21
     m_PreInfinity: 2
     m_PostInfinity: 2
   rangeType: 0
