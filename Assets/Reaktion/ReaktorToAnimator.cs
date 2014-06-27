@@ -35,6 +35,8 @@ public class ReaktorToAnimator : MonoBehaviour
 
     Reaktor reaktor;
     Animator animator;
+
+    float previousOutput;
     float triggerTimer;
 
     void Awake()
@@ -50,7 +52,7 @@ public class ReaktorToAnimator : MonoBehaviour
 
         if (enableTrigger)
         {
-            if (triggerTimer <= 0.0f && reaktor.Output >= triggerThreshold)
+            if (triggerTimer <= 0.0f && reaktor.Output >= triggerThreshold && previousOutput < triggerThreshold)
             {
                 animator.SetTrigger(triggerName);
                 triggerTimer = triggerInterval;
@@ -59,6 +61,7 @@ public class ReaktorToAnimator : MonoBehaviour
             {
                 triggerTimer -= Time.deltaTime;
             }
+            previousOutput = reaktor.Output;
         }
     }
 }
