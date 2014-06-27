@@ -2900,7 +2900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1218292059
 Transform:
   m_ObjectHideFlags: 0
@@ -2982,11 +2982,11 @@ MonoBehaviour:
     m_PostInfinity: 2
   sensitivity: 0
   decaySpeed: 100
-  showAudioOptions: 0
+  showAudioOptions: 1
   headroom: 8
   dynamicRange: 12
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!1 &1251885461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4347,7 +4347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1929463375
 Transform:
   m_ObjectHideFlags: 0
@@ -4430,10 +4430,10 @@ MonoBehaviour:
   sensitivity: 15.1000004
   decaySpeed: 1.5
   showAudioOptions: 0
-  headroom: 6
-  dynamicRange: 20
+  headroom: 2
+  dynamicRange: 16
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!1 &2097324533
 GameObject:
   m_ObjectHideFlags: 0
