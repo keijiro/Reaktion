@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f7500a515d741e2b1282fb8e75017b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   target: {fileID: 0}
   broadcast: 0
   enableTrigger: 1
@@ -354,6 +356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff989006ba2344a078d58adb25167cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableTranslation: 1
   translationVector: {x: 1, y: 0, z: 0}
   velocityCurve:
@@ -425,9 +429,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 328707819}
   - 114: {fileID: 328707818}
+  - 114: {fileID: 328707821}
   - 114: {fileID: 328707820}
   m_Layer: 0
-  m_Name: Input
+  m_Name: Reaktor Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,9 +446,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 328707817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 233880db483cd48d49a6c8f99785b36a, type: 3}
+  m_Script: {fileID: 11500000, guid: c8cc1239f4a7a4fd585345b2c0e4ef58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  channel: 0
+  bufferSize: 320
 --- !u!4 &328707819
 Transform:
   m_ObjectHideFlags: 0
@@ -468,6 +475,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mute: 1
+--- !u!114 &328707821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 328707817}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b611a96a1be824fc4b5137763ac40719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutoff: .5
+  q: 1
 --- !u!1 &339349485
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +841,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cb2331231cf48f5bcd3aa4030ea802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableIntensity: 1
   intensityCurve:
     serializedVersion: 2
@@ -1411,6 +1433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -1487,6 +1511,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _Shininess
   targetType: 1
   threshold: .5
@@ -1620,6 +1646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c73495c07c574c8888398de99a9c523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableTranslation: 1
   translationVector: {x: 0, y: 1, z: 0}
   translationCurve:
@@ -1700,6 +1728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e98ecc7d043445439010cbb4b3c9c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableBurst: 1
   burstThreshold: .100000001
   burstInterval: .400000006
@@ -3214,6 +3244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7465771cea044f4bf201779c7cd3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableSpeed: 0
   speedCurve:
     serializedVersion: 2
@@ -3264,6 +3296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _MainTex
   targetType: 3
   threshold: .5
@@ -3340,6 +3374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -3715,6 +3751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019c9b3121da7431cb5f32c6500d1fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   prefabs:
   - {fileID: 100000, guid: a260d7c2f83ce41058b0d0b17e0950cf, type: 2}
   - {fileID: 100000, guid: 03d8473e3b50e4d0a8a967eefe43d8f1, type: 2}
@@ -3927,6 +3965,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff989006ba2344a078d58adb25167cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableTranslation: 0
   translationVector: {x: 0, y: 1, z: 0}
   velocityCurve:
@@ -4031,6 +4071,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -4134,6 +4176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetName: _SpecColor
   targetType: 0
   threshold: .5
@@ -4240,6 +4284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7465771cea044f4bf201779c7cd3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableSpeed: 1
   speedCurve:
     serializedVersion: 2
@@ -4324,6 +4370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42f354c551f0491189fd9db8fd7f724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetType: 0
   targetGameObjects:
   - {fileID: 993836811}
@@ -4418,6 +4466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42f354c551f0491189fd9db8fd7f724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   targetType: 1
   targetGameObjects:
   - {fileID: 993836811}
@@ -4570,6 +4620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cb2331231cf48f5bcd3aa4030ea802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
   enableIntensity: 1
   intensityCurve:
     serializedVersion: 2
