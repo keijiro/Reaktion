@@ -22,6 +22,23 @@
 //
 using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
+
+#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+
+public static class Lasp
+{
+    [DllImport("Lasp", EntryPoint="LaspInitialize")]
+    public static extern void Initialize();
+
+    [DllImport("Lasp", EntryPoint="LaspCountInputChannels")]
+    public static extern uint CountInputChannels();
+
+    [DllImport("Lasp", EntryPoint="LaspRetrieveWaveform")]
+    public static extern void RetrieveWaveform(uint sourceChannel, float[] buffer, uint bufferLength, uint channelCount);
+}
+
+#endif
 
 namespace Reaktion {
 
@@ -45,7 +62,6 @@ public class NativeAudioInput : MonoBehaviour
         audioSource.loop = true;
 
 #if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
-
         // Initialize the Lasp module.
         Lasp.Initialize();
 
