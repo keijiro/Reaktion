@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToMaterial)), CanEditMultipleObjects]
-public class ReaktorToMaterialEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(MaterialGear)), CanEditMultipleObjects]
+public class MaterialGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
@@ -76,26 +78,26 @@ public class ReaktorToMaterialEditor : Editor
         EditorGUILayout.PropertyField(propTargetName);
 
         if (!propTargetType.hasMultipleDifferentValues &&
-            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Color)
+            propTargetType.enumValueIndex == (int)MaterialGear.TargetType.Color)
         {
             EditorGUILayout.PropertyField(propColorGradient);
         }
 
         if (!propTargetType.hasMultipleDifferentValues &&
-            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Float)
+            propTargetType.enumValueIndex == (int)MaterialGear.TargetType.Float)
         {
             EditorGUILayout.PropertyField(propFloatCurve);
         }
 
         if (!propTargetType.hasMultipleDifferentValues &&
-            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Vector)
+            propTargetType.enumValueIndex == (int)MaterialGear.TargetType.Vector)
         {
             EditorGUILayout.PropertyField(propVectorFrom, labelFrom, true);
             EditorGUILayout.PropertyField(propVectorTo, labelTo, true);
         }
 
         if (!propTargetType.hasMultipleDifferentValues &&
-            propTargetType.enumValueIndex == (int)ReaktorToMaterial.TargetType.Texture)
+            propTargetType.enumValueIndex == (int)MaterialGear.TargetType.Texture)
         {
             EditorGUILayout.PropertyField(propThreshold);
             EditorGUILayout.PropertyField(propTextureLow, labelLow);
@@ -105,3 +107,5 @@ public class ReaktorToMaterialEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+} // namespace Reaktion

@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToParticleSystem)), CanEditMultipleObjects]
-public class ReaktorToParticleSystemEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(ParticleSystemGear)), CanEditMultipleObjects]
+public class ParticleSystemGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
@@ -89,3 +91,5 @@ public class ReaktorToParticleSystemEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+} // namespace Reaktion

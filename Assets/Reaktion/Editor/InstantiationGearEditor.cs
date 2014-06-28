@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToInstantiation)), CanEditMultipleObjects]
-public class ReaktorToInstantiationEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(InstantiationGear)), CanEditMultipleObjects]
+public class InstantiationGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
@@ -124,7 +126,7 @@ public class ReaktorToInstantiationEditor : Editor
         // Range information
         EditorGUILayout.PropertyField(propRangeType);
         {
-            var isSphere = (propRangeType.enumValueIndex == (int)ReaktorToInstantiation.RangeType.Sphere);
+            var isSphere = (propRangeType.enumValueIndex == (int)InstantiationGear.RangeType.Sphere);
             var showBoth = propRangeType.hasMultipleDifferentValues;
             if ( isSphere || showBoth) EditorGUILayout.PropertyField(propRangeRadius, labelRangeRadius);
             if (!isSphere || showBoth) EditorGUILayout.PropertyField(propRangeVector, labelRangeVector);
@@ -134,3 +136,5 @@ public class ReaktorToInstantiationEditor : Editor
         serializedObject.ApplyModifiedProperties ();
     }
 }
+
+} // namespace Reaktion

@@ -23,8 +23,10 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Particle System")]
-public class ReaktorToParticleSystem : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Gear/Particle System Gear")]
+public class ParticleSystemGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
@@ -69,3 +71,5 @@ public class ReaktorToParticleSystem : MonoBehaviour
         previousOutput = reaktor.Output;
     }
 }
+
+} // namespace Reaktion

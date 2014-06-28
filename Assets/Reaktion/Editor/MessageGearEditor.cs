@@ -24,73 +24,92 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToAnimator)), CanEditMultipleObjects]
-public class ReaktorToAnimatorEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(MessageGear)), CanEditMultipleObjects]
+public class MessageGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
 
-    SerializedProperty propEnableSpeed;
-    SerializedProperty propSpeedCurve;
+    SerializedProperty propTarget;
+    SerializedProperty propBroadcast;
 
     SerializedProperty propEnableTrigger;
     SerializedProperty propTriggerThreshold;
     SerializedProperty propTriggerInterval;
-    SerializedProperty propTriggerName;
+    SerializedProperty propTriggerMessage;
+    
+    SerializedProperty propEnableInput;
+    SerializedProperty propInputCurve;
+    SerializedProperty propMaxInput;
+    SerializedProperty propInputMessage;
 
-    GUIContent labelSpeed;
+    GUIContent labelSendTo;
+    GUIContent labelTriggerMessage;
+    GUIContent labelInputMessage;
+    GUIContent labelMessage;
     GUIContent labelCurve;
-    GUIContent labelTrigger;
-    GUIContent labelThreshold;
-    GUIContent labelInterval;
 
     void OnEnable()
     {
         propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
 
-        propEnableSpeed = serializedObject.FindProperty("enableSpeed");
-        propSpeedCurve  = serializedObject.FindProperty("speedCurve");
+        propTarget    = serializedObject.FindProperty("target");
+        propBroadcast = serializedObject.FindProperty("broadcast");
 
         propEnableTrigger    = serializedObject.FindProperty("enableTrigger");
         propTriggerThreshold = serializedObject.FindProperty("triggerThreshold");
         propTriggerInterval  = serializedObject.FindProperty("triggerInterval");
-        propTriggerName      = serializedObject.FindProperty("triggerName");
+        propTriggerMessage   = serializedObject.FindProperty("triggerMessage");
 
-        labelSpeed     = new GUIContent("Speed");
-        labelCurve     = new GUIContent("Curve");
-        labelTrigger   = new GUIContent("Trigger");
-        labelThreshold = new GUIContent("Threshold");
-        labelInterval  = new GUIContent("Minimum Interval");
+        propEnableInput  = serializedObject.FindProperty("enableInput");
+        propInputCurve   = serializedObject.FindProperty("inputCurve");
+        propInputMessage = serializedObject.FindProperty("inputMessage");
+
+        labelSendTo         = new GUIContent("Send To");
+        labelTriggerMessage = new GUIContent("Trigger Message");
+        labelInputMessage   = new GUIContent("Input Message");
+        labelMessage        = new GUIContent("Message");
+        labelCurve          = new GUIContent("Curve");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        
-        EditorGUILayout.PropertyField(propAutoBind);
 
+        EditorGUILayout.PropertyField(propAutoBind);
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
+        EditorGUILayout.PropertyField(propTarget, labelSendTo);
+        if (propTarget.objectReferenceValue == null)
+            EditorGUILayout.HelpBox("Leave None to send messages to itself (loopback)", MessageType.None);
+
+        EditorGUILayout.PropertyField(propBroadcast);
+
         EditorGUILayout.Space();
 
-        EditorGUILayout.PropertyField(propEnableSpeed, labelSpeed);
-
-        if (propEnableSpeed.hasMultipleDifferentValues || propEnableSpeed.boolValue)
-            EditorGUILayout.PropertyField(propSpeedCurve, labelCurve);
-
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableTrigger, labelTrigger);
-
+        EditorGUILayout.PropertyField(propEnableTrigger, labelTriggerMessage);
         if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
         {
-            EditorGUILayout.Slider(propTriggerThreshold, 0.01f, 0.99f, labelThreshold);
-            EditorGUILayout.PropertyField(propTriggerInterval, labelInterval);
-            EditorGUILayout.PropertyField(propTriggerName);
+            EditorGUILayout.Slider(propTriggerThreshold, 0.0f, 1.0f, "Threahold");
+            EditorGUILayout.Slider(propTriggerInterval, 0.0f, 1.0f, "Interval");
+            EditorGUILayout.PropertyField(propTriggerMessage, labelMessage);
+        }
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propEnableInput, labelInputMessage);
+        if (propEnableInput.hasMultipleDifferentValues || propEnableInput.boolValue)
+        {
+            EditorGUILayout.PropertyField(propInputCurve, labelCurve);
+            EditorGUILayout.PropertyField(propInputMessage, labelMessage);
         }
 
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+} // namespace Reaktion

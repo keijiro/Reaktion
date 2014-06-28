@@ -23,50 +23,62 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Transform")]
-public class ReaktorToTransform : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Gear/Activation Gear")]
+public class ActivationGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    public bool enableTranslation;
-    public Vector3 translationVector = Vector3.up;
-    public AnimationCurve translationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    public enum TargetType { GameObject, Component };
+    public TargetType targetType;
+    public GameObject[] targetGameObjects;
+    public Component[] targetComponents;
 
-    public bool enableRotation;
-    public Vector3 rotationAxis = Vector3.up;
-    public AnimationCurve rotationCurve = AnimationCurve.Linear(0, -90, 1, 90);
-
-    public bool enableScaling;
-    public Vector3 scalingVector = Vector3.one;
-    public AnimationCurve scalingCurve = AnimationCurve.Linear(0, 0, 1, 1);
-
-    Vector3 initialPosition;
-    Quaternion initialRotation;
-    Vector3 initialScale;
+    public float threshold = 0.9f;
+    public float interval = 0.1f;
+    public bool invert;
+    
+    bool previousState;
+    float timer;
 
     void Awake()
     {
         if (autoBind || reaktor == null)
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
-    }
 
-    void Start()
-    {
-        initialPosition = transform.localPosition;
-        initialRotation = transform.localRotation;
-        initialScale = transform.localScale;
+        SwitchTargetState(false);
     }
-
+	
     void Update()
     {
-        if (enableTranslation)
-            transform.localPosition = initialPosition + translationVector * translationCurve.Evaluate(reaktor.Output);
+        if (timer <= 0.0f)
+        {
+            var state = (reaktor.Output >= threshold);
+            if (state != previousState)
+            {
+                SwitchTargetState(state);
+                previousState = state;
+                timer = interval;
+            }
+        }
+        timer -= Time.deltaTime;
+    }
 
-        if (enableRotation)
-            transform.localRotation = Quaternion.AngleAxis(rotationCurve.Evaluate(reaktor.Output), rotationAxis) * initialRotation;
-
-        if (enableScaling)
-            transform.localScale = initialScale + scalingVector * scalingCurve.Evaluate(reaktor.Output);
+    void SwitchTargetState(bool state)
+    {
+        if (targetType == TargetType.GameObject)
+        {
+            foreach (var go in targetGameObjects)
+                go.SetActive(state ^ invert);
+        }
+        else
+        {
+            foreach (var c in targetComponents)
+                c.GetType().GetProperty("enabled").SetValue(c, state ^ invert, null);
+        }
     }
 }
+
+} // namespace Reaktion

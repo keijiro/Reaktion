@@ -1,4 +1,4 @@
-//
+﻿//
 // Reaktion - An audio reactive animation toolkit for Unity.
 //
 // Copyright (C) 2013, 2014 Keijiro Takahashi
@@ -23,36 +23,52 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Light")]
-public class ReaktorToLight : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Reaktor And Source/Audio Reaktor Source")]
+public class AudioReaktorSource : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public bool mute = true;
 
-    public bool enableIntensity;
-    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    const float zeroOffset = 1.5849e-13f;
+    const float refLevel = 0.70710678118f; // 1/sqrt(2)
+    const float minDB = -60.0f;
 
-    public bool enableColor;
-    public Gradient colorGradient;
+    float squareSum;
+    int sampleCount;
 
-    void Awake()
+    float dbLevel;
+
+    public float DbLevel
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
-        UpdateLight(0);
+        get { return dbLevel; }
     }
 
     void Update()
     {
-        UpdateLight(reaktor.Output);
+        if (sampleCount < 1) return;
+
+        var rms = Mathf.Min(1.0f, Mathf.Sqrt(squareSum / sampleCount));
+        dbLevel = 20.0f * Mathf.Log10(rms / refLevel + zeroOffset);
+
+        squareSum = 0;
+        sampleCount = 0;
     }
 
-    void UpdateLight(float param)
+    void OnAudioFilterRead(float[] data, int channels)
     {
-        if (enableIntensity)
-            light.intensity = intensityCurve.Evaluate(param);
-        if (enableColor)
-            light.color = colorGradient.Evaluate(param);
+        for (var i = 0; i < data.Length; i += channels)
+        {
+            var level = data[i];
+            squareSum += level * level;
+        }
+
+        sampleCount += data.Length / channels;
+
+        if (mute)
+            for (var i = 0; i < data.Length; i++)
+                data[i] = 0;
     }
 }
+
+} // namespace Reaktion

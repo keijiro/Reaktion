@@ -23,62 +23,40 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Material")]
-public class ReaktorToMaterial : MonoBehaviour
-{
-    public enum TargetType { Color, Float, Vector, Texture }
+namespace Reaktion {
 
+[AddComponentMenu("Reaktion/Gear/Light Gear")]
+public class LightGear : MonoBehaviour
+{
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    public string targetName = "_Color";
-    public TargetType targetType = TargetType.Color;
+    public bool enableIntensity;
+    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    public float threshold = 0.5f;
-
+    public bool enableColor;
     public Gradient colorGradient;
-
-    public AnimationCurve floatCurve = AnimationCurve.Linear(0, 0, 1, 1);
-
-    public Vector4 vectorFrom = Vector4.zero;
-    public Vector4 vectorTo = Vector4.one;
-
-    public Texture textureLow;
-    public Texture textureHigh;
-
-    Material material;
 
     void Awake()
     {
         if (autoBind || reaktor == null)
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
 
-        material = renderer.material;
-
-        UpdateMaterial(0);
+        UpdateLight(0);
     }
 
     void Update()
     {
-        UpdateMaterial(reaktor.Output);
+        UpdateLight(reaktor.Output);
     }
 
-    void UpdateMaterial(float param)
+    void UpdateLight(float param)
     {
-        switch (targetType)
-        {
-        case TargetType.Color:
-            material.SetColor(targetName, colorGradient.Evaluate(param));
-            break;
-        case TargetType.Float:
-            material.SetFloat(targetName, floatCurve.Evaluate(param));
-            break;
-        case TargetType.Vector:
-            material.SetVector(targetName, Vector4.Lerp(vectorFrom, vectorTo, param));
-            break;
-        case TargetType.Texture:
-            material.SetTexture(targetName, param < threshold ? textureLow : textureHigh);
-            break;
-        }
+        if (enableIntensity)
+            light.intensity = intensityCurve.Evaluate(param);
+        if (enableColor)
+            light.color = colorGradient.Evaluate(param);
     }
 }
+
+} // namespace Reaktion

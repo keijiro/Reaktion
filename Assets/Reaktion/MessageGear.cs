@@ -23,8 +23,10 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Message")]
-public class ReaktorToMessage : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Gear/Message Gear")]
+public class MessageGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
@@ -94,3 +96,5 @@ public class ReaktorToMessage : MonoBehaviour
         previousOutput = reaktor.Output;
     }
 }
+
+} // namespace Reaktion

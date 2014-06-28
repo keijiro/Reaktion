@@ -24,6 +24,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+namespace Reaktion {
+
 [CustomEditor(typeof(Reaktor)), CanEditMultipleObjects]
 public class ReaktorEditor : Editor
 {
@@ -317,3 +319,5 @@ public class ReaktorEditor : Editor
         EditorGUI.LabelField(rect, label + ": " + (value * 100).ToString("0.0") + " %");
     }
 }
+
+} // namespace Reaktion

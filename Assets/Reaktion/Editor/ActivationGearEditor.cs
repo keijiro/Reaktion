@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToActivation)), CanEditMultipleObjects]
-public class ReaktorToActivationEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(ActivationGear)), CanEditMultipleObjects]
+public class ActivationGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
@@ -74,7 +76,7 @@ public class ReaktorToActivationEditor : Editor
             EditorGUILayout.PropertyField(propTargetGameObjects, true);
             EditorGUILayout.PropertyField(propTargetComponents, true);
         }
-        else if (propTargetType.enumValueIndex == (int)ReaktorToActivation.TargetType.GameObject)
+        else if (propTargetType.enumValueIndex == (int)ActivationGear.TargetType.GameObject)
         {
             EditorGUILayout.PropertyField(propTargetGameObjects, labelTargetList, true);
         }
@@ -90,3 +92,5 @@ public class ReaktorToActivationEditor : Editor
         serializedObject.ApplyModifiedProperties ();
     }
 }
+
+} // namespace Reaktion

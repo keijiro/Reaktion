@@ -24,8 +24,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ReaktorToTransform)), CanEditMultipleObjects]
-public class ReaktorToTransformEditor : Editor
+namespace Reaktion {
+
+[CustomEditor(typeof(TransformGear)), CanEditMultipleObjects]
+public class TransformGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
@@ -112,3 +114,5 @@ public class ReaktorToTransformEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+} // namespace Reaktion

@@ -23,6 +23,8 @@
 using UnityEngine;
 using UnityEditor;
 
+namespace Reaktion {
+
 public class ReaktionWindow : EditorWindow
 {
     const int updateInterval = 15;
@@ -147,3 +149,5 @@ public class ReaktionWindow : EditorWindow
         EditorGUILayout.EndScrollView ();
     }
 }
+
+} // namespace Reaktion

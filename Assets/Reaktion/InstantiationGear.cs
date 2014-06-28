@@ -23,8 +23,10 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Instantiation")]
-public class ReaktorToInstantiation : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Gear/Instantiation Gear")]
+public class InstantiationGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
@@ -121,3 +123,5 @@ public class ReaktorToInstantiation : MonoBehaviour
         if (parent != null) instance.transform.parent = parent;
     }
 }
+
+} // namespace Reaktion

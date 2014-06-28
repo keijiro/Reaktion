@@ -23,13 +23,15 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Reaktor/Reaktor")]
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Reaktor And Source/Reaktor")]
 public class Reaktor : MonoBehaviour
 {
     #region Audio input settings
 
     public bool autoBind = true;
-    public ReaktorSource source;
+    public AudioReaktorSource source;
     public AnimationCurve audioCurve = AnimationCurve.Linear (0, 0, 1, 1);
 
     #endregion
@@ -133,12 +135,12 @@ public class Reaktor : MonoBehaviour
         // Search for a Reaktor source.
         if (autoBind)
         {
-            source = GetComponentInChildren<ReaktorSource>();
+            source = GetComponentInChildren<AudioReaktorSource>();
             if (source == null)
             {
-                source = GetComponentInParent<ReaktorSource>();
+                source = GetComponentInParent<AudioReaktorSource>();
                 if (source == null)
-                    source= FindObjectOfType<ReaktorSource>();
+                    source= FindObjectOfType<AudioReaktorSource>();
             }
         }
 
@@ -227,3 +229,5 @@ public class Reaktor : MonoBehaviour
 
     #endregion
 }
+
+} // namespace Reaktion

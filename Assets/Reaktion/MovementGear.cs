@@ -23,8 +23,10 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Reaktion/Gear/Reaktor To Movement")]
-public class ReaktorToMovement : MonoBehaviour
+namespace Reaktion {
+
+[AddComponentMenu("Reaktion/Gear/Movement Gear")]
+public class MovementGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
@@ -67,3 +69,5 @@ public class ReaktorToMovement : MonoBehaviour
         }
     }
 }
+
+} // namespace Reaktion
