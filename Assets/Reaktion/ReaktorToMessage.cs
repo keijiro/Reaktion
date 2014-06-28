@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Gear/Reaktor To Message")]
 public class ReaktorToMessage : MonoBehaviour
 {
     public bool autoBind = true;

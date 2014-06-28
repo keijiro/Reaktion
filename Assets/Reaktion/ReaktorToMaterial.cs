@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Gear/Reaktor To Material")]
 public class ReaktorToMaterial : MonoBehaviour
 {
     public enum TargetType { Color, Float, Vector, Texture }

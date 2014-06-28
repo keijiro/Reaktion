@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Reaktor/Reaktor")]
 public class Reaktor : MonoBehaviour
 {
     #region Audio input settings

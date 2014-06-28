@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Gear/Reaktor To Activation")]
 public class ReaktorToActivation : MonoBehaviour
 {
     public bool autoBind = true;

@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Gear/Reaktor To Transform")]
 public class ReaktorToTransform : MonoBehaviour
 {
     public bool autoBind = true;

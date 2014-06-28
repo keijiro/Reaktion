@@ -23,6 +23,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Gear/Reaktor To Particle System")]
 public class ReaktorToParticleSystem : MonoBehaviour
 {
     public bool autoBind = true;

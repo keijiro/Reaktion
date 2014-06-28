@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Reaktion/Source/Reaktor Source")]
 public class ReaktorSource : MonoBehaviour
 {
     public bool mute = true;
