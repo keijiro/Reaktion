@@ -32,7 +32,7 @@ public class Reaktor : MonoBehaviour
 
     public bool autoBind = true;
     public AudioReaktorSource source;
-    public AnimationCurve audioCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve audioCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
 
@@ -42,7 +42,7 @@ public class Reaktor : MonoBehaviour
     public int gainKnobIndex = 2;
     public MidiChannel gainKnobChannel = MidiChannel.All;
     public string gainInputAxis;
-    public AnimationCurve gainCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve gainCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
 
@@ -52,7 +52,7 @@ public class Reaktor : MonoBehaviour
     public int offsetKnobIndex = 3;
     public MidiChannel offsetKnobChannel = MidiChannel.All;
     public string offsetInputAxis;
-    public AnimationCurve offsetCurve = AnimationCurve.Linear (0, 0, 1, 1);
+    public AnimationCurve offsetCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
 
@@ -96,7 +96,7 @@ public class Reaktor : MonoBehaviour
     }
 
     public float Override {
-        get { return Mathf.Clamp01 (fakeInput); }
+        get { return Mathf.Clamp01(fakeInput); }
         set { fakeInput = value; }
     }
 
@@ -130,7 +130,7 @@ public class Reaktor : MonoBehaviour
 
     #region MonoBehaviour functions
 
-    void Start ()
+    void Start()
     {
         // Search for a Reaktor source.
         if (autoBind)
@@ -150,7 +150,7 @@ public class Reaktor : MonoBehaviour
         gain = 1.0f;
     }
 
-    void Update ()
+    void Update()
     {
         float input = 0.0f;
 
@@ -159,47 +159,47 @@ public class Reaktor : MonoBehaviour
 
         // Check the peak level.
         peak -= Time.deltaTime * falldown;
-        peak = Mathf.Max (peak, Mathf.Max (rawInput, lowerBound + dynamicRange + headroom));
+        peak = Mathf.Max(peak, Mathf.Max(rawInput, lowerBound + dynamicRange + headroom));
         
         // Normalize the input level.
         input = (rawInput - peak + headroom + dynamicRange) / dynamicRange;
-        input = audioCurve.Evaluate (Mathf.Clamp01 (input));
+        input = audioCurve.Evaluate(Mathf.Clamp01(input));
 
         // MIDI CC input.
         if (gainEnabled)
         {
-            gain = MidiJack.GetKnob (gainKnobChannel, gainKnobIndex, 1.0f);
+            gain = MidiJack.GetKnob(gainKnobChannel, gainKnobIndex, 1.0f);
             if (!string.IsNullOrEmpty(gainInputAxis))
-                gain = Mathf.Clamp01 (gain + Input.GetAxis (gainInputAxis));
-            gain = gainCurve.Evaluate (gain);
+                gain = Mathf.Clamp01(gain + Input.GetAxis(gainInputAxis));
+            gain = gainCurve.Evaluate(gain);
             input *= gain;
         }
         if (offsetEnabled)
         {
-            offset = MidiJack.GetKnob (offsetKnobChannel, offsetKnobIndex);
+            offset = MidiJack.GetKnob(offsetKnobChannel, offsetKnobIndex);
             if (!string.IsNullOrEmpty(offsetInputAxis))
-                offset = Mathf.Clamp01 (offset + Input.GetAxis (offsetInputAxis));
-            offset = offsetCurve.Evaluate (offset);
+                offset = Mathf.Clamp01(offset + Input.GetAxis(offsetInputAxis));
+            offset = offsetCurve.Evaluate(offset);
             input += offset;
         }
 
         // Make output.
-        input = Mathf.Clamp01 (fakeInput < 0.0f ? input : fakeInput);
+        input = Mathf.Clamp01(fakeInput < 0.0f ? input : fakeInput);
 
         if (sensitivity > 0.0f)
         {
-            input -= (input - output) * Mathf.Exp (-sensitivity * Time.deltaTime);
+            input -= (input - output) * Mathf.Exp(-sensitivity * Time.deltaTime);
         }
 
-        output = Mathf.Max (input, output - Time.deltaTime * decaySpeed);
+        output = Mathf.Max(input, output - Time.deltaTime * decaySpeed);
     }
 
-    void OnEnable ()
+    void OnEnable()
     {
         activeInstanceCount++;
     }
 
-    void OnDisable ()
+    void OnDisable()
     {
         activeInstanceCount--;
     }
@@ -209,21 +209,21 @@ public class Reaktor : MonoBehaviour
     #region Public functions
 
     // Stop overriding.
-    public void StopOverride ()
+    public void StopOverride()
     {
         fakeInput = -1.0f;
     }
 
     // Search an available Reaktor placed close to the game object.
-    public static Reaktor SearchAvailableFrom (GameObject go)
+    public static Reaktor SearchAvailableFrom(GameObject go)
     {
-        var r = go.GetComponent<Reaktor> ();
+        var r = go.GetComponent<Reaktor>();
         if (r) return r;
 
-        r = go.GetComponentInParent<Reaktor> ();
+        r = go.GetComponentInParent<Reaktor>();
         if (r) return r;
 
-        r = go.GetComponentInChildren<Reaktor> ();
+        r = go.GetComponentInChildren<Reaktor>();
         return r;
     }
 
