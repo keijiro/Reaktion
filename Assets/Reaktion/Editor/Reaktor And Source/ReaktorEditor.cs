@@ -166,13 +166,22 @@ public class ReaktorEditor : Editor
                                 propOffsetEnabled.hasMultipleDifferentValues || propOffsetEnabled.boolValue;
 
         // Gain control.
+#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+        var useMidi = true;
+#else
+        var useMidi = false;
+#endif
+
         if (shouldInsertSpace) EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propGainEnabled, labelGainControl);
         if (propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue)
         {
-            EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
-            EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            if (useMidi)
+            {
+                EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
+                EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            }
             EditorGUILayout.PropertyField(propGainInputAxis, labelInputAxis);
             EditorGUILayout.PropertyField(propGainCurve, labelCurve);
         }
@@ -183,8 +192,11 @@ public class ReaktorEditor : Editor
         EditorGUILayout.PropertyField(propOffsetEnabled, labelOffsetControl);
         if (propOffsetEnabled.hasMultipleDifferentValues || propOffsetEnabled.boolValue)
         {
-            EditorGUILayout.PropertyField(propOffsetKnobIndex, labelMidiCC);
-            EditorGUILayout.IntPopup(propOffsetKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            if (useMidi)
+            {
+                EditorGUILayout.PropertyField(propOffsetKnobIndex, labelMidiCC);
+                EditorGUILayout.IntPopup(propOffsetKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
+            }
             EditorGUILayout.PropertyField(propOffsetInputAxis, labelInputAxis);
             EditorGUILayout.PropertyField(propOffsetCurve, labelCurve);
         }

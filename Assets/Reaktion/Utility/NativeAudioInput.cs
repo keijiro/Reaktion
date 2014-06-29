@@ -54,6 +54,7 @@ public class NativeAudioInput : MonoBehaviour
 
     void Awake()
     {
+#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
         var sampleRate = AudioSettings.outputSampleRate;
 
         // Create an audio source.
@@ -61,7 +62,6 @@ public class NativeAudioInput : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.loop = true;
 
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
         // Initialize the Lasp module.
         Lasp.Initialize();
 
