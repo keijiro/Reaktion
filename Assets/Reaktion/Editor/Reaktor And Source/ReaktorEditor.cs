@@ -240,9 +240,13 @@ public class ReaktorEditor : Editor
         // Draw the level bar on play mode.
         if (EditorApplication.isPlaying && !serializedObject.isEditingMultipleObjects)
         {
-            EditorGUILayout.Space();
-            DrawInputLevelBars(target as Reaktor);
-            EditorUtility.SetDirty(target); // Make it dirty to update the view.
+            var reaktor = target as Reaktor;
+            if (reaktor.enabled && reaktor.gameObject.activeInHierarchy)
+            {
+                EditorGUILayout.Space();
+                DrawInputLevelBars(reaktor);
+                EditorUtility.SetDirty(target); // Make it dirty to update the view.
+            }
         }
     }
 
