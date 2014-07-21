@@ -25,42 +25,45 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Reaktor And Source/Audio Reaktor Source")]
-public class AudioReaktorSource : ReaktorSourceBase
+[AddComponentMenu("Reaktion/Reaktor And Source/Beat Reaktor Source")]
+public class BeatReaktorSource : ReaktorSourceBase
 {
-    public bool mute = true;
+    public float bpm = 120;
+    public AnimationCurve curve = AnimationCurve.Linear(0, 1, 0.5f, 0);
 
-    const float zeroOffset = 1.5849e-13f;
-    const float refLevel = 0.70710678118f; // 1/sqrt(2)
-    const float minDB = -60.0f;
+    public int tapNote = -1;
+    public MidiChannel tapChannel = MidiChannel.All;
+    public string tapButton;
 
-    float squareSum;
-    int sampleCount;
+    float time;
+    float tapTime;
 
     void Update()
     {
-        if (sampleCount < 1) return;
+        if (tapNote >= 0)
+            if (MidiJack.GetKeyDown(tapChannel, tapNote))
+                Tap();
 
-        var rms = Mathf.Min(1.0f, Mathf.Sqrt(squareSum / sampleCount));
-        dbLevel = 20.0f * Mathf.Log10(rms / refLevel + zeroOffset);
+        if (!string.IsNullOrEmpty(tapButton))
+            if (Input.GetButtonDown(tapButton))
+                Tap();
 
-        squareSum = 0;
-        sampleCount = 0;
+        var interval = 60.0f / bpm;
+
+        time = (time + Time.deltaTime) % interval;
+
+        dbLevel = (curve.Evaluate(time / interval) - 1) * 60;
     }
 
-    void OnAudioFilterRead(float[] data, int channels)
+    public void Tap()
     {
-        for (var i = 0; i < data.Length; i += channels)
+        var delta = Time.time - tapTime;
+        if (tapTime > 0.2f && delta < 3.0f)
         {
-            var level = data[i];
-            squareSum += level * level;
+            bpm = Mathf.Lerp(bpm, 60.0f / delta, 0.15f);
+            time = 0.0f;
         }
-
-        sampleCount += data.Length / channels;
-
-        if (mute)
-            for (var i = 0; i < data.Length; i++)
-                data[i] = 0;
+        tapTime = Time.time;
     }
 }
 

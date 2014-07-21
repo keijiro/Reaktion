@@ -31,7 +31,7 @@ public class Reaktor : MonoBehaviour
     #region Audio input settings
 
     public bool autoBind = true;
-    public AudioReaktorSource source;
+    public ReaktorSourceBase source;
     public AnimationCurve audioCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
@@ -135,12 +135,12 @@ public class Reaktor : MonoBehaviour
         // Search for a Reaktor source.
         if (autoBind)
         {
-            source = GetComponentInChildren<AudioReaktorSource>();
+            source = GetComponentInChildren<ReaktorSourceBase>();
             if (source == null)
             {
-                source = GetComponentInParent<AudioReaktorSource>();
+                source = GetComponentInParent<ReaktorSourceBase>();
                 if (source == null)
-                    source= FindObjectOfType<AudioReaktorSource>();
+                    source= FindObjectOfType<ReaktorSourceBase>();
             }
         }
 
