@@ -61,7 +61,7 @@ public class BeatInjector : InjectorBase
         if (tapTime > 0.2f && delta < 3.0f)
         {
             bpm = Mathf.Lerp(bpm, 60.0f / delta, 0.15f);
-            time = 0.0f;
+            time = (time > 0.2f) ? 0.0f : time * 0.5f;
         }
         tapTime = Time.time;
     }
