@@ -52,7 +52,7 @@ public class BeatInjector : InjectorBase
 
         time = (time + Time.deltaTime) % interval;
 
-        dbLevel = (curve.Evaluate(time / interval) - 1) * 60;
+        dbLevel = (curve.Evaluate(time / interval) - 1) * 18;
     }
 
     public void Tap()
