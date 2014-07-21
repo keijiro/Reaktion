@@ -31,7 +31,7 @@ public class ReaktorEditor : Editor
 {
     // Audio input settings.
     SerializedProperty propAutoBind;
-    SerializedProperty propSource;
+    SerializedProperty propInjector;
     SerializedProperty propAudioCurve;
 
     // Gain control.
@@ -99,7 +99,7 @@ public class ReaktorEditor : Editor
     {
         // Audio input settings.
         propAutoBind          = serializedObject.FindProperty("autoBind");
-        propSource            = serializedObject.FindProperty("source");
+        propInjector          = serializedObject.FindProperty("injector");
         propAudioCurve        = serializedObject.FindProperty("audioCurve");
 
         // Gain control.
@@ -158,7 +158,7 @@ public class ReaktorEditor : Editor
         EditorGUILayout.PropertyField(propAutoBind);
 
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propSource);
+            EditorGUILayout.PropertyField(propInjector);
 
         EditorGUILayout.PropertyField(propAudioCurve, labelCurve);
 

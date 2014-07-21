@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -2892,7 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3008,7 +3008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3476,7 +3476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3719,7 +3719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -3850,7 +3850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4541,7 +4541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4742,7 +4742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
-  source: {fileID: 0}
+  injector: {fileID: 0}
   audioCurve:
     serializedVersion: 2
     m_Curve:

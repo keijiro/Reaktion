@@ -25,8 +25,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Reaktor And Source/Audio Reaktor Source")]
-public class AudioReaktorSource : ReaktorSourceBase
+[AddComponentMenu("Reaktion/Injector/Audio Injector")]
+public class AudioInjector : InjectorBase
 {
     public bool mute = true;
 

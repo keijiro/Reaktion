@@ -26,8 +26,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(AudioReaktorSource)), CanEditMultipleObjects]
-public class AudioReaktorSourceEditor : Editor
+[CustomEditor(typeof(AudioInjector)), CanEditMultipleObjects]
+public class AudioInjectorEditor : Editor
 {
     SerializedProperty propMute;
 
@@ -61,7 +61,7 @@ public class AudioReaktorSourceEditor : Editor
         // Draw a level meter if the target is active.
         if (EditorApplication.isPlaying && !serializedObject.isEditingMultipleObjects)
         {
-            var source = target as AudioReaktorSource;
+            var source = target as AudioInjector;
             if (source.enabled && source.gameObject.activeInHierarchy)
             {
                 DrawLevelMeter(source.DbLevel);

@@ -21,49 +21,17 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(BeatReaktorSource)), CanEditMultipleObjects]
-public class BeatReaktorSourceEditor : Editor
+public class InjectorBase : MonoBehaviour
 {
-    SerializedProperty propBpm;
-    SerializedProperty propCurve;
-    SerializedProperty propTapNote;
-    SerializedProperty propTapChannel;
-    SerializedProperty propTapButton;
-    GUIContent labelBpm;
+    protected float dbLevel;
 
-    void OnEnable()
+    public float DbLevel
     {
-        propBpm = serializedObject.FindProperty("bpm");
-        propCurve = serializedObject.FindProperty("curve");
-        propTapNote = serializedObject.FindProperty("tapNote");
-        propTapChannel = serializedObject.FindProperty("tapChannel");
-        propTapButton = serializedObject.FindProperty("tapButton");
-        labelBpm = new GUIContent("BPM");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        EditorGUILayout.PropertyField(propBpm, labelBpm);
-        EditorGUILayout.PropertyField(propCurve);
-
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propTapNote);
-        EditorGUILayout.PropertyField(propTapChannel);
-        EditorGUILayout.PropertyField(propTapButton);
-
-        if (GUILayout.Button("TAP"))
-            foreach (var t in targets)
-                (t as BeatReaktorSource).SendMessage("Tap");
-
-        serializedObject.ApplyModifiedProperties();
+        get { return dbLevel; }
     }
 }
 

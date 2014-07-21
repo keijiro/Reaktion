@@ -25,8 +25,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Reaktor And Source/Beat Reaktor Source")]
-public class BeatReaktorSource : ReaktorSourceBase
+[AddComponentMenu("Reaktion/Injector/Beat Injector")]
+public class BeatInjector : InjectorBase
 {
     public float bpm = 120;
     public AnimationCurve curve = AnimationCurve.Linear(0, 1, 0.5f, 0);

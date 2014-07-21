@@ -25,13 +25,13 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Reaktor And Source/Reaktor")]
+[AddComponentMenu("Reaktion/Reaktor")]
 public class Reaktor : MonoBehaviour
 {
     #region Audio input settings
 
     public bool autoBind = true;
-    public ReaktorSourceBase source;
+    public InjectorBase injector;
     public AnimationCurve audioCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
@@ -132,15 +132,15 @@ public class Reaktor : MonoBehaviour
 
     void Start()
     {
-        // Search for a Reaktor source.
+        // Search for an injector.
         if (autoBind)
         {
-            source = GetComponentInChildren<ReaktorSourceBase>();
-            if (source == null)
+            injector = GetComponentInChildren<InjectorBase>();
+            if (injector == null)
             {
-                source = GetComponentInParent<ReaktorSourceBase>();
-                if (source == null)
-                    source= FindObjectOfType<ReaktorSourceBase>();
+                injector = GetComponentInParent<InjectorBase>();
+                if (injector == null)
+                    injector = FindObjectOfType<InjectorBase>();
             }
         }
 
@@ -155,7 +155,7 @@ public class Reaktor : MonoBehaviour
         float input = 0.0f;
 
         // Audio input.
-        rawInput = source ? source.DbLevel : -1e12f;
+        rawInput = injector ? injector.DbLevel : -1e12f;
 
         // Check the peak level.
         peak -= Time.deltaTime * falldown;
