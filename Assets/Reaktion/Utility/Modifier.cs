@@ -25,42 +25,25 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Gear/Jitter Gear")]
-public class JitterGear : MonoBehaviour
+[System.Serializable]
+public class Modifier
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public bool enabled;
+    public float min;
+    public float max;
+    public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    public Modifier positionFrequency = Modifier.Linear(0, 0.1f);
-    public Modifier rotationFrequency = Modifier.Linear(0, 0.1f);
-    public Modifier positionAmount = Modifier.Linear(0, 1);
-    public Modifier rotationAmount = Modifier.Linear(0, 30);
-
-    TransformJitter jitter;
-
-    void Awake()
+    public float Evaluate(float i)
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
-        jitter = GetComponent<TransformJitter>();
+        return Mathf.Lerp(min, max, curve.Evaluate(i));
     }
 
-    void Update()
+    public static Modifier Linear(float min, float max)
     {
-        var o = reaktor.Output;
-
-        if (positionFrequency.enabled)
-            jitter.positionFrequency = positionFrequency.Evaluate(o);
-
-        if (rotationFrequency.enabled)
-            jitter.rotationFrequency = rotationFrequency.Evaluate(o);
-
-        if (positionAmount.enabled)
-            jitter.positionAmount = positionAmount.Evaluate(o);
-
-        if (rotationAmount.enabled)
-            jitter.rotationAmount = rotationAmount.Evaluate(o);
+        var instance = new Modifier();
+        instance.min = min;
+        instance.max = max;
+        return instance;
     }
 }
 

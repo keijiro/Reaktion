@@ -31,72 +31,19 @@ public class JitterGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
-    SerializedProperty propChangePositionFrequency;
-    SerializedProperty propPositionFrequencyMin;
-    SerializedProperty propPositionFrequencyMax;
-    SerializedProperty propPositionFrequencyCurve;
-
-    SerializedProperty propChangeRotationFrequency;
-    SerializedProperty propRotationFrequencyMin;
-    SerializedProperty propRotationFrequencyMax;
-    SerializedProperty propRotationFrequencyCurve;
-
-    SerializedProperty propChangePositionAmount;
-    SerializedProperty propPositionAmountMin;
-    SerializedProperty propPositionAmountMax;
-    SerializedProperty propPositionAmountCurve;
-
-    SerializedProperty propChangeRotationAmount;
-    SerializedProperty propRotationAmountMin;
-    SerializedProperty propRotationAmountMax;
-    SerializedProperty propRotationAmountCurve;
-
-    GUIContent labelChangePositionFrequency;
-    GUIContent labelChangeRotationFrequency;
-    GUIContent labelChangePositionAmount;
-    GUIContent labelChangeRotationAmount;
-    GUIContent labelMin;
-    GUIContent labelMax;
-    GUIContent labelCurve;
-
-    bool showPositionFrequency = true;
-    bool showRotationFrequency = true;
-    bool showPositionAmount = true;
-    bool showRotationAmount = true;
+    SerializedProperty propPositionFrequency;
+    SerializedProperty propRotationFrequency;
+    SerializedProperty propPositionAmount;
+    SerializedProperty propRotationAmount;
 
     void OnEnable()
     {
         propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
-
-        propChangePositionFrequency = serializedObject.FindProperty("changePositionFrequency");
-        propPositionFrequencyMin    = serializedObject.FindProperty("positionFrequencyMin");
-        propPositionFrequencyMax    = serializedObject.FindProperty("positionFrequencyMax");
-        propPositionFrequencyCurve  = serializedObject.FindProperty("positionFrequencyCurve");
-
-        propChangeRotationFrequency = serializedObject.FindProperty("changeRotationFrequency");
-        propRotationFrequencyMin    = serializedObject.FindProperty("rotationFrequencyMin");
-        propRotationFrequencyMax    = serializedObject.FindProperty("rotationFrequencyMax");
-        propRotationFrequencyCurve  = serializedObject.FindProperty("rotationFrequencyCurve");
-
-        propChangePositionAmount = serializedObject.FindProperty("changePositionAmount");
-        propPositionAmountMin    = serializedObject.FindProperty("positionAmountMin");
-        propPositionAmountMax    = serializedObject.FindProperty("positionAmountMax");
-        propPositionAmountCurve  = serializedObject.FindProperty("positionAmountCurve");
-
-        propChangeRotationAmount = serializedObject.FindProperty("changeRotationAmount");
-        propRotationAmountMin   = serializedObject.FindProperty("rotationAmountMin");
-        propRotationAmountMax   = serializedObject.FindProperty("rotationAmountMax");
-        propRotationAmountCurve = serializedObject.FindProperty("rotationAmountCurve");
-
-        labelChangePositionFrequency = new GUIContent("Position Frequency");
-        labelChangeRotationFrequency = new GUIContent("Rotation Frequency");
-        labelChangePositionAmount = new GUIContent("Position Amount");
-        labelChangeRotationAmount = new GUIContent("Rotation Amount");
-        labelMin = new GUIContent("Minimum Value");
-        labelMax = new GUIContent("Maximum Value");
-        labelCurve = new GUIContent("Curve");
+        propPositionFrequency = serializedObject.FindProperty("positionFrequency");
+        propRotationFrequency = serializedObject.FindProperty("rotationFrequency");
+        propPositionAmount = serializedObject.FindProperty("positionAmount");
+        propRotationAmount = serializedObject.FindProperty("rotationAmount");
     }
 
     public override void OnInspectorGUI()
@@ -107,37 +54,10 @@ public class JitterGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.PropertyField(propChangePositionFrequency, labelChangePositionFrequency);
-        if (propChangePositionFrequency.hasMultipleDifferentValues || propChangePositionFrequency.boolValue)
-        {
-            EditorGUILayout.PropertyField(propPositionFrequencyMin, labelMin);
-            EditorGUILayout.PropertyField(propPositionFrequencyMax, labelMax);
-            EditorGUILayout.PropertyField(propPositionFrequencyCurve, labelCurve);
-        }
-
-        EditorGUILayout.PropertyField(propChangeRotationFrequency, labelChangeRotationFrequency);
-        if (propChangeRotationFrequency.hasMultipleDifferentValues || propChangeRotationFrequency.boolValue)
-        {
-            EditorGUILayout.PropertyField(propRotationFrequencyMin, labelMin);
-            EditorGUILayout.PropertyField(propRotationFrequencyMax, labelMax);
-            EditorGUILayout.PropertyField(propRotationFrequencyCurve, labelCurve);
-        }
-
-        EditorGUILayout.PropertyField(propChangePositionAmount, labelChangePositionAmount);
-        if (propChangePositionAmount.hasMultipleDifferentValues || propChangePositionAmount.boolValue)
-        {
-            EditorGUILayout.PropertyField(propPositionAmountMin, labelMin);
-            EditorGUILayout.PropertyField(propPositionAmountMax, labelMax);
-            EditorGUILayout.PropertyField(propPositionAmountCurve, labelCurve);
-        }
-
-        EditorGUILayout.PropertyField(propChangeRotationAmount, labelChangeRotationAmount);
-        if (propChangeRotationAmount.hasMultipleDifferentValues || propChangeRotationAmount.boolValue)
-        {
-            EditorGUILayout.PropertyField(propRotationAmountMin, labelMin);
-            EditorGUILayout.PropertyField(propRotationAmountMax, labelMax);
-            EditorGUILayout.PropertyField(propRotationAmountCurve, labelCurve);
-        }
+        EditorGUILayout.PropertyField(propPositionFrequency);
+        EditorGUILayout.PropertyField(propRotationFrequency);
+        EditorGUILayout.PropertyField(propPositionAmount);
+        EditorGUILayout.PropertyField(propRotationAmount);
 
         serializedObject.ApplyModifiedProperties();
     }
