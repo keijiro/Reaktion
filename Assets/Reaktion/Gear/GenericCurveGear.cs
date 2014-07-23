@@ -49,7 +49,7 @@ public class GenericCurveGear : MonoBehaviour
     public OptionType optionType = OptionType.Float;
     public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
     public Vector3 origin;
-    public Vector3 direction;
+    public Vector3 direction = Vector3.right;
 
     public BoolEvent boolTarget;
     public IntEvent intTarget;
