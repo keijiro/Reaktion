@@ -25,8 +25,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Gear/Jitter Gear")]
-public class JitterGear : MonoBehaviour
+[AddComponentMenu("Reaktion/Gear/Jitter Motion Gear")]
+public class JitterMotionGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
@@ -36,14 +36,14 @@ public class JitterGear : MonoBehaviour
     public Modifier positionAmount = Modifier.Linear(0, 1);
     public Modifier rotationAmount = Modifier.Linear(0, 30);
 
-    TransformJitter jitter;
+    JitterMotion jitter;
 
     void Awake()
     {
         if (autoBind || reaktor == null)
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
 
-        jitter = GetComponent<TransformJitter>();
+        jitter = GetComponent<JitterMotion>();
     }
 
     void Update()

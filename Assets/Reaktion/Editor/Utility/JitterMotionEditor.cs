@@ -26,8 +26,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(TransformJitter)), CanEditMultipleObjects]
-public class TransformJitterEditor : Editor
+[CustomEditor(typeof(JitterMotion)), CanEditMultipleObjects]
+public class JitterMotionEditor : Editor
 {
     SerializedProperty propPositionFrequency;
     SerializedProperty propRotationFrequency;
@@ -59,9 +59,9 @@ public class TransformJitterEditor : Editor
         propPositionOctave = serializedObject.FindProperty("positionOctave");
         propRotationOctave = serializedObject.FindProperty("rotationOctave");
 
-        labelFrequency  = new GUIContent("Frequency");
-        labelAmount     = new GUIContent("Noise Strength");
-        labelOctave     = new GUIContent("Fractal Level");
+        labelFrequency = new GUIContent("Frequency");
+        labelAmount    = new GUIContent("Noise Strength");
+        labelOctave    = new GUIContent("Fractal Level");
     }
 
     public override void OnInspectorGUI()
@@ -71,23 +71,17 @@ public class TransformJitterEditor : Editor
         EditorGUILayout.LabelField("Position");
         EditorGUI.indentLevel++;
         EditorGUILayout.PropertyField(propPositionAmount, labelAmount);
-        if (propPositionAmount.hasMultipleDifferentValues || propPositionAmount.floatValue != 0.0f)
-        {
-            EditorGUILayout.PropertyField(propPositionComponents, GUIContent.none);
-            EditorGUILayout.PropertyField(propPositionFrequency, labelFrequency);
-            EditorGUILayout.IntSlider(propPositionOctave, 1, 8, labelOctave);
-        }
+        EditorGUILayout.PropertyField(propPositionComponents, GUIContent.none);
+        EditorGUILayout.PropertyField(propPositionFrequency, labelFrequency);
+        EditorGUILayout.IntSlider(propPositionOctave, 1, 8, labelOctave);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Rotation");
         EditorGUI.indentLevel++;
         EditorGUILayout.PropertyField(propRotationAmount, labelAmount);
-        if (propRotationAmount.hasMultipleDifferentValues || propRotationAmount.floatValue != 0.0f)
-        {
-            EditorGUILayout.PropertyField(propRotationComponents, GUIContent.none);
-            EditorGUILayout.PropertyField(propRotationFrequency, labelFrequency);
-            EditorGUILayout.IntSlider(propRotationOctave, 1, 8, labelOctave);
-        }
+        EditorGUILayout.PropertyField(propRotationComponents, GUIContent.none);
+        EditorGUILayout.PropertyField(propRotationFrequency, labelFrequency);
+        EditorGUILayout.IntSlider(propRotationOctave, 1, 8, labelOctave);
         EditorGUI.indentLevel--;
 
         serializedObject.ApplyModifiedProperties();

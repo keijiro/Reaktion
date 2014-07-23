@@ -26,8 +26,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(JitterGear)), CanEditMultipleObjects]
-public class JitterGearEditor : Editor
+[CustomEditor(typeof(JitterMotionGear)), CanEditMultipleObjects]
+public class JitterMotionGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;

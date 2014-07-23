@@ -24,7 +24,7 @@ using UnityEngine;
 
 namespace Reaktion {
 
-public class TransformJitter : MonoBehaviour
+public class JitterMotion : MonoBehaviour
 {
     public float positionFrequency = 0.2f;
     public float rotationFrequency = 0.2f;
