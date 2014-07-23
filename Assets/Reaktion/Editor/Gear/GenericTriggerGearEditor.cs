@@ -55,7 +55,7 @@ public class GenericTriggerGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.PropertyField(propThreshold);
+        EditorGUILayout.Slider(propThreshold, 0.01f, 0.99f);
         EditorGUILayout.PropertyField(propInterval, labelInterval);
 
         EditorGUILayout.PropertyField(propTarget);
