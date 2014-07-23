@@ -4105,7 +4105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1153192218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4208,7 +4208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1218292059
 Transform:
   m_ObjectHideFlags: 0
@@ -4352,22 +4352,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableSpeed: 0
-  speedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  speed:
+    enabled: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   enableTrigger: 1
   triggerThreshold: .899999976
   triggerInterval: .400000006
@@ -5928,27 +5931,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableSpeed: 1
-  speedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: .000263899565
-      value: .504560709
-      inSlope: 0
-      outSlope: 2.49198294
-      tangentMode: 21
-    - time: .599869668
-      value: 1.99876809
-      inSlope: 2.49198294
-      outSlope: 19.9848289
-      tangentMode: 21
-    - time: .900195658
-      value: 8.00073147
-      inSlope: 19.9848289
-      outSlope: .0421165042
-      tangentMode: 21
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  speed:
+    enabled: 1
+    min: .100000001
+    max: 3
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   enableTrigger: 0
   triggerThreshold: .899999976
   triggerInterval: .100000001
@@ -6243,7 +6244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1929463375
 Transform:
   m_ObjectHideFlags: 0

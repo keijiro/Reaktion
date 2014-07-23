@@ -31,8 +31,7 @@ public class AnimatorGear : MonoBehaviour
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    public bool enableSpeed;
-    public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    public Modifier speed;
 
     public bool enableTrigger;
     public float triggerThreshold = 0.9f;
@@ -53,8 +52,8 @@ public class AnimatorGear : MonoBehaviour
 
     void Update()
     {
-        if (enableSpeed)
-            animator.speed = speedCurve.Evaluate(reaktor.Output);
+        if (speed.enabled)
+            animator.speed = speed.Evaluate(reaktor.Output);
 
         if (enableTrigger)
         {

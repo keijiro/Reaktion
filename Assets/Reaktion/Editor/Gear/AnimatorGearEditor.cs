@@ -32,8 +32,7 @@ public class AnimatorGearEditor : Editor
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
 
-    SerializedProperty propEnableSpeed;
-    SerializedProperty propSpeedCurve;
+    SerializedProperty propSpeed;
 
     SerializedProperty propEnableTrigger;
     SerializedProperty propTriggerThreshold;
@@ -41,7 +40,6 @@ public class AnimatorGearEditor : Editor
     SerializedProperty propTriggerName;
 
     GUIContent labelSpeed;
-    GUIContent labelCurve;
     GUIContent labelTrigger;
     GUIContent labelThreshold;
     GUIContent labelInterval;
@@ -51,16 +49,13 @@ public class AnimatorGearEditor : Editor
         propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
 
-        propEnableSpeed = serializedObject.FindProperty("enableSpeed");
-        propSpeedCurve  = serializedObject.FindProperty("speedCurve");
+        propSpeed = serializedObject.FindProperty("speed");
 
         propEnableTrigger    = serializedObject.FindProperty("enableTrigger");
         propTriggerThreshold = serializedObject.FindProperty("triggerThreshold");
         propTriggerInterval  = serializedObject.FindProperty("triggerInterval");
         propTriggerName      = serializedObject.FindProperty("triggerName");
 
-        labelSpeed     = new GUIContent("Speed");
-        labelCurve     = new GUIContent("Curve");
         labelTrigger   = new GUIContent("Trigger");
         labelThreshold = new GUIContent("Threshold");
         labelInterval  = new GUIContent("Minimum Interval");
@@ -75,22 +70,17 @@ public class AnimatorGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableSpeed, labelSpeed);
-
-        if (propEnableSpeed.hasMultipleDifferentValues || propEnableSpeed.boolValue)
-            EditorGUILayout.PropertyField(propSpeedCurve, labelCurve);
-
-        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(propSpeed);
 
         EditorGUILayout.PropertyField(propEnableTrigger, labelTrigger);
 
         if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
         {
+            EditorGUI.indentLevel++;
             EditorGUILayout.Slider(propTriggerThreshold, 0.01f, 0.99f, labelThreshold);
             EditorGUILayout.PropertyField(propTriggerInterval, labelInterval);
             EditorGUILayout.PropertyField(propTriggerName);
+            EditorGUI.indentLevel--;
         }
 
         serializedObject.ApplyModifiedProperties();
