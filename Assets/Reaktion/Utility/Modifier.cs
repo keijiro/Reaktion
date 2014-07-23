@@ -29,8 +29,8 @@ namespace Reaktion {
 public class Modifier
 {
     public bool enabled;
-    public float min;
-    public float max;
+    public float min = 0;
+    public float max = 1;
     public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public float Evaluate(float i)

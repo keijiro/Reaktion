@@ -1,4 +1,4 @@
-﻿//
+//
 // Reaktion - An audio reactive animation toolkit for Unity.
 //
 // Copyright (C) 2013, 2014 Keijiro Takahashi
@@ -25,31 +25,34 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Gear/Animator Gear")]
-public class AnimatorGear : MonoBehaviour
+[System.Serializable]
+public class Trigger
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public bool enabled;
+    public float threshold = 0.5f;
+    public float interval = 0.1f;
 
-    public Modifier speed;
-    public Trigger trigger;
-    public string triggerName;
+    float previous;
+    float timer;
 
-    Animator animator;
-
-    void Awake()
+    public bool Update(float current)
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-        animator = GetComponent<Animator>();
-    }
+        if (!enabled) return false;
 
-    void Update()
-    {
-        if (speed.enabled)
-            animator.speed = speed.Evaluate(reaktor.Output);
-        if (trigger.Update(reaktor.Output))
-            animator.SetTrigger(triggerName);
+        if (timer <= 0.0f && current >= threshold && previous < threshold)
+        {
+            // bang
+            timer = interval;
+            previous = current;
+            return true;
+        }
+        else
+        {
+            // stay
+            timer -= Time.deltaTime;
+            previous = current;
+            return false;
+        }
     }
 }
 

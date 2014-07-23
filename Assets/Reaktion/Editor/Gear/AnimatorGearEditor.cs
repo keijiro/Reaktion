@@ -31,34 +31,17 @@ public class AnimatorGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
     SerializedProperty propSpeed;
-
-    SerializedProperty propEnableTrigger;
-    SerializedProperty propTriggerThreshold;
-    SerializedProperty propTriggerInterval;
+    SerializedProperty propTrigger;
     SerializedProperty propTriggerName;
-
-    GUIContent labelSpeed;
-    GUIContent labelTrigger;
-    GUIContent labelThreshold;
-    GUIContent labelInterval;
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
-        propReaktor  = serializedObject.FindProperty("reaktor");
-
-        propSpeed = serializedObject.FindProperty("speed");
-
-        propEnableTrigger    = serializedObject.FindProperty("enableTrigger");
-        propTriggerThreshold = serializedObject.FindProperty("triggerThreshold");
-        propTriggerInterval  = serializedObject.FindProperty("triggerInterval");
-        propTriggerName      = serializedObject.FindProperty("triggerName");
-
-        labelTrigger   = new GUIContent("Trigger");
-        labelThreshold = new GUIContent("Threshold");
-        labelInterval  = new GUIContent("Minimum Interval");
+        propAutoBind    = serializedObject.FindProperty("autoBind");
+        propReaktor     = serializedObject.FindProperty("reaktor");
+        propSpeed       = serializedObject.FindProperty("speed");
+        propTrigger     = serializedObject.FindProperty("trigger");
+        propTriggerName = serializedObject.FindProperty("triggerName");
     }
 
     public override void OnInspectorGUI()
@@ -72,13 +55,12 @@ public class AnimatorGearEditor : Editor
 
         EditorGUILayout.PropertyField(propSpeed);
 
-        EditorGUILayout.PropertyField(propEnableTrigger, labelTrigger);
+        EditorGUILayout.PropertyField(propTrigger);
 
-        if (propEnableTrigger.hasMultipleDifferentValues || propEnableTrigger.boolValue)
+        if (propTrigger.hasMultipleDifferentValues ||
+            propTrigger.FindPropertyRelative("enabled").boolValue)
         {
             EditorGUI.indentLevel++;
-            EditorGUILayout.Slider(propTriggerThreshold, 0.01f, 0.99f, labelThreshold);
-            EditorGUILayout.PropertyField(propTriggerInterval, labelInterval);
             EditorGUILayout.PropertyField(propTriggerName);
             EditorGUI.indentLevel--;
         }

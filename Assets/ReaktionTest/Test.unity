@@ -4371,9 +4371,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-  enableTrigger: 1
-  triggerThreshold: .899999976
-  triggerInterval: .400000006
+  trigger:
+    enabled: 1
+    threshold: .899999976
+    interval: .100000001
   triggerName: Jump
 --- !u!1 &1337910071
 GameObject:
@@ -5950,9 +5951,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-  enableTrigger: 0
-  triggerThreshold: .899999976
-  triggerInterval: .100000001
+  trigger:
+    enabled: 0
+    threshold: .5
+    interval: .100000001
   triggerName: 
 --- !u!95 &1782383568
 Animator:
