@@ -300,6 +300,7 @@ GameObject:
   - 4: {fileID: 307014376}
   - 33: {fileID: 307014379}
   - 23: {fileID: 307014378}
+  - 114: {fileID: 307014380}
   - 114: {fileID: 307014377}
   m_Layer: 0
   m_Name: Cube
@@ -326,48 +327,51 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 307014375}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff989006ba2344a078d58adb25167cbf, type: 3}
+  m_Script: {fileID: 11500000, guid: acb99621fcb1f4503985e79e170fa93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableTranslation: 1
-  translationVector: {x: 1, y: 0, z: 0}
-  velocityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: .00320905447
-      value: -.0136473179
-      inSlope: 2.02022386
-      outSlope: 2.02022386
-      tangentMode: 10
-    - time: .999958813
-      value: 2.00001025
-      inSlope: 2.02022386
-      outSlope: 2.02022386
-      tangentMode: 10
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  enableRotation: 1
-  rotationAxis: {x: 0, y: 1, z: 0}
-  angularVelocityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 360
-      tangentMode: 0
-    - time: 1
-      value: 360
-      inSlope: 360
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  useLocal: 1
+  position:
+    enabled: 0
+    min: 0
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  rotation:
+    enabled: 1
+    min: 0
+    max: 300
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
 --- !u!23 &307014378
 Renderer:
   m_ObjectHideFlags: 0
@@ -395,6 +399,28 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 307014375}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &307014380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307014375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91a6fa75d39940268b68c6204273e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position:
+    vectorOption: 0
+    arbitralVector: {x: 1, y: 0, z: 0}
+    velocity: 0
+    velocityRandomness: 0
+  rotation:
+    vectorOption: 4
+    arbitralVector: {x: 0, y: 1, z: 0}
+    velocity: 30
+    velocityRandomness: 0
+  useLocalCoordinate: 1
 --- !u!1 &328707817
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,6 +5495,7 @@ GameObject:
   - 33: {fileID: 1614488843}
   - 23: {fileID: 1614488842}
   - 114: {fileID: 1614488844}
+  - 114: {fileID: 1614488841}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -5488,6 +5515,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1153192219}
   m_RootOrder: 0
+--- !u!114 &1614488841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1614488839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb99621fcb1f4503985e79e170fa93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoBind: 1
+  reaktor: {fileID: 0}
+  position:
+    enabled: 1
+    min: 0
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  rotation:
+    enabled: 1
+    min: 0
+    max: 300
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
 --- !u!23 &1614488842
 Renderer:
   m_ObjectHideFlags: 0
