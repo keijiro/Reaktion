@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1015581105}
   - {fileID: 1765375703}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 15
 --- !u!114 &200722478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &339349486
 Transform:
   m_ObjectHideFlags: 0
@@ -519,7 +519,7 @@ Transform:
   - {fileID: 2097324534}
   - {fileID: 512763288}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
 --- !u!114 &339349487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +694,7 @@ Transform:
   m_Children:
   - {fileID: 1100653361}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
 --- !u!1 &458939243
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,22 +844,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableIntensity: 1
-  intensityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  intensity:
+    enabled: 1
+    min: .100000001
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   enableColor: 1
   colorGradient:
     key0:
@@ -4310,7 +4313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1300914056
 Transform:
   m_ObjectHideFlags: 0
@@ -4704,7 +4707,7 @@ GameObject:
   - 114: {fileID: 1362350447}
   - 114: {fileID: 1362350450}
   m_Layer: 0
-  m_Name: Test | Jitter
+  m_Name: Test | Jitter Motion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4816,7 +4819,7 @@ Transform:
   - {fileID: 226079365}
   - {fileID: 1877489266}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 13
 --- !u!114 &1362350450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5252,7 +5255,7 @@ Transform:
   - {fileID: 1080750201}
   - {fileID: 118286694}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 17
 --- !u!114 &1513266362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5469,7 +5472,7 @@ Transform:
   m_Children:
   - {fileID: 767720841}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1 &1575360840
 GameObject:
   m_ObjectHideFlags: 0
@@ -7603,27 +7606,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableIntensity: 1
-  intensityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: -.0117647061
-      value: .460606009
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .112461746
-      value: .0126476446
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  intensity:
+    enabled: 1
+    min: .100000001
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   enableColor: 1
   colorGradient:
     key0:
@@ -7833,4 +7834,4 @@ Transform:
   m_Children:
   - {fileID: 781884823}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 11

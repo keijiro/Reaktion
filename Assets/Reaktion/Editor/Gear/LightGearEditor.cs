@@ -31,29 +31,23 @@ public class LightGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-    SerializedProperty propEnableIntensity;
-    SerializedProperty propIntensityCurve;
+    SerializedProperty propIntensity;
     SerializedProperty propEnableColor;
     SerializedProperty propColorGradient;
 
-    GUIContent labelIntensity;
-    GUIContent labelCurve;
     GUIContent labelColor;
     GUIContent labelGradient;
 
     void OnEnable()
     {
-        propAutoBind        = serializedObject.FindProperty("autoBind");
-        propReaktor         = serializedObject.FindProperty("reaktor");
-        propEnableIntensity = serializedObject.FindProperty("enableIntensity");
-        propIntensityCurve  = serializedObject.FindProperty("intensityCurve");
-        propEnableColor     = serializedObject.FindProperty("enableColor");
-        propColorGradient   = serializedObject.FindProperty("colorGradient");
+        propAutoBind      = serializedObject.FindProperty("autoBind");
+        propReaktor       = serializedObject.FindProperty("reaktor");
+        propIntensity     = serializedObject.FindProperty("intensity");
+        propEnableColor   = serializedObject.FindProperty("enableColor");
+        propColorGradient = serializedObject.FindProperty("colorGradient");
 
-        labelIntensity = new GUIContent("Intensity");
-        labelCurve     = new GUIContent("Curve");
-        labelColor     = new GUIContent("Color");
-        labelGradient  = new GUIContent("Gradient");
+        labelColor    = new GUIContent("Color");
+        labelGradient = new GUIContent("Gradient");
     }
 
     public override void OnInspectorGUI()
@@ -64,17 +58,15 @@ public class LightGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableIntensity, labelIntensity);
-        if (propEnableIntensity.hasMultipleDifferentValues || propEnableIntensity.boolValue)
-            EditorGUILayout.PropertyField(propIntensityCurve, labelCurve);
-
-        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(propIntensity);
 
         EditorGUILayout.PropertyField(propEnableColor, labelColor);
         if (propEnableColor.hasMultipleDifferentValues || propEnableColor.boolValue)
+        {
+            EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(propColorGradient, labelGradient);
+            EditorGUI.indentLevel--;
+        }
 
         serializedObject.ApplyModifiedProperties();
     }

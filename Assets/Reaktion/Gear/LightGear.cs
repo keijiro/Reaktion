@@ -30,10 +30,7 @@ public class LightGear : MonoBehaviour
 {
     public bool autoBind = true;
     public Reaktor reaktor;
-
-    public bool enableIntensity;
-    public AnimationCurve intensityCurve = AnimationCurve.Linear(0, 0, 1, 1);
-
+    public Modifier intensity;
     public bool enableColor;
     public Gradient colorGradient;
 
@@ -41,7 +38,6 @@ public class LightGear : MonoBehaviour
     {
         if (autoBind || reaktor == null)
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
         UpdateLight(0);
     }
 
@@ -52,8 +48,8 @@ public class LightGear : MonoBehaviour
 
     void UpdateLight(float param)
     {
-        if (enableIntensity)
-            light.intensity = intensityCurve.Evaluate(param);
+        if (intensity.enabled)
+            light.intensity = intensity.Evaluate(param);
         if (enableColor)
             light.color = colorGradient.Evaluate(param);
     }
