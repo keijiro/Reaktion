@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1015581105}
   - {fileID: 1765375703}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!114 &200722478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,7 +519,7 @@ Transform:
   - {fileID: 2097324534}
   - {fileID: 512763288}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!114 &339349487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4100,7 +4100,7 @@ GameObject:
   - 4: {fileID: 1153192219}
   - 114: {fileID: 1153192218}
   m_Layer: 0
-  m_Name: Test | Movement
+  m_Name: Test | Constant Motion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4192,7 +4192,7 @@ Transform:
   - {fileID: 1614488840}
   - {fileID: 307014376}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 7
 --- !u!1 &1218292058
 GameObject:
   m_ObjectHideFlags: 0
@@ -4203,12 +4203,12 @@ GameObject:
   - 4: {fileID: 1218292059}
   - 114: {fileID: 1218292060}
   m_Layer: 0
-  m_Name: Test | Animation (trigger)
+  m_Name: Test | Animation (Trigger)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1218292059
 Transform:
   m_ObjectHideFlags: 0
@@ -4834,7 +4834,7 @@ Transform:
   - {fileID: 1672564661}
   - {fileID: 635508304}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &1435041836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5367,7 +5367,7 @@ Transform:
   m_Children:
   - {fileID: 767720841}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &1575360840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5560,14 +5560,14 @@ MonoBehaviour:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 0
+        inSlope: 1
         outSlope: 1
-        tangentMode: 0
+        tangentMode: 10
       - time: 1
         value: 1
         inSlope: 1
-        outSlope: 0
-        tangentMode: 0
+        outSlope: 1
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
 --- !u!23 &1614488842
@@ -5986,7 +5986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1858113699
 Transform:
   m_ObjectHideFlags: 0
@@ -6002,7 +6002,7 @@ Transform:
   - {fileID: 878792563}
   - {fileID: 614732665}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!114 &1858113701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6096,13 +6096,18 @@ MonoBehaviour:
     - time: 0
       value: 0
       inSlope: Infinity
-      outSlope: 1
-      tangentMode: 7
-    - time: .862179518
-      value: .997596145
+      outSlope: Infinity
+      tangentMode: 31
+    - time: .799800992
+      value: 1.00000954
       inSlope: Infinity
       outSlope: 1.00016594
       tangentMode: 7
+    - time: .999611974
+      value: 1.00002837
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 31
     m_PreInfinity: 2
     m_PostInfinity: 2
   origin: {x: 0, y: 0, z: 0}
@@ -6241,12 +6246,12 @@ GameObject:
   - 4: {fileID: 1929463375}
   - 114: {fileID: 1929463376}
   m_Layer: 0
-  m_Name: Test | Animation (speed)
+  m_Name: Test | Animation (Speed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1929463375
 Transform:
   m_ObjectHideFlags: 0
