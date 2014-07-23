@@ -43,11 +43,7 @@ public class TransformJitterEditor : Editor
 
     GUIContent labelFrequency;
     GUIContent labelAmount;
-    GUIContent labelComponents;
     GUIContent labelOctave;
-
-    bool showPosition = true;
-    bool showRotation = true;
 
     void OnEnable()
     {
@@ -64,8 +60,7 @@ public class TransformJitterEditor : Editor
         propRotationOctave = serializedObject.FindProperty("rotationOctave");
 
         labelFrequency  = new GUIContent("Frequency");
-        labelAmount     = new GUIContent("Noise Amount");
-        labelComponents = new GUIContent("Noise Multiply");
+        labelAmount     = new GUIContent("Noise Strength");
         labelOctave     = new GUIContent("Fractal Level");
     }
 
@@ -73,27 +68,27 @@ public class TransformJitterEditor : Editor
     {
         serializedObject.Update();
 
-        showPosition = EditorGUILayout.Foldout(showPosition, "Position");
-        if (showPosition)
+        EditorGUILayout.LabelField("Position");
+        EditorGUI.indentLevel++;
+        EditorGUILayout.PropertyField(propPositionAmount, labelAmount);
+        if (propPositionAmount.hasMultipleDifferentValues || propPositionAmount.floatValue != 0.0f)
         {
-            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propPositionComponents, GUIContent.none);
             EditorGUILayout.PropertyField(propPositionFrequency, labelFrequency);
             EditorGUILayout.IntSlider(propPositionOctave, 1, 8, labelOctave);
-            EditorGUILayout.PropertyField(propPositionAmount, labelAmount);
-            EditorGUILayout.PropertyField(propPositionComponents, labelComponents);
-            EditorGUI.indentLevel--;
         }
+        EditorGUI.indentLevel--;
 
-        showRotation = EditorGUILayout.Foldout(showRotation, "Rotation");
-        if (showRotation)
+        EditorGUILayout.LabelField("Rotation");
+        EditorGUI.indentLevel++;
+        EditorGUILayout.PropertyField(propRotationAmount, labelAmount);
+        if (propRotationAmount.hasMultipleDifferentValues || propRotationAmount.floatValue != 0.0f)
         {
-            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propRotationComponents, GUIContent.none);
             EditorGUILayout.PropertyField(propRotationFrequency, labelFrequency);
             EditorGUILayout.IntSlider(propRotationOctave, 1, 8, labelOctave);
-            EditorGUILayout.PropertyField(propRotationAmount, labelAmount);
-            EditorGUILayout.PropertyField(propRotationComponents, labelComponents);
-            EditorGUI.indentLevel--;
         }
+        EditorGUI.indentLevel--;
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -35,6 +35,9 @@ public class JitterGearEditor : Editor
     SerializedProperty propRotationFrequency;
     SerializedProperty propPositionAmount;
     SerializedProperty propRotationAmount;
+    GUIContent labelPositionAmount;
+    GUIContent labelRotationAmount;
+    GUIContent labelFrequency;
 
     void OnEnable()
     {
@@ -44,6 +47,9 @@ public class JitterGearEditor : Editor
         propRotationFrequency = serializedObject.FindProperty("rotationFrequency");
         propPositionAmount = serializedObject.FindProperty("positionAmount");
         propRotationAmount = serializedObject.FindProperty("rotationAmount");
+        labelPositionAmount = new GUIContent("Position Noise");
+        labelRotationAmount = new GUIContent("Rotation Noise");
+        labelFrequency = new GUIContent("Frequency");
     }
 
     public override void OnInspectorGUI()
@@ -55,11 +61,14 @@ public class JitterGearEditor : Editor
             EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(propPositionFrequency);
-        EditorGUILayout.PropertyField(propPositionAmount);
+
+        EditorGUILayout.PropertyField(propPositionAmount, labelPositionAmount);
+        EditorGUILayout.PropertyField(propPositionFrequency, labelFrequency);
+
         EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(propRotationFrequency);
-        EditorGUILayout.PropertyField(propRotationAmount);
+
+        EditorGUILayout.PropertyField(propRotationAmount, labelRotationAmount);
+        EditorGUILayout.PropertyField(propRotationFrequency, labelFrequency);
 
         serializedObject.ApplyModifiedProperties();
     }
