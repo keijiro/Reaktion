@@ -26,27 +26,87 @@ namespace Reaktion {
 
 public class ConstantMotion : MonoBehaviour
 {
-    public Vector3 direction = Vector3.right;
-    public float velocity = 1;
+    public enum VectorOption {
+        X, Y, Z, Arbitral, Random
+    };
 
-    public Vector3 axis = Vector3.up;
-    public float angularVelocity = 30;
+    [System.Serializable]
+    public class MotionElement
+    {
+        public VectorOption vectorOption;
+        public Vector3 arbitralVector;
+        public float velocity;
+        public float velocityRandomness;
 
-    public bool inLocal = true;
+        Vector3 randomVector;
+        float randomScalar;
+
+        public void Initialize()
+        {
+            randomVector = Random.onUnitSphere;
+            randomScalar = Random.value;
+        }
+
+        public Vector3 Vector {
+            get {
+                switch (vectorOption)
+                {
+                    case VectorOption.X:
+                        return Vector3.right;
+                    case VectorOption.Y:
+                        return Vector3.up;
+                    case VectorOption.Z:
+                        return Vector3.forward;
+                    case VectorOption.Arbitral:
+                        return arbitralVector;
+                    default:
+                        return randomVector;
+                }
+            }
+        }
+
+        public float Delta {
+            get {
+                var scale = (1.0f - velocityRandomness * randomScalar);
+                return velocity * scale * Time.deltaTime;
+            }
+        }
+    }
+
+    public MotionElement position = new MotionElement{
+        vectorOption = VectorOption.X,
+        arbitralVector = Vector3.right,
+        velocity = 1.0f
+    };
+
+    public MotionElement rotation = new MotionElement{
+        vectorOption = VectorOption.Y,
+        arbitralVector = Vector3.up,
+        velocity = 30.0f
+    };
+
+    public bool useLocalCoordinate = true;
+
+    void Awake()
+    {
+        position.Initialize();
+        rotation.Initialize();
+    }
 
     void Update()
     {
-        var delta = direction * (velocity * Time.deltaTime);
-        var omega = Quaternion.AngleAxis(angularVelocity * Time.deltaTime, axis);
-        if (inLocal)
+        var deltaP = position.Vector * position.Delta;
+        var deltaR = Quaternion.AngleAxis(rotation.Delta, rotation.Vector);
+
+        if (useLocalCoordinate)
         {
-            transform.localPosition += delta;
-            transform.localRotation = omega * transform.localRotation;
+            transform.localPosition += deltaP;
+            transform.localRotation = deltaR * transform.localRotation;
         }
         else
         {
-            transform.position += delta;
-            transform.rotation = omega * transform.rotation;
+            transform.position += deltaP;
+            transform.rotation = deltaR * transform.rotation;
         }
     }
 }

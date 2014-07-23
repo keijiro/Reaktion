@@ -5468,7 +5468,6 @@ GameObject:
   - 4: {fileID: 1614488840}
   - 33: {fileID: 1614488843}
   - 23: {fileID: 1614488842}
-  - 114: {fileID: 1614488841}
   - 114: {fileID: 1614488844}
   m_Layer: 0
   m_Name: Cube
@@ -5489,54 +5488,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1153192219}
   m_RootOrder: 0
---- !u!114 &1614488841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1614488839}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff989006ba2344a078d58adb25167cbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
-  enableTranslation: 0
-  translationVector: {x: 0, y: 1, z: 0}
-  velocityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  enableRotation: 1
-  rotationAxis: {x: 0, y: 1, z: 0}
-  angularVelocityCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 360
-      tangentMode: 0
-    - time: 1
-      value: 360
-      inSlope: 360
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  useLocal: 1
 --- !u!23 &1614488842
 Renderer:
   m_ObjectHideFlags: 0
@@ -5575,11 +5526,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91a6fa75d39940268b68c6204273e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 1, y: 0, z: 0}
-  velocity: 1
-  axis: {x: 0, y: 1, z: 0}
-  angularVelocity: 300
-  inLocal: 1
+  position:
+    vectorOption: 4
+    arbitralVector: {x: 1, y: 0, z: 0}
+    velocity: 1
+    velocityRandomness: .238999993
+  rotation:
+    vectorOption: 3
+    arbitralVector: {x: 0, y: 1, z: 0}
+    velocity: 300
+    velocityRandomness: .184
+  useLocalCoordinate: 1
 --- !u!1 &1672564658
 GameObject:
   m_ObjectHideFlags: 0
