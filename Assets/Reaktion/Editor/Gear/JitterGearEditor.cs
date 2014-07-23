@@ -54,9 +54,11 @@ public class JitterGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
+        EditorGUILayout.Space();
         EditorGUILayout.PropertyField(propPositionFrequency);
-        EditorGUILayout.PropertyField(propRotationFrequency);
         EditorGUILayout.PropertyField(propPositionAmount);
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(propRotationFrequency);
         EditorGUILayout.PropertyField(propRotationAmount);
 
         serializedObject.ApplyModifiedProperties();

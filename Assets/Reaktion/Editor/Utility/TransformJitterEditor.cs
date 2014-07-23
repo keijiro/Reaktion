@@ -76,19 +76,23 @@ public class TransformJitterEditor : Editor
         showPosition = EditorGUILayout.Foldout(showPosition, "Position");
         if (showPosition)
         {
+            EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(propPositionFrequency, labelFrequency);
+            EditorGUILayout.IntSlider(propPositionOctave, 1, 8, labelOctave);
             EditorGUILayout.PropertyField(propPositionAmount, labelAmount);
             EditorGUILayout.PropertyField(propPositionComponents, labelComponents);
-            EditorGUILayout.IntSlider(propPositionOctave, 1, 8, labelOctave);
+            EditorGUI.indentLevel--;
         }
 
         showRotation = EditorGUILayout.Foldout(showRotation, "Rotation");
         if (showRotation)
         {
+            EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(propRotationFrequency, labelFrequency);
+            EditorGUILayout.IntSlider(propRotationOctave, 1, 8, labelOctave);
             EditorGUILayout.PropertyField(propRotationAmount, labelAmount);
             EditorGUILayout.PropertyField(propRotationComponents, labelComponents);
-            EditorGUILayout.IntSlider(propRotationOctave, 1, 8, labelOctave);
+            EditorGUI.indentLevel--;
         }
 
         serializedObject.ApplyModifiedProperties();
