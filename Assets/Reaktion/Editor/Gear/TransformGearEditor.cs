@@ -26,38 +26,125 @@ using System.Collections;
 
 namespace Reaktion {
 
+// Custom property drawer for TransformElement.
+[CustomPropertyDrawer(typeof(TransformGear.TransformElement))]
+class TransformElementDrawer : PropertyDrawer
+{
+    // Labels for TransformMode.
+    static GUIContent[] modeLabels = {
+        new GUIContent("Off"),
+        new GUIContent("X Axis"),
+        new GUIContent("Y Axis"),
+        new GUIContent("Z Axis"),
+        new GUIContent("Arbitral Vector"),
+        new GUIContent("Random Vector")
+    };
+
+    // Value options for TransformMode.
+    static int[] modeOptions = {
+        // It looks a little bit silly but don't mind...
+        (int)TransformGear.TransformMode.NoMove,
+        (int)TransformGear.TransformMode.XAxis,
+        (int)TransformGear.TransformMode.YAxis,
+        (int)TransformGear.TransformMode.ZAxis,
+        (int)TransformGear.TransformMode.Arbitral,
+        (int)TransformGear.TransformMode.Random
+    };
+
+    static int GetExpansionLevel(SerializedProperty property)
+    {
+        var mode = property.FindPropertyRelative("mode");
+        // Fully expand if it has different values.
+        if (mode.hasMultipleDifferentValues) return 2;
+        // "Off"
+        if (mode.enumValueIndex == 0) return 0;
+        // Fully expand if it's in Arbitral mode.
+        if (mode.enumValueIndex == (int)TransformGear.TransformMode.Arbitral) return 2;
+        // Expand one level.
+        return 1;
+    }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        int rows = new int[]{1, 3, 4}[GetExpansionLevel(property)];
+        return EditorGUIUtility.singleLineHeight * rows +
+               EditorGUIUtility.standardVerticalSpacing * (rows - 1);
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        EditorGUI.BeginProperty(position, label, property);
+
+        position.height = EditorGUIUtility.singleLineHeight;
+        var rowHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+        // Transform mode selector drop-down.
+        EditorGUI.IntPopup(position, property.FindPropertyRelative("mode"), modeLabels, modeOptions, label);
+        position.y += rowHeight;
+
+        var expansion = GetExpansionLevel(property);
+        if (expansion > 0)
+        {
+            // Insert an indent.
+            position.x += 16;
+            position.width -= 16;
+            EditorGUIUtility.labelWidth -= 16;
+
+            if (expansion == 2)
+            {
+                // Vector box.
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("arbitralVector"), GUIContent.none);
+                position.y += rowHeight;
+            }
+
+            // Shorten the labels.
+            EditorGUIUtility.labelWidth = 26;
+
+            // Split into three columns.
+            var column = position;
+            column.width = (column.width - 8) / 3;
+            position.y += rowHeight;
+
+            // Min value box.
+            EditorGUI.PropertyField(column, property.FindPropertyRelative("min"));
+            column.x += column.width + 4;
+
+            // Max value box.
+            EditorGUI.PropertyField(column, property.FindPropertyRelative("max"));
+            column.x += column.width + 4;
+
+            // Curve (no label).
+            EditorGUI.PropertyField(column, property.FindPropertyRelative("curve"), GUIContent.none);
+
+            // Re-expand the labels.
+            EditorGUIUtility.labelWidth = 0;
+
+            // Randomness slider.
+            EditorGUI.Slider(position, property.FindPropertyRelative("randomness"), 0, 1);
+        }
+
+        EditorGUI.EndProperty();
+    }
+}
+
 [CustomEditor(typeof(TransformGear)), CanEditMultipleObjects]
 public class TransformGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
     SerializedProperty propPosition;
-    SerializedProperty propPositionVector;
-
     SerializedProperty propRotation;
-    SerializedProperty propRotationAxis;
-
     SerializedProperty propScale;
-    SerializedProperty propScaleVector;
-
-    SerializedProperty propAddInitialValue;
+    SerializedProperty propAddInitial;
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
-        propReaktor  = serializedObject.FindProperty("reaktor");
-
-        propPosition       = serializedObject.FindProperty("position");
-        propPositionVector = serializedObject.FindProperty("positionVector");
-
-        propRotation     = serializedObject.FindProperty("rotation");
-        propRotationAxis = serializedObject.FindProperty("rotationAxis");
-
-        propScale       = serializedObject.FindProperty("scale");
-        propScaleVector = serializedObject.FindProperty("scaleVector");
-
-        propAddInitialValue = serializedObject.FindProperty("addInitialValue");
+        propAutoBind   = serializedObject.FindProperty("autoBind");
+        propReaktor    = serializedObject.FindProperty("reaktor");
+        propPosition   = serializedObject.FindProperty("position");
+        propRotation   = serializedObject.FindProperty("rotation");
+        propScale      = serializedObject.FindProperty("scale");
+        propAddInitial = serializedObject.FindProperty("addInitialValue");
     }
 
     public override void OnInspectorGUI()
@@ -68,34 +155,21 @@ public class TransformGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
+        EditorGUILayout.Space();
+
         EditorGUILayout.PropertyField(propPosition);
-        if (propPosition.hasMultipleDifferentValues ||
-            propPosition.FindPropertyRelative("enabled").boolValue)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propPositionVector, GUIContent.none);
-            EditorGUI.indentLevel--;
-        }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propRotation);
-        if (propRotation.hasMultipleDifferentValues ||
-            propRotation.FindPropertyRelative("enabled").boolValue)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propRotationAxis, GUIContent.none);
-            EditorGUI.indentLevel--;
-        }
+
+        EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(propScale);
-        if (propScale.hasMultipleDifferentValues ||
-            propScale.FindPropertyRelative("enabled").boolValue)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propScaleVector, GUIContent.none);
-            EditorGUI.indentLevel--;
-        }
 
-        EditorGUILayout.PropertyField(propAddInitialValue);
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propAddInitial);
 
         serializedObject.ApplyModifiedProperties();
     }
