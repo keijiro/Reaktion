@@ -32,36 +32,24 @@ public class ParticleSystemGearEditor : Editor
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
 
-    SerializedProperty propEnableBurst;
-    SerializedProperty propBurstThreshold;
-    SerializedProperty propBurstInterval;
-    SerializedProperty propBurstEmissionNumber;
+    SerializedProperty propBurst;
+    SerializedProperty propBurstNumber;
 
-    SerializedProperty propEnableEmissionRate;
-    SerializedProperty propEmissionRateCurve;
+    SerializedProperty propEmissionRate;
 
-    GUIContent labelBurst;
-    GUIContent labelParticles;
-    GUIContent labelEmissionRate;
-    GUIContent labelCurve;
+    GUIContent labelBurstNumber;
 
     void OnEnable()
     {
         propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
 
-        propEnableBurst         = serializedObject.FindProperty("enableBurst");
-        propBurstThreshold      = serializedObject.FindProperty("burstThreshold");
-        propBurstInterval       = serializedObject.FindProperty("burstInterval");
-        propBurstEmissionNumber = serializedObject.FindProperty("burstEmissionNumber");
+        propBurst       = serializedObject.FindProperty("burst");
+        propBurstNumber = serializedObject.FindProperty("burstNumber");
 
-        propEnableEmissionRate = serializedObject.FindProperty("enableEmissionRate");
-        propEmissionRateCurve  = serializedObject.FindProperty("emissionRateCurve");
+        propEmissionRate = serializedObject.FindProperty("emissionRate");
 
-        labelBurst        = new GUIContent("Burst");
-        labelParticles    = new GUIContent("Particles");
-        labelEmissionRate = new GUIContent("Emission Rate");
-        labelCurve        = new GUIContent("Curve");
+        labelBurstNumber = new GUIContent("Particles");
     }
 
     public override void OnInspectorGUI()
@@ -72,21 +60,16 @@ public class ParticleSystemGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableBurst, labelBurst);
-        if (propEnableBurst.boolValue || propEnableBurst.hasMultipleDifferentValues)
+        EditorGUILayout.PropertyField(propBurst);
+        if (propBurst.hasMultipleDifferentValues ||
+            propBurst.FindPropertyRelative("enabled").boolValue)
         {
-            EditorGUILayout.Slider(propBurstThreshold, 0.0f, 1.0f, "Threshold");
-            EditorGUILayout.Slider(propBurstInterval, 0.0f, 1.0f, "Interval");
-            EditorGUILayout.PropertyField(propBurstEmissionNumber, labelParticles);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propBurstNumber, labelBurstNumber);
+            EditorGUI.indentLevel--;
         }
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableEmissionRate, labelEmissionRate);
-        if (propEnableEmissionRate.boolValue || propEnableEmissionRate.hasMultipleDifferentValues)
-            EditorGUILayout.PropertyField(propEmissionRateCurve, labelCurve);
+        EditorGUILayout.PropertyField(propEmissionRate);
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -31,19 +31,11 @@ public class ParticleSystemGear : MonoBehaviour
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    // Burst options.
-    public bool enableBurst;
-    public float burstThreshold = 0.9f;
-    public float burstInterval = 0.1f;
-    public int burstEmissionNumber = 10;
+    public Trigger burst;
+    public int burstNumber = 10;
 
-    // Emission rate options.
-    public bool enableEmissionRate;
-    public AnimationCurve emissionRateCurve = AnimationCurve.Linear(0, 0, 1, 20);
+    public Modifier emissionRate = Modifier.Linear(0, 20);
     
-    float previousOutput;
-    float burstTimer;
-
     void Awake()
     {
         if (autoBind || reaktor == null)
@@ -52,23 +44,14 @@ public class ParticleSystemGear : MonoBehaviour
 
     void Update()
     {
-        if (enableBurst)
+        if (burst.Update(reaktor.Output))
         {
-            if (burstTimer <= 0.0f && previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
-            {
-                particleSystem.Emit(burstEmissionNumber);
-                particleSystem.Play();
-                burstTimer = burstInterval;
-            }
-            burstTimer -= Time.deltaTime;
+            particleSystem.Emit(burstNumber);
+            particleSystem.Play();
         }
-        
-        if (enableEmissionRate)
-        {
-            particleSystem.emissionRate = emissionRateCurve.Evaluate(reaktor.Output);
-        }
-        
-        previousOutput = reaktor.Output;
+
+        if (emissionRate.enabled)
+            particleSystem.emissionRate = emissionRate.Evaluate(reaktor.Output);
     }
 }
 
