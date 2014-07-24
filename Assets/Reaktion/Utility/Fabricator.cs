@@ -25,66 +25,44 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Gear/Instantiation Gear")]
-public class InstantiationGear : MonoBehaviour
+[AddComponentMenu("Reaktion/Utility/Fabricator")]
+public class Fabricator : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
     // General options.
     public GameObject[] prefabs;
+    public float instantiationRate;
     public bool randomRotation = true;
     public Transform parent;
 
-    // Options for burst instantiation.
-    public bool enableBurst;
-    public float burstThreshold = 0.9f;
-    public float burstInterval = 0.1f;
-    public int burstNumber = 5;
-
-    // Options for time-based instantiation
-    public bool enableTimer;
-    public AnimationCurve rateCurve = AnimationCurve.Linear(0, 0, 1, 10);
-
-    // Instantiation range information
+    // Instantiation range information.
     public enum RangeType { Sphere, Box };
     public RangeType rangeType = RangeType.Sphere;
     public float rangeRadius = 1.0f;
     public Vector3 rangeVector = Vector3.one;
 
-    // Private variables
-    float previousOutput;
-    float burstIntervalTimer;
+    // Private variables.
     float timer;
 
-    void Awake()
+    // Make an instance from a randomly chosen prefab.
+    public void MakeInstance()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        var prefab = prefabs[Random.Range(0, prefabs.Length)];
+        var position = transform.TransformPoint(GetRandomPositionInRange());
+        var rotation = randomRotation ? Random.rotation : prefab.transform.rotation * transform.rotation;
+        var instance = Instantiate(prefab, position, rotation) as GameObject;
+        if (parent != null) instance.transform.parent = parent;
+    }
+
+    // Make some instances.
+    public void MakeInstance(int count)
+    {
+        while (count-- > 0) MakeInstance();
     }
 
     void Update()
     {
-        // Burst instantiation
-        if (enableBurst && burstIntervalTimer <= 0.0f)
-        {
-            if (previousOutput < burstThreshold && reaktor.Output >= burstThreshold)
-            {
-                for (var i = 0; i < burstNumber; i++) Spawn();
-                burstIntervalTimer = burstInterval;
-            }
-        }
-
-        burstIntervalTimer -= Time.deltaTime;
-
-        // Time-based instantiation
-        if (enableTimer)
-        {
-            timer += rateCurve.Evaluate(reaktor.Output) * Time.deltaTime;
-            for (; timer > 1.0f; timer -= 1.0f) Spawn();
-        }
-
-        previousOutput = reaktor.Output;
+        timer += instantiationRate * Time.deltaTime;
+        for (; timer > 1.0f; timer -= 1.0f) MakeInstance();
     }
 
     void OnDrawGizmosSelected()
@@ -112,15 +90,6 @@ public class InstantiationGear : MonoBehaviour
             var rv = new Vector3(Random.value, Random.value, Random.value);
             return Vector3.Scale(rv - Vector3.one * 0.5f, rangeVector);
         }
-    }
-
-    void Spawn()
-    {
-        var prefab = prefabs[Random.Range(0, prefabs.Length)];
-        var position = transform.TransformPoint(GetRandomPositionInRange());
-        var rotation = randomRotation ? Random.rotation : prefab.transform.rotation * transform.rotation;
-        var instance = Instantiate(prefab, position, rotation) as GameObject;
-        if (parent != null) instance.transform.parent = parent;
     }
 }
 

@@ -175,7 +175,6 @@ MonoBehaviour:
   reaktor: {fileID: 0}
   position:
     mode: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -193,10 +192,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
     mode: 4
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -214,10 +213,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   scale:
     mode: 5
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -235,6 +234,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   addInitialValue: 1
 --- !u!23 &161982932
@@ -2995,7 +2995,6 @@ MonoBehaviour:
   reaktor: {fileID: 0}
   position:
     mode: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -3013,10 +3012,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
     mode: 4
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -3034,10 +3033,10 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   scale:
     mode: 5
-    arbitralVector: {x: 0, y: 1, z: 0}
     min: 0
     max: 1
     curve:
@@ -3055,6 +3054,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+    arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   addInitialValue: 1
 --- !u!1 &1100653357
@@ -4472,7 +4472,7 @@ Transform:
   m_Children:
   - {fileID: 1914790991}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!114 &1300914057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5085,7 +5085,7 @@ Transform:
   - {fileID: 1672564661}
   - {fileID: 635508304}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!114 &1435041836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5387,7 +5387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1513266361
 Transform:
   m_ObjectHideFlags: 0
@@ -5485,14 +5485,15 @@ GameObject:
   m_Component:
   - 4: {fileID: 1569667047}
   - 114: {fileID: 1569667046}
+  - 114: {fileID: 1569667048}
   - 114: {fileID: 1569667045}
   m_Layer: 0
-  m_Name: Test | Instantiation
+  m_Name: Test | Fabricator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1569667045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5506,34 +5507,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  prefabs:
-  - {fileID: 100000, guid: a260d7c2f83ce41058b0d0b17e0950cf, type: 2}
-  - {fileID: 100000, guid: 03d8473e3b50e4d0a8a967eefe43d8f1, type: 2}
-  randomRotation: 1
-  parent: {fileID: 0}
-  enableBurst: 1
-  burstThreshold: .899999976
-  burstInterval: .100000001
+  burst:
+    enabled: 1
+    threshold: .5
+    interval: .100000001
   burstNumber: 5
-  enableTimer: 1
-  rateCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 29.9962521
-      tangentMode: 21
-    - time: 1
-      value: 29.9962521
-      inSlope: 29.9962521
-      outSlope: 0
-      tangentMode: 21
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  rangeType: 0
-  rangeRadius: 1
-  rangeVector: {x: 1, y: 1, z: 1}
+  instantiationRate:
+    enabled: 1
+    min: 0
+    max: 10
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
 --- !u!114 &1569667046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5619,7 +5616,27 @@ Transform:
   m_Children:
   - {fileID: 767720841}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 8
+--- !u!114 &1569667048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1569667044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19854da83e6c4d99a6c42c3c7df5161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 100000, guid: a260d7c2f83ce41058b0d0b17e0950cf, type: 2}
+  - {fileID: 100000, guid: 03d8473e3b50e4d0a8a967eefe43d8f1, type: 2}
+  instantiationRate: 4
+  randomRotation: 1
+  parent: {fileID: 0}
+  rangeType: 0
+  rangeRadius: 1
+  rangeVector: {x: 1, y: 1, z: 1}
 --- !u!1 &1575360840
 GameObject:
   m_ObjectHideFlags: 0
@@ -6254,7 +6271,7 @@ Transform:
   - {fileID: 878792563}
   - {fileID: 614732665}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &1858113701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7981,4 +7998,4 @@ Transform:
   m_Children:
   - {fileID: 781884823}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
