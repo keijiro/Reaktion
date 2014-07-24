@@ -155,20 +155,9 @@ public class TransformGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.Space();
-
         EditorGUILayout.PropertyField(propPosition);
-
-        EditorGUILayout.Space();
-
         EditorGUILayout.PropertyField(propRotation);
-
-        EditorGUILayout.Space();
-
         EditorGUILayout.PropertyField(propScale);
-
-        EditorGUILayout.Space();
-
         EditorGUILayout.PropertyField(propAddInitial);
 
         serializedObject.ApplyModifiedProperties();
