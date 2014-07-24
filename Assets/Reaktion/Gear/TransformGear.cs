@@ -31,17 +31,16 @@ public class TransformGear : MonoBehaviour
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    public bool enableTranslation;
-    public Vector3 translationVector = Vector3.up;
-    public AnimationCurve translationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    public Modifier position;
+    public Vector3 positionVector = Vector3.up;
 
-    public bool enableRotation;
+    public Modifier rotation = Modifier.Linear(-90, 90);
     public Vector3 rotationAxis = Vector3.up;
-    public AnimationCurve rotationCurve = AnimationCurve.Linear(0, -90, 1, 90);
 
-    public bool enableScaling;
-    public Vector3 scalingVector = Vector3.one;
-    public AnimationCurve scalingCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    public Modifier scale;
+    public Vector3 scaleVector = Vector3.one;
+
+    public bool addInitialValue = true;
 
     Vector3 initialPosition;
     Quaternion initialRotation;
@@ -53,7 +52,7 @@ public class TransformGear : MonoBehaviour
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
     }
 
-    void Start()
+    void OnEnable()
     {
         initialPosition = transform.localPosition;
         initialRotation = transform.localRotation;
@@ -62,14 +61,23 @@ public class TransformGear : MonoBehaviour
 
     void Update()
     {
-        if (enableTranslation)
-            transform.localPosition = initialPosition + translationVector * translationCurve.Evaluate(reaktor.Output);
+        if (position.enabled)
+        {
+            transform.localPosition = positionVector * position.Evaluate(reaktor.Output);
+            if (addInitialValue) transform.localPosition += initialPosition;
+        }
 
-        if (enableRotation)
-            transform.localRotation = Quaternion.AngleAxis(rotationCurve.Evaluate(reaktor.Output), rotationAxis) * initialRotation;
+        if (rotation.enabled)
+        {
+            transform.localRotation = Quaternion.AngleAxis(rotation.Evaluate(reaktor.Output), rotationAxis);
+            if (addInitialValue) transform.localRotation *= initialRotation;
+        }
 
-        if (enableScaling)
-            transform.localScale = initialScale + scalingVector * scalingCurve.Evaluate(reaktor.Output);
+        if (scale.enabled)
+        {
+            transform.localScale = scaleVector * scale.Evaluate(reaktor.Output);
+            if (addInitialValue) transform.localScale += initialScale;
+        }
     }
 }
 

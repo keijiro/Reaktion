@@ -608,7 +608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &368835010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2859,57 +2859,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoBind: 1
   reaktor: {fileID: 0}
-  enableTranslation: 1
-  translationVector: {x: 0, y: 1, z: 0}
-  translationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 2.65187526
-      outSlope: 2.65187526
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 4.00109229e-06
-      outSlope: 4.00109229e-06
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  enableRotation: 1
+  position:
+    enabled: 1
+    min: 0
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  positionVector: {x: 0, y: 1, z: 0}
+  rotation:
+    enabled: 1
+    min: -90
+    max: 90
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   rotationAxis: {x: 0, y: 1, z: 0}
-  rotationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: -90
-      inSlope: 26.3306808
-      outSlope: 26.3306808
-      tangentMode: 0
-    - time: 1
-      value: 90
-      inSlope: 430.448486
-      outSlope: 430.448486
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  enableScaling: 1
-  scalingVector: {x: 1, y: 1, z: 1}
-  scalingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: .0912641436
-      outSlope: .0912641436
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: -.103124522
-      outSlope: -.103124522
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  scale:
+    enabled: 1
+    min: 0
+    max: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  scaleVector: {x: 1, y: 1, z: 1}
+  addInitialValue: 1
 --- !u!1 &1100653357
 GameObject:
   m_ObjectHideFlags: 0
@@ -5240,7 +5250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1513266361
 Transform:
   m_ObjectHideFlags: 0
@@ -5322,7 +5332,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   sensitivity: 0
-  decaySpeed: 100
+  decaySpeed: 5.5
   showAudioOptions: 1
   headroom: 2
   dynamicRange: 16

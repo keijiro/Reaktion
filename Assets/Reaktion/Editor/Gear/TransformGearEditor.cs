@@ -32,48 +32,32 @@ public class TransformGearEditor : Editor
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
 
-    SerializedProperty propEnableTranslation;
-    SerializedProperty propTranslationVector;
-    SerializedProperty propTranslationCurve;
+    SerializedProperty propPosition;
+    SerializedProperty propPositionVector;
 
-    SerializedProperty propEnableRotation;
+    SerializedProperty propRotation;
     SerializedProperty propRotationAxis;
-    SerializedProperty propRotationCurve;
 
-    SerializedProperty propEnableScaling;
-    SerializedProperty propScalingVector;
-    SerializedProperty propScalingCurve;
+    SerializedProperty propScale;
+    SerializedProperty propScaleVector;
 
-    GUIContent labelTranslation;
-    GUIContent labelRotation;
-    GUIContent labelScaling;
-    GUIContent labelVector;
-    GUIContent labelAxis;
-    GUIContent labelCurve;
+    SerializedProperty propAddInitialValue;
 
     void OnEnable()
     {
         propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
 
-        propEnableTranslation = serializedObject.FindProperty("enableTranslation");
-        propTranslationVector = serializedObject.FindProperty("translationVector");
-        propTranslationCurve  = serializedObject.FindProperty("translationCurve");
+        propPosition       = serializedObject.FindProperty("position");
+        propPositionVector = serializedObject.FindProperty("positionVector");
 
-        propEnableRotation = serializedObject.FindProperty("enableRotation");
-        propRotationAxis   = serializedObject.FindProperty("rotationAxis");
-        propRotationCurve  = serializedObject.FindProperty("rotationCurve");
+        propRotation     = serializedObject.FindProperty("rotation");
+        propRotationAxis = serializedObject.FindProperty("rotationAxis");
 
-        propEnableScaling = serializedObject.FindProperty("enableScaling");
-        propScalingVector = serializedObject.FindProperty("scalingVector");
-        propScalingCurve  = serializedObject.FindProperty("scalingCurve");
+        propScale       = serializedObject.FindProperty("scale");
+        propScaleVector = serializedObject.FindProperty("scaleVector");
 
-        labelTranslation = new GUIContent("Translation");
-        labelRotation    = new GUIContent("Rotation");
-        labelScaling     = new GUIContent("Scaling");
-        labelVector      = new GUIContent("Vector");
-        labelAxis        = new GUIContent("Axis");
-        labelCurve       = new GUIContent("Curve");
+        propAddInitialValue = serializedObject.FindProperty("addInitialValue");
     }
 
     public override void OnInspectorGUI()
@@ -84,32 +68,34 @@ public class TransformGearEditor : Editor
         if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
             EditorGUILayout.PropertyField(propReaktor);
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableTranslation, labelTranslation);
-        if (propEnableTranslation.hasMultipleDifferentValues || propEnableTranslation.boolValue)
+        EditorGUILayout.PropertyField(propPosition);
+        if (propPosition.hasMultipleDifferentValues ||
+            propPosition.FindPropertyRelative("enabled").boolValue)
         {
-            EditorGUILayout.PropertyField(propTranslationVector, labelVector);
-            EditorGUILayout.PropertyField(propTranslationCurve, labelCurve);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propPositionVector, GUIContent.none);
+            EditorGUI.indentLevel--;
         }
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableRotation, labelRotation);
-        if (propEnableRotation.hasMultipleDifferentValues || propEnableRotation.boolValue)
+        EditorGUILayout.PropertyField(propRotation);
+        if (propRotation.hasMultipleDifferentValues ||
+            propRotation.FindPropertyRelative("enabled").boolValue)
         {
-            EditorGUILayout.PropertyField(propRotationAxis, labelAxis);
-            EditorGUILayout.PropertyField(propRotationCurve, labelCurve);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propRotationAxis, GUIContent.none);
+            EditorGUI.indentLevel--;
         }
 
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propEnableScaling, labelScaling);
-        if (propEnableScaling.hasMultipleDifferentValues || propEnableScaling.boolValue)
+        EditorGUILayout.PropertyField(propScale);
+        if (propScale.hasMultipleDifferentValues ||
+            propScale.FindPropertyRelative("enabled").boolValue)
         {
-            EditorGUILayout.PropertyField(propScalingVector, labelVector);
-            EditorGUILayout.PropertyField(propScalingCurve, labelCurve);
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propScaleVector, GUIContent.none);
+            EditorGUI.indentLevel--;
         }
+
+        EditorGUILayout.PropertyField(propAddInitialValue);
 
         serializedObject.ApplyModifiedProperties();
     }
