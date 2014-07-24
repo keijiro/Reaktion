@@ -37,6 +37,8 @@ public class ParticleSystemGearEditor : Editor
 
     SerializedProperty propEmissionRate;
 
+    SerializedProperty propSize;
+
     GUIContent labelBurstNumber;
 
     void OnEnable()
@@ -48,6 +50,8 @@ public class ParticleSystemGearEditor : Editor
         propBurstNumber = serializedObject.FindProperty("burstNumber");
 
         propEmissionRate = serializedObject.FindProperty("emissionRate");
+
+        propSize = serializedObject.FindProperty("size");
 
         labelBurstNumber = new GUIContent("Particles");
     }
@@ -70,6 +74,8 @@ public class ParticleSystemGearEditor : Editor
         }
 
         EditorGUILayout.PropertyField(propEmissionRate);
+
+        EditorGUILayout.PropertyField(propSize);
 
         serializedObject.ApplyModifiedProperties();
     }

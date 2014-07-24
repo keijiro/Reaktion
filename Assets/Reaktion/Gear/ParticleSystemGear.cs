@@ -35,6 +35,10 @@ public class ParticleSystemGear : MonoBehaviour
     public int burstNumber = 10;
 
     public Modifier emissionRate = Modifier.Linear(0, 20);
+
+    public Modifier size = Modifier.Linear(0.5f, 1.5f);
+
+    ParticleSystem.Particle[] tempArray;
     
     void Awake()
     {
@@ -52,6 +56,22 @@ public class ParticleSystemGear : MonoBehaviour
 
         if (emissionRate.enabled)
             particleSystem.emissionRate = emissionRate.Evaluate(reaktor.Output);
+
+        if (size.enabled)
+            ResizeParticles(size.Evaluate(reaktor.Output));
+    }
+
+    void ResizeParticles(float newSize)
+    {
+        if (tempArray == null || tempArray.Length != particleSystem.maxParticles)
+            tempArray = new ParticleSystem.Particle[particleSystem.maxParticles];
+
+        var count = particleSystem.GetParticles(tempArray);
+
+        for (var i = 0; i < count; i++)
+            tempArray[i].size = newSize;
+
+        particleSystem.SetParticles(tempArray, count);
     }
 }
 
