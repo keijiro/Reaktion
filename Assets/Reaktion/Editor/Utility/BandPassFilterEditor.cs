@@ -26,7 +26,7 @@ using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(BandPassFilter))]
+[CustomEditor(typeof(BandPassFilter)), CanEditMultipleObjects]
 public class BandPassFilterEditor : Editor
 {
     SerializedProperty propCutoff;
