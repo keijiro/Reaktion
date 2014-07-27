@@ -3066,6 +3066,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1100653361}
   - 114: {fileID: 1100653358}
+  - 114: {fileID: 1100653362}
   - 198: {fileID: 1100653360}
   - 199: {fileID: 1100653359}
   m_Layer: 0
@@ -4202,6 +4203,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 368835011}
   m_RootOrder: 0
+--- !u!114 &1100653362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1100653357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fce67a8a2644610b056a44ea519c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 100000, guid: bfced4461972b49108f6aafe24bf75f6, type: 2}
+  maxParticles: 100
 --- !u!1 &1144881631
 GameObject:
   m_ObjectHideFlags: 0
