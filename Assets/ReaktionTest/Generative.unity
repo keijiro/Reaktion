@@ -12,10 +12,10 @@ SceneSettings:
     backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
-  m_Fog: 0
-  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: .211764708, g: .215686277, b: .219607845, a: 1}
   m_FogMode: 3
-  m_FogDensity: .00999999978
+  m_FogDensity: .100000001
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientLight: {r: 0, g: 0, b: 0, a: 1}
@@ -215,8 +215,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 1
-  m_Color: {r: .456389338, g: .411764681, b: 1, a: 1}
-  m_Intensity: .200000003
+  m_Color: {r: 0, g: .503448486, b: 1, a: 1}
+  m_Intensity: .0399999991
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
