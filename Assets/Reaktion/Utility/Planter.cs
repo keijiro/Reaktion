@@ -30,28 +30,28 @@ public class Planter : MonoBehaviour
 {
     // General parameters.
     public GameObject[] prefabs;
-    public int maxObjects;
+    public int maxObjects = 100;
 
-    // Placement parameters.
-    public enum PlacementType { Single, Random, Grid }
-    public PlacementType placementType;
-    public Vector2 extent;
-    public float gridSize;
+    // Distribution settings.
+    public enum DistributionMode { Single, Random, Grid }
+    public DistributionMode distributionMode;
+    public Vector2 distributionRange = new Vector2(3, 0);
+    public float gridSpace = 1;
 
-    // Rotation parameters.
-    public enum RotationType { NotTouch, Planter, Random }
-    public RotationType rotationType;
+    // Rotation setting.
+    public enum RotationMode { Keep, Planter, Random }
+    public RotationMode rotationMode;
 
-    // Interval parameters.
-    public enum IntervalType { Distance, Time }
-    public IntervalType intervalType;
-    public float interval;
+    // Interval settings.
+    public enum IntervalMode { Distance, Time }
+    public IntervalMode intervalMode;
+    public float interval = 1;
 
     // Object pool.
     GameObject[] objectPool;
     int objectPoolIndex;
 
-    // Interval counter.
+    // Variables for managing interval.
     float intervalCounter;
     Vector3 previousPosition;
     Quaternion previousRotation;
@@ -60,7 +60,7 @@ public class Planter : MonoBehaviour
     void PutInstance(Vector3 position, Quaternion rotation)
     {
         // Randomize rotation if needed.
-        if (rotationType == RotationType.Random)
+        if (rotationMode == RotationMode.Random)
             rotation = Random.rotation;
 
         // Pick up the oldest object.
@@ -70,7 +70,7 @@ public class Planter : MonoBehaviour
         {
             // Make a new instance and push it to the pool.
             var prefab = prefabs[Random.Range(0, prefabs.Length)];
-            if (rotationType == RotationType.NotTouch)
+            if (rotationMode == RotationMode.Keep)
                 rotation = prefab.transform.rotation;
             go = Instantiate(prefab, position, rotation) as GameObject;
             objectPool[objectPoolIndex] = go;
@@ -79,7 +79,7 @@ public class Planter : MonoBehaviour
         {
             // Reuse the oldest object in the pool.
             go.transform.position = position;
-            if (rotationType != RotationType.NotTouch)
+            if (rotationMode != RotationMode.Keep)
                 go.transform.rotation = rotation;
         }
 
@@ -95,16 +95,16 @@ public class Planter : MonoBehaviour
         var ly = rotation * Vector3.up;
 
         // Number of columns and rows.
-        var nx = Mathf.Max(Mathf.FloorToInt(extent.x / gridSize), 0);
-        var ny = Mathf.Max(Mathf.FloorToInt(extent.y / gridSize), 0);
+        var nx = Mathf.Max(Mathf.FloorToInt(distributionRange.x / gridSpace), 0);
+        var ny = Mathf.Max(Mathf.FloorToInt(distributionRange.y / gridSpace), 0);
 
         // Put instances on each point of the grid.
         for (var y = 0; y <= ny; y++)
         {
-            var dy = gridSize * ((float)y - 0.5f * ny);
+            var dy = gridSpace * ((float)y - 0.5f * ny);
             for (var x = 0; x <= nx; x++)
             {
-                var dx = gridSize * ((float)x - 0.5f * nx);
+                var dx = gridSpace * ((float)x - 0.5f * nx);
                 PutInstance(position + lx * dx + ly * dy, rotation);
             }
         }
@@ -118,8 +118,8 @@ public class Planter : MonoBehaviour
         var ly = rotation * Vector3.up;
 
         // Get random value.
-        var dx = (Random.value - 0.5f) * extent.x;
-        var dy = (Random.value - 0.5f) * extent.y;
+        var dx = (Random.value - 0.5f) * distributionRange.x;
+        var dy = (Random.value - 0.5f) * distributionRange.y;
 
         // Put an instance on the point.
         PutInstance(position + lx * dx + ly * dy, rotation);
@@ -139,7 +139,7 @@ public class Planter : MonoBehaviour
     void Update()
     {
         // Get delta value on the interval parameter.
-        var delta = intervalType == IntervalType.Distance ?
+        var delta = intervalMode == IntervalMode.Distance ?
             Vector3.Distance(transform.position, previousPosition) : Time.deltaTime;
 
         // Look for the next plant position between frames.
@@ -151,9 +151,9 @@ public class Planter : MonoBehaviour
             var rotation = Quaternion.Slerp(previousRotation, transform.rotation, p);
 
             // Plant!
-            if (placementType == PlacementType.Grid)
+            if (distributionMode == DistributionMode.Grid)
                 PlantAlongGrid(position, rotation);
-            else if (placementType == PlacementType.Random)
+            else if (distributionMode == DistributionMode.Random)
                 PlantRandom(position, rotation);
             else
                 PutInstance(position, rotation);
