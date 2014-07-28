@@ -829,77 +829,6 @@ Transform:
   - {fileID: 1100653361}
   m_Father: {fileID: 0}
   m_RootOrder: 16
---- !u!1 &411395681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 411395684}
-  - 114: {fileID: 411395683}
-  - 114: {fileID: 411395682}
-  m_Layer: 0
-  m_Name: Test | Planter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &411395682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 411395681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91a6fa75d39940268b68c6204273e22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position:
-    vectorOption: 2
-    arbitralVector: {x: 1, y: 0, z: 0}
-    velocity: 4
-    velocityRandomness: 0
-  rotation:
-    vectorOption: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
-    velocity: 30
-    velocityRandomness: 0
-  useLocalCoordinate: 1
---- !u!114 &411395683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 411395681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 371624ba2c9a24cee9404b4661bd6819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabs:
-  - {fileID: 100000, guid: bfced4461972b49108f6aafe24bf75f6, type: 2}
-  _maxObjects: 100
-  distributionMode: 2
-  _distributionRange: {x: 2, y: 1}
-  _gridSpace: 1
-  rotationMode: 1
-  intervalMode: 0
-  _interval: 1
---- !u!4 &411395684
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 411395681}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
 --- !u!1 &458939243
 GameObject:
   m_ObjectHideFlags: 0
@@ -5491,7 +5420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1513266361
 Transform:
   m_ObjectHideFlags: 0
@@ -5506,7 +5435,7 @@ Transform:
   - {fileID: 1080750201}
   - {fileID: 118286694}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!114 &1513266362
 MonoBehaviour:
   m_ObjectHideFlags: 0
