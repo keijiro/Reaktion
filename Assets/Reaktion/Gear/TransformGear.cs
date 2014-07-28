@@ -29,21 +29,21 @@ namespace Reaktion {
 public class TransformGear : MonoBehaviour
 {
     public enum TransformMode {
-        NoMove, XAxis, YAxis, ZAxis, Arbitral, Random
+        Off, XAxis, YAxis, ZAxis, Arbitral, Random
     };
 
     // A class for handling each transformation.
     [System.Serializable]
     public class TransformElement
     {
-        public TransformMode mode = TransformMode.NoMove;
+        public TransformMode mode = TransformMode.Off;
 
-        // Standard modifier parameters.
+        // Basic modifier parameters.
         public float min = 0;
         public float max = 1;
         public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        // Used only when Arbitral mode.
+        // Used only in the arbitral mode.
         public Vector3 arbitralVector = Vector3.up;
 
         // Affects lerp parameter.
@@ -85,9 +85,9 @@ public class TransformGear : MonoBehaviour
     public bool autoBind = true;
     public Reaktor reaktor;
 
-    public TransformElement position;
-    public TransformElement rotation;
-    public TransformElement scale;
+    public TransformElement position = new TransformElement();
+    public TransformElement rotation = new TransformElement{ max = 90 };
+    public TransformElement scale = new TransformElement{ arbitralVector = Vector3.one };
 
     public bool addInitialValue = true;
 
@@ -99,7 +99,6 @@ public class TransformGear : MonoBehaviour
     {
         if (autoBind || reaktor == null)
             reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
         position.Initialize();
         rotation.Initialize();
         scale.Initialize();
@@ -114,21 +113,23 @@ public class TransformGear : MonoBehaviour
 
     void Update()
     {
-        if (position.mode != TransformMode.NoMove)
+        var ro = reaktor.Output;
+
+        if (position.mode != TransformMode.Off)
         {
-            transform.localPosition = position.Vector * position.GetScalar(reaktor.Output);
+            transform.localPosition = position.Vector * position.GetScalar(ro);
             if (addInitialValue) transform.localPosition += initialPosition;
         }
 
-        if (rotation.mode != TransformMode.NoMove)
+        if (rotation.mode != TransformMode.Off)
         {
-            transform.localRotation = Quaternion.AngleAxis(rotation.GetScalar(reaktor.Output), rotation.Vector);
+            transform.localRotation = Quaternion.AngleAxis(rotation.GetScalar(ro), rotation.Vector);
             if (addInitialValue) transform.localRotation *= initialRotation;
         }
 
-        if (scale.mode != TransformMode.NoMove)
+        if (scale.mode != TransformMode.Off)
         {
-            transform.localScale = scale.Vector * scale.GetScalar(reaktor.Output);
+            transform.localScale = scale.Vector * scale.GetScalar(ro);
             if (addInitialValue) transform.localScale += initialScale;
         }
     }

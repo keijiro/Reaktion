@@ -545,15 +545,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    vectorOption: 0
-    arbitralVector: {x: 1, y: 0, z: 0}
+    mode: 0
     velocity: 0
-    velocityRandomness: 0
+    arbitralVector: {x: 1, y: 0, z: 0}
+    randomness: 0
   rotation:
-    vectorOption: 4
-    arbitralVector: {x: 0, y: 1, z: 0}
+    mode: 0
     velocity: 30
-    velocityRandomness: 0
+    arbitralVector: {x: 0, y: 1, z: 0}
+    randomness: 0
   useLocalCoordinate: 1
 --- !u!1 &328707817
 GameObject:
@@ -5911,15 +5911,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    vectorOption: 4
-    arbitralVector: {x: 1, y: 0, z: 0}
+    mode: 0
     velocity: 1
-    velocityRandomness: .238999993
+    arbitralVector: {x: 1, y: 0, z: 0}
+    randomness: 0
   rotation:
-    vectorOption: 3
-    arbitralVector: {x: 0, y: 1, z: 0}
+    mode: 0
     velocity: 300
-    velocityRandomness: .184
+    arbitralVector: {x: 0, y: 1, z: 0}
+    randomness: 0
   useLocalCoordinate: 1
 --- !u!1 &1672564658
 GameObject:

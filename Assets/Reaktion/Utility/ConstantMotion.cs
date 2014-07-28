@@ -26,18 +26,24 @@ namespace Reaktion {
 
 public class ConstantMotion : MonoBehaviour
 {
-    public enum VectorOption {
-        X, Y, Z, Arbitral, Random
+    public enum TransformMode {
+        Off, XAxis, YAxis, ZAxis, Arbitral, Random
     };
 
+    // A class for handling each transformation.
     [System.Serializable]
-    public class MotionElement
+    public class TransformElement
     {
-        public VectorOption vectorOption;
-        public Vector3 arbitralVector;
-        public float velocity;
-        public float velocityRandomness;
+        public TransformMode mode = TransformMode.Off;
+        public float velocity = 1;
 
+        // Used only in the arbitral mode.
+        public Vector3 arbitralVector = Vector3.up;
+
+        // Affects velocity.
+        public float randomness = 0;
+
+        // Randomizer states.
         Vector3 randomVector;
         float randomScalar;
 
@@ -47,44 +53,32 @@ public class ConstantMotion : MonoBehaviour
             randomScalar = Random.value;
         }
 
+        // Get a vector corresponds to the current transform mode.
         public Vector3 Vector {
             get {
-                switch (vectorOption)
+                switch (mode)
                 {
-                    case VectorOption.X:
-                        return Vector3.right;
-                    case VectorOption.Y:
-                        return Vector3.up;
-                    case VectorOption.Z:
-                        return Vector3.forward;
-                    case VectorOption.Arbitral:
-                        return arbitralVector;
-                    default:
-                        return randomVector;
+                    case TransformMode.XAxis:    return Vector3.right;
+                    case TransformMode.YAxis:    return Vector3.up;
+                    case TransformMode.ZAxis:    return Vector3.forward;
+                    case TransformMode.Arbitral: return arbitralVector;
+                    case TransformMode.Random:   return randomVector;
                 }
+                return Vector3.zero;
             }
         }
 
+        // Get the current delta value.
         public float Delta {
             get {
-                var scale = (1.0f - velocityRandomness * randomScalar);
+                var scale = (1.0f - randomness * randomScalar);
                 return velocity * scale * Time.deltaTime;
             }
         }
     }
 
-    public MotionElement position = new MotionElement{
-        vectorOption = VectorOption.X,
-        arbitralVector = Vector3.right,
-        velocity = 1.0f
-    };
-
-    public MotionElement rotation = new MotionElement{
-        vectorOption = VectorOption.Y,
-        arbitralVector = Vector3.up,
-        velocity = 30.0f
-    };
-
+    public TransformElement position = new TransformElement();
+    public TransformElement rotation = new TransformElement{ velocity = 30 };
     public bool useLocalCoordinate = true;
 
     void Awake()
@@ -95,18 +89,20 @@ public class ConstantMotion : MonoBehaviour
 
     void Update()
     {
-        var deltaP = position.Vector * position.Delta;
-        var deltaR = Quaternion.AngleAxis(rotation.Delta, rotation.Vector);
-
-        if (useLocalCoordinate)
+        if (position.mode != TransformMode.Off)
         {
-            transform.localPosition += deltaP;
-            transform.localRotation = deltaR * transform.localRotation;
+            if (useLocalCoordinate)
+                transform.localPosition += position.Vector * position.Delta;
+            else
+                transform.position += position.Vector * position.Delta;
         }
         else
         {
-            transform.position += deltaP;
-            transform.rotation = deltaR * transform.rotation;
+            var delta = Quaternion.AngleAxis(rotation.Delta, rotation.Vector);
+            if (useLocalCoordinate)
+                transform.localRotation = delta * transform.localRotation;
+            else
+                transform.rotation = delta * transform.rotation;
         }
     }
 }

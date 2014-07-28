@@ -102,15 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    vectorOption: 2
-    arbitralVector: {x: 1, y: 0, z: 0}
+    mode: 3
     velocity: 4
-    velocityRandomness: 0
+    arbitralVector: {x: 1, y: 0, z: 0}
+    randomness: 0
   rotation:
-    vectorOption: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
+    mode: 0
     velocity: 0
-    velocityRandomness: 0
+    arbitralVector: {x: 0, y: 1, z: 0}
+    randomness: 0
   useLocalCoordinate: 1
 --- !u!4 &411395684
 Transform:
@@ -350,15 +350,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    vectorOption: 2
-    arbitralVector: {x: 1, y: 0, z: 0}
+    mode: 0
     velocity: 0
-    velocityRandomness: 0
+    arbitralVector: {x: 1, y: 0, z: 0}
+    randomness: 0
   rotation:
-    vectorOption: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
+    mode: 3
     velocity: 45
-    velocityRandomness: 0
+    arbitralVector: {x: 0, y: 1, z: 0}
+    randomness: 0
   useLocalCoordinate: 1
 --- !u!114 &994847871
 MonoBehaviour:
@@ -388,6 +388,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1338967907}
+  - 114: {fileID: 1338967908}
   m_Layer: 0
   m_Name: Camera Pivot
   m_TagString: Untagged
@@ -408,6 +409,25 @@ Transform:
   - {fileID: 1508327443}
   m_Father: {fileID: 411395684}
   m_RootOrder: 2
+--- !u!114 &1338967908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338967906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d637268abbbb5428e991dd9ec93136f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionFrequency: .200000003
+  rotationFrequency: .200000003
+  positionAmount: .600000024
+  rotationAmount: 15
+  positionComponents: {x: 1, y: 1, z: 1}
+  rotationComponents: {x: 1, y: 1, z: 0}
+  positionOctave: 3
+  rotationOctave: 3
 --- !u!1 &1508327438
 GameObject:
   m_ObjectHideFlags: 0

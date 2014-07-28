@@ -26,57 +26,74 @@ using System.Collections;
 
 namespace Reaktion {
 
-[CustomPropertyDrawer(typeof(ConstantMotion.MotionElement))]
+// Custom property drawer for TransformElement.
+[CustomPropertyDrawer(typeof(ConstantMotion.TransformElement))]
 class ConstantMotionElementDrawer : PropertyDrawer
 {
-    static bool CheckExpandVectorOption(SerializedProperty property)
+    // Labels and values for TransformMode.
+    static GUIContent[] modeLabels = {
+        new GUIContent("Off"),
+        new GUIContent("X Axis"),
+        new GUIContent("Y Axis"),
+        new GUIContent("Z Axis"),
+        new GUIContent("Arbitral Vector"),
+        new GUIContent("Random Vector")
+    };
+    static int[] modeValues = { 0, 1, 2, 3, 4, 5 };
+
+    static int GetExpansionLevel(SerializedProperty property)
     {
-        // Expand if the vector option is "Arbitral".
-        var option = property.FindPropertyRelative("vectorOption");
-        return option.hasMultipleDifferentValues ||
-               option.enumValueIndex == (int)ConstantMotion.VectorOption.Arbitral;
+        var mode = property.FindPropertyRelative("mode");
+        // Fully expand if it has different values.
+        if (mode.hasMultipleDifferentValues) return 2;
+        // "Off"
+        if (mode.enumValueIndex == 0) return 0;
+        // Fully expand if it's in Arbitral mode.
+        if (mode.enumValueIndex == (int)ConstantMotion.TransformMode.Arbitral) return 2;
+        // Expand one level.
+        return 1;
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        var expand = CheckExpandVectorOption(property);
-        return EditorGUIUtility.singleLineHeight * (expand ? 5 : 4) +
-               EditorGUIUtility.standardVerticalSpacing * (expand ? 3 : 2);
+        int rows = new int[]{1, 3, 4}[GetExpansionLevel(property)];
+        return EditorGUIUtility.singleLineHeight * rows +
+               EditorGUIUtility.standardVerticalSpacing * (rows - 1);
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        var expand = CheckExpandVectorOption(property);
         position.height = EditorGUIUtility.singleLineHeight;
+        var rowHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-        // Simply put the label.
-        EditorGUI.LabelField(position, label);
-        position.y += EditorGUIUtility.singleLineHeight;
+        // Transform mode selector drop-down.
+        EditorGUI.IntPopup(position, property.FindPropertyRelative("mode"), modeLabels, modeValues, label);
+        position.y += rowHeight;
 
-        // Make an indent.
-        position.x += 16;
-        position.width -= 16;
-        EditorGUIUtility.labelWidth -= 16;
-
-        // Vector option drop-down.
-        EditorGUI.PropertyField(position, property.FindPropertyRelative("vectorOption"), new GUIContent("Direction/Axis"));
-        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-        if (expand)
+        var expansion = GetExpansionLevel(property);
+        if (expansion > 0)
         {
-            // Vector box.
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("arbitralVector"), GUIContent.none);
+            // Insert an indent.
+            position.x += 16;
+            position.width -= 16;
+            EditorGUIUtility.labelWidth -= 16;
+
+            if (expansion == 2)
+            {
+                // Vector box.
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("arbitralVector"), GUIContent.none);
+                position.y += rowHeight;
+            }
+
+            // Velocity box.
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("velocity"), new GUIContent("Velocity"));
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+            // Randomness slider.
+            EditorGUI.Slider(position, property.FindPropertyRelative("randomness"), 0, 1, new GUIContent("Randomness"));
         }
-
-        // Velocity box.
-        EditorGUI.PropertyField(position, property.FindPropertyRelative("velocity"), new GUIContent("Velocity"));
-        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-        // Randomness slider.
-        EditorGUI.Slider(position, property.FindPropertyRelative("velocityRandomness"), 0, 1, new GUIContent("Randomness"));
 
         EditorGUI.EndProperty();
     }

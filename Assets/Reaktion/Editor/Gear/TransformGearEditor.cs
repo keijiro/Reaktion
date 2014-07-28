@@ -28,9 +28,9 @@ namespace Reaktion {
 
 // Custom property drawer for TransformElement.
 [CustomPropertyDrawer(typeof(TransformGear.TransformElement))]
-class TransformElementDrawer : PropertyDrawer
+class TransformGearElementDrawer : PropertyDrawer
 {
-    // Labels for TransformMode.
+    // Labels and values for TransformMode.
     static GUIContent[] modeLabels = {
         new GUIContent("Off"),
         new GUIContent("X Axis"),
@@ -39,17 +39,7 @@ class TransformElementDrawer : PropertyDrawer
         new GUIContent("Arbitral Vector"),
         new GUIContent("Random Vector")
     };
-
-    // Value options for TransformMode.
-    static int[] modeOptions = {
-        // It looks a little bit silly but don't mind...
-        (int)TransformGear.TransformMode.NoMove,
-        (int)TransformGear.TransformMode.XAxis,
-        (int)TransformGear.TransformMode.YAxis,
-        (int)TransformGear.TransformMode.ZAxis,
-        (int)TransformGear.TransformMode.Arbitral,
-        (int)TransformGear.TransformMode.Random
-    };
+    static int[] modeValues = { 0, 1, 2, 3, 4, 5 };
 
     static int GetExpansionLevel(SerializedProperty property)
     {
@@ -79,7 +69,7 @@ class TransformElementDrawer : PropertyDrawer
         var rowHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
         // Transform mode selector drop-down.
-        EditorGUI.IntPopup(position, property.FindPropertyRelative("mode"), modeLabels, modeOptions, label);
+        EditorGUI.IntPopup(position, property.FindPropertyRelative("mode"), modeLabels, modeValues, label);
         position.y += rowHeight;
 
         var expansion = GetExpansionLevel(property);

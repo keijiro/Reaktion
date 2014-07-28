@@ -68,24 +68,27 @@ public class JitterMotion : MonoBehaviour
         timePosition += Time.deltaTime * positionFrequency;
         timeRotation += Time.deltaTime * rotationFrequency;
 
-        var p = new Vector3(
-            Fbm(noiseVectors[0] * timePosition, positionOctave),
-            Fbm(noiseVectors[1] * timePosition, positionOctave),
-            Fbm(noiseVectors[2] * timePosition, positionOctave)
-        );
+        if (positionAmount != 0.0f)
+        {
+            var p = new Vector3(
+                Fbm(noiseVectors[0] * timePosition, positionOctave),
+                Fbm(noiseVectors[1] * timePosition, positionOctave),
+                Fbm(noiseVectors[2] * timePosition, positionOctave)
+            );
+            p = Vector3.Scale(p, positionComponents) * positionAmount * 2;
+            transform.localPosition = initialPosition + p;
+        }
 
-        var r = new Vector3(
-            Fbm(noiseVectors[3] * timeRotation, rotationOctave),
-            Fbm(noiseVectors[4] * timeRotation, rotationOctave),
-            Fbm(noiseVectors[5] * timeRotation, rotationOctave)
-        );
-
-        p = Vector3.Scale(p, positionComponents) * positionAmount * 2;
-        r = Vector3.Scale(r, rotationComponents) * rotationAmount * 2;
-
-        transform.localPosition = initialPosition + p;
-
-        transform.localRotation = Quaternion.Euler(r) * initialRotation;
+        if (rotationAmount != 0.0f)
+        {
+            var r = new Vector3(
+                Fbm(noiseVectors[3] * timeRotation, rotationOctave),
+                Fbm(noiseVectors[4] * timeRotation, rotationOctave),
+                Fbm(noiseVectors[5] * timeRotation, rotationOctave)
+            );
+            r = Vector3.Scale(r, rotationComponents) * rotationAmount * 2;
+            transform.localRotation = Quaternion.Euler(r) * initialRotation;
+        }
     }
 
     static float Fbm(Vector2 coord, int octave)
