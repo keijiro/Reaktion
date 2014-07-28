@@ -22,6 +22,7 @@
 //
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Reaktion {
 
@@ -30,13 +31,28 @@ public class Planter : MonoBehaviour
 {
     // General parameters.
     public GameObject[] prefabs;
-    public int maxObjects = 100;
+
+    [SerializeField] int _maxObjects = 100;
+    public int maxObjects {
+        get { return Mathf.Max(1, _maxObjects); }
+        set { _maxObjects = value; }
+    }
 
     // Distribution settings.
     public enum DistributionMode { Single, Random, Grid }
     public DistributionMode distributionMode;
-    public Vector2 distributionRange = new Vector2(3, 0);
-    public float gridSpace = 1;
+
+    [SerializeField] Vector2 _distributionRange = new Vector2(3, 0);
+    public Vector2 distributionRange {
+        get { return Vector2.Max(Vector2.zero, _distributionRange); }
+        set { _distributionRange = value; }
+    }
+
+    [SerializeField] float _gridSpace = 1;
+    public float gridSpace {
+        get { return Mathf.Max(0.01f, _gridSpace); }
+        set { _gridSpace = value; }
+    }
 
     // Rotation setting.
     public enum RotationMode { Keep, Planter, Random }
@@ -45,11 +61,15 @@ public class Planter : MonoBehaviour
     // Interval settings.
     public enum IntervalMode { Distance, Time }
     public IntervalMode intervalMode;
-    public float interval = 1;
+
+    [SerializeField] float _interval = 1;
+    public float interval {
+        get { return Mathf.Max(0.01f, _interval); }
+        set { _interval = value; }
+    }
 
     // Object pool.
-    GameObject[] objectPool;
-    int objectPoolIndex;
+    Queue<GameObject> objectPool;
 
     // Variables for managing interval.
     float intervalCounter;
@@ -63,28 +83,24 @@ public class Planter : MonoBehaviour
         if (rotationMode == RotationMode.Random)
             rotation = Random.rotation;
 
-        // Pick up the oldest object.
-        var go = objectPool[objectPoolIndex];
-
-        if (go == null)
+        if (objectPool.Count >= maxObjects)
+        {
+            // Reuse the oldest object in the pool.
+            var go = objectPool.Dequeue();
+            go.transform.position = position;
+            if (rotationMode != RotationMode.Keep)
+                go.transform.rotation = rotation;
+            objectPool.Enqueue(go);
+        }
+        else
         {
             // Make a new instance and push it to the pool.
             var prefab = prefabs[Random.Range(0, prefabs.Length)];
             if (rotationMode == RotationMode.Keep)
                 rotation = prefab.transform.rotation;
-            go = Instantiate(prefab, position, rotation) as GameObject;
-            objectPool[objectPoolIndex] = go;
+            var go = Instantiate(prefab, position, rotation) as GameObject;
+            objectPool.Enqueue(go);
         }
-        else
-        {
-            // Reuse the oldest object in the pool.
-            go.transform.position = position;
-            if (rotationMode != RotationMode.Keep)
-                go.transform.rotation = rotation;
-        }
-
-        // Increment the pool index.
-        objectPoolIndex = (objectPoolIndex + 1) % maxObjects;
     }
 
     // Plant a set of objects along the grid.
@@ -127,7 +143,7 @@ public class Planter : MonoBehaviour
 
     void Awake()
     {
-        objectPool = new GameObject[maxObjects];
+        objectPool = new Queue<GameObject>();
     }
 
     void Start()
@@ -138,6 +154,8 @@ public class Planter : MonoBehaviour
 
     void Update()
     {
+        if (prefabs == null || prefabs.Length == 0) return;
+
         // Get delta value on the interval parameter.
         var delta = intervalMode == IntervalMode.Distance ?
             Vector3.Distance(transform.position, previousPosition) : Time.deltaTime;
@@ -163,6 +181,10 @@ public class Planter : MonoBehaviour
         intervalCounter = (intervalCounter + delta) % interval;
         previousPosition = transform.position;
         previousRotation = transform.rotation;
+
+        // Truncate the object pool if needed.
+        while (objectPool.Count > maxObjects)
+            Destroy(objectPool.Dequeue());
     }
 }
 

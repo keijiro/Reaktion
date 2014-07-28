@@ -41,13 +41,13 @@ public class PlanterEditor : Editor
     void OnEnable()
     {
         propPrefabs           = serializedObject.FindProperty("prefabs");
-        propMaxObjects        = serializedObject.FindProperty("maxObjects");
+        propMaxObjects        = serializedObject.FindProperty("_maxObjects");
         propDistributionMode  = serializedObject.FindProperty("distributionMode");
-        propDistributionRange = serializedObject.FindProperty("distributionRange");
-        propGridSpace         = serializedObject.FindProperty("gridSpace");
+        propDistributionRange = serializedObject.FindProperty("_distributionRange");
+        propGridSpace         = serializedObject.FindProperty("_gridSpace");
         propRotationMode      = serializedObject.FindProperty("rotationMode");
         propIntervalMode      = serializedObject.FindProperty("intervalMode");
-        propInterval          = serializedObject.FindProperty("interval");
+        propInterval          = serializedObject.FindProperty("_interval");
     }
 
     public override void OnInspectorGUI()
