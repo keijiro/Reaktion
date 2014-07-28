@@ -32,8 +32,9 @@ public class SelfDestructionEditor : Editor
     SerializedProperty propConditionType;
     SerializedProperty propReferenceType;
 
-    SerializedProperty propDistance;
+    SerializedProperty propMaxDistance;
     SerializedProperty propBounds;
+    SerializedProperty propLifetime;
 
     SerializedProperty propReferencePoint;
     SerializedProperty propReferenceObject;
@@ -47,10 +48,11 @@ public class SelfDestructionEditor : Editor
     GUIContent[] conditionTypeLabels = {
         new GUIContent("Distance"),
         new GUIContent("Bounding Box"),
+        new GUIContent("Time"),
         new GUIContent("Particle System Liveness")
     };
 
-    int[] conditionTypeValues = { 0, 1, 2 };
+    int[] conditionTypeValues = { 0, 1, 2, 3 };
 
     GUIContent[] referenceTypeLabels = {
         new GUIContent("Origin"),
@@ -67,8 +69,9 @@ public class SelfDestructionEditor : Editor
         propConditionType = serializedObject.FindProperty("conditionType");
         propReferenceType = serializedObject.FindProperty("referenceType");
 
-        propDistance = serializedObject.FindProperty("distance");
-        propBounds   = serializedObject.FindProperty("bounds");
+        propMaxDistance = serializedObject.FindProperty("maxDistance");
+        propBounds      = serializedObject.FindProperty("bounds");
+        propLifetime    = serializedObject.FindProperty("lifetime");
 
         propReferencePoint  = serializedObject.FindProperty("referencePoint");
         propReferenceObject = serializedObject.FindProperty("referenceObject");
@@ -90,7 +93,7 @@ public class SelfDestructionEditor : Editor
             propConditionType.enumValueIndex == (int)SelfDestruction.ConditionType.Distance)
         {
             EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propDistance);
+            EditorGUILayout.PropertyField(propMaxDistance);
             EditorGUI.indentLevel--;
         }
 
@@ -99,7 +102,16 @@ public class SelfDestructionEditor : Editor
             EditorGUILayout.PropertyField(propBounds, GUIContent.none);
 
         if (propConditionType.hasMultipleDifferentValues ||
-            propConditionType.enumValueIndex != (int)SelfDestruction.ConditionType.ParticleSystem)
+            propConditionType.enumValueIndex == (int)SelfDestruction.ConditionType.Time)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propLifetime);
+            EditorGUI.indentLevel--;
+        }
+
+        if (propConditionType.hasMultipleDifferentValues ||
+            (propConditionType.enumValueIndex != (int)SelfDestruction.ConditionType.ParticleSystem &&
+             propConditionType.enumValueIndex != (int)SelfDestruction.ConditionType.Time))
         {
             EditorGUILayout.IntPopup(propReferenceType, referenceTypeLabels, referenceTypeValues, labelReferenceType);
 

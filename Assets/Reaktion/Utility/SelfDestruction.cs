@@ -28,19 +28,21 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Utility/Self Destruction")]
 public class SelfDestruction : MonoBehaviour
 {
-    public enum ConditionType { Distance, Bounds, ParticleSystem }
+    public enum ConditionType { Distance, Bounds, Time, ParticleSystem }
     public enum ReferenceType { Origin, Point, InitialPosition, GameObject, GameObjectName }
 
     public ConditionType conditionType = ConditionType.Distance;
     public ReferenceType referenceType = ReferenceType.InitialPosition;
 
-    public float distance = 10;
+    public float maxDistance = 10;
     public Bounds bounds = new Bounds(Vector3.zero, new Vector3(10, 10, 10));
+    public float lifetime = 5;
 
     public Vector3 referencePoint;
     public GameObject referenceObject;
     public string referenceName;
 
+    float timer;
     Vector3 initialPoint;
     GameObject referenceObjectCache; // used to dereference referenceName
 
@@ -73,10 +75,13 @@ public class SelfDestruction : MonoBehaviour
     bool IsAlive()
     {
         if (conditionType == ConditionType.Distance)
-            return Vector3.Distance(transform.position, GetReferencePoint()) <= distance;
+            return Vector3.Distance(transform.position, GetReferencePoint()) <= maxDistance;
 
         if (conditionType == ConditionType.Bounds)
             return bounds.Contains(transform.position - GetReferencePoint());
+
+        if (conditionType == ConditionType.Time)
+            return timer < lifetime;
 
         // conditionType == ConditionType.ParticleSystem:
         return particleSystem != null && particleSystem.IsAlive();
@@ -85,6 +90,11 @@ public class SelfDestruction : MonoBehaviour
     void Start()
     {
         initialPoint = transform.position;
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
     }
 
     void LateUpdate() 
@@ -97,7 +107,7 @@ public class SelfDestruction : MonoBehaviour
         Gizmos.color = Color.yellow;
 
         if (conditionType == ConditionType.Distance)
-            Gizmos.DrawWireSphere(GetReferencePoint(), distance);
+            Gizmos.DrawWireSphere(GetReferencePoint(), maxDistance);
 
         if (conditionType == ConditionType.Bounds)
             Gizmos.DrawWireCube(GetReferencePoint() + bounds.center, bounds.size);
