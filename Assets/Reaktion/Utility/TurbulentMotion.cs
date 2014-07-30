@@ -27,19 +27,18 @@ namespace Reaktion {
 public class TurbulentMotion : MonoBehaviour
 {
     // Amount of changes.
-    public Vector3 maxDisplace = Vector3.one;
-    public Vector3 maxRotation = new Vector3(30, 30, 0);
-    public Vector3 minScale    = Vector3.one;
+    public Vector3 maxDisplacement = Vector3.one;
+    public Vector3 maxRotation     = new Vector3(30, 30, 0);
+    public Vector3 minScale        = Vector3.one;
 
     // Flow settings.
-    public Vector3 flowVector  = Vector3.up;
+    public Vector3 flowVector  = Vector3.up * 0.45f;
     public float   flowDensity = 1;
-    public float   flowSpeed   = 1;
 
     // Coefficients (multiplier) for the elements.
-    public float coeffDisplace = 1;
-    public float coeffRotation = 1;
-    public float coeffScale    = 1;
+    public float coeffDisplacement = 1;
+    public float coeffRotation     = 1;
+    public float coeffScale        = 1;
 
     // Misc settings.
     public bool   useLocalCoordinate = true;
@@ -70,19 +69,19 @@ public class TurbulentMotion : MonoBehaviour
     void Update()
     {
         // Noise position.
-        var np = initialPosition * flowDensity + flowVector * Time.time * flowSpeed;
+        var np = initialPosition * flowDensity + flowVector * Time.time;
 
         // Offset for the noise position.
         var offs = new Vector3(13, 17, 19);
 
         // Displacement.
-        if (maxDisplace != Vector3.zero)
+        if (maxDisplacement != Vector3.zero)
         {
             // Noise position for the displacement.
-            var npd = np * coeffDisplace;
+            var npd = np * coeffDisplacement;
 
             // Get noise values.
-            var vd = maxDisplace;
+            var vd = maxDisplacement;
             vd = new Vector3(
                 vd.x == 0.0f ? 0.0f : vd.x * Perlin.Noise(npd),
                 vd.y == 0.0f ? 0.0f : vd.y * Perlin.Noise(npd + offs),
