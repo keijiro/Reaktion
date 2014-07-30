@@ -87,9 +87,11 @@ public class Planter : MonoBehaviour
         {
             // Reuse the oldest object in the pool.
             var go = objectPool.Dequeue();
+            go.SetActive(false);
             go.transform.position = position;
             if (rotationMode != RotationMode.Keep)
                 go.transform.rotation = rotation;
+            go.SetActive(true);
             objectPool.Enqueue(go);
         }
         else
