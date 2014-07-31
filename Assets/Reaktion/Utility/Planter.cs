@@ -188,6 +188,16 @@ public class Planter : MonoBehaviour
         while (objectPool.Count > maxObjects)
             Destroy(objectPool.Dequeue());
     }
+
+    void OnDrawGizmos()
+    {
+        if (distributionMode != DistributionMode.Single)
+        {
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(Vector3.zero, distributionRange);
+        }
+    }
 }
 
 } // namespace Reaktion
