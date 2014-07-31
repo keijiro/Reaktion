@@ -66,28 +66,28 @@ public class TurbulentMotionEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.LabelField("Noise Flow");
+        EditorGUILayout.LabelField("Noise");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propFlowVector, new GUIContent("Speed"));
         EditorGUILayout.PropertyField(propFlowDensity, new GUIContent("Density"));
+        EditorGUILayout.PropertyField(propFlowVector, new GUIContent("Linear Flow"));
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Displacement");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMaxDisplacement, new GUIContent("Maximum Values"));
-        EditorGUILayout.PropertyField(propCoeffDisplacement, new GUIContent("Flow Multiplier"));
+        EditorGUILayout.PropertyField(propMaxDisplacement, new GUIContent("Amplitude"));
+        EditorGUILayout.PropertyField(propCoeffDisplacement, new GUIContent("Wavenumber"));
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Rotation (Euler)");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMaxRotation, new GUIContent("Maximum Values"));
-        EditorGUILayout.PropertyField(propCoeffRotation, new GUIContent("Flow Multiplier"));
+        EditorGUILayout.PropertyField(propMaxRotation, new GUIContent("Amplitude"));
+        EditorGUILayout.PropertyField(propCoeffRotation, new GUIContent("Wavenumber"));
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Scale");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMinScale, new GUIContent("Influence (%)"));
-        EditorGUILayout.PropertyField(propCoeffScale, new GUIContent("Flow Multiplier"));
+        EditorGUILayout.PropertyField(propMinScale, new GUIContent("Influence (≦1.0)"));
+        EditorGUILayout.PropertyField(propCoeffScale, new GUIContent("Wavenumber"));
         EditorGUILayout.PropertyField(propScaleByShader);
         if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
             EditorGUILayout.PropertyField(propScalePropertyName, new GUIContent("Property Name"));
