@@ -96,7 +96,8 @@ public class ConstantMotion : MonoBehaviour
             else
                 transform.position += position.Vector * position.Delta;
         }
-        else
+
+        if (rotation.mode != TransformMode.Off)
         {
             var delta = Quaternion.AngleAxis(rotation.Delta, rotation.Vector);
             if (useLocalCoordinate)
