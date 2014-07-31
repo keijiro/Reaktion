@@ -108,6 +108,7 @@ class TransformGearElementDrawer : PropertyDrawer
 
             // Re-expand the labels.
             EditorGUIUtility.labelWidth = 0;
+            EditorGUIUtility.labelWidth -= 16;
 
             // Randomness slider.
             EditorGUI.Slider(position, property.FindPropertyRelative("randomness"), 0, 1);
@@ -122,19 +123,31 @@ public class TransformGearEditor : Editor
 {
     SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
+
     SerializedProperty propPosition;
     SerializedProperty propRotation;
     SerializedProperty propScale;
+
     SerializedProperty propAddInitial;
+    SerializedProperty propScaleByShader;
+    SerializedProperty propScalePropertyName;
+
+    GUIContent labelPropertyName;
 
     void OnEnable()
     {
-        propAutoBind   = serializedObject.FindProperty("autoBind");
-        propReaktor    = serializedObject.FindProperty("reaktor");
-        propPosition   = serializedObject.FindProperty("position");
-        propRotation   = serializedObject.FindProperty("rotation");
-        propScale      = serializedObject.FindProperty("scale");
-        propAddInitial = serializedObject.FindProperty("addInitialValue");
+        propAutoBind = serializedObject.FindProperty("autoBind");
+        propReaktor  = serializedObject.FindProperty("reaktor");
+
+        propPosition = serializedObject.FindProperty("position");
+        propRotation = serializedObject.FindProperty("rotation");
+        propScale    = serializedObject.FindProperty("scale");
+
+        propAddInitial        = serializedObject.FindProperty("addInitialValue");
+        propScaleByShader     = serializedObject.FindProperty("scaleByShader");
+        propScalePropertyName = serializedObject.FindProperty("scalePropertyName");
+
+        labelPropertyName = new GUIContent("Property Name");
     }
 
     public override void OnInspectorGUI()
@@ -146,8 +159,20 @@ public class TransformGearEditor : Editor
             EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propPosition);
+
         EditorGUILayout.PropertyField(propRotation);
+
         EditorGUILayout.PropertyField(propScale);
+        var propMode = propScale.FindPropertyRelative("mode");
+        if (propMode.hasMultipleDifferentValues || propMode.enumValueIndex > 0)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propScaleByShader);
+            if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
+                EditorGUILayout.PropertyField(propScalePropertyName, labelPropertyName);
+            EditorGUI.indentLevel--;
+        }
+
         EditorGUILayout.PropertyField(propAddInitial);
 
         serializedObject.ApplyModifiedProperties();
