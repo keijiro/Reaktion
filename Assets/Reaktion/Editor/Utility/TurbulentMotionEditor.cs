@@ -29,13 +29,12 @@ namespace Reaktion {
 [CustomEditor(typeof(TurbulentMotion)), CanEditMultipleObjects]
 public class TurbulentMotionEditor : Editor
 {
-    SerializedProperty propMaxDisplacement;
-    SerializedProperty propMaxRotation;
-    SerializedProperty propMinScale;
+    SerializedProperty propDensity;
+    SerializedProperty propLinearFlow;
 
-    SerializedProperty propFlowVector;
-    SerializedProperty propFlowDensity;
-
+    SerializedProperty propDisplacement;
+    SerializedProperty propRotation;
+    SerializedProperty propScale;
     SerializedProperty propCoeffDisplacement;
     SerializedProperty propCoeffRotation;
     SerializedProperty propCoeffScale;
@@ -43,16 +42,21 @@ public class TurbulentMotionEditor : Editor
     SerializedProperty propUseLocalCoordinate;
     SerializedProperty propScaleByShader;
     SerializedProperty propScalePropertyName;
+
+    GUIContent labelAmplitude;
+    GUIContent labelWaveNumber;
+    GUIContent labelInfluence;
+    GUIContent labelPropertyName;
+    GUIContent labelLocalCoordinate;
     
     void OnEnable()
     {
-        propMaxDisplacement = serializedObject.FindProperty("maxDisplacement");
-        propMaxRotation     = serializedObject.FindProperty("maxRotation");
-        propMinScale        = serializedObject.FindProperty("minScale");
+        propDensity    = serializedObject.FindProperty("density");
+        propLinearFlow = serializedObject.FindProperty("linearFlow");
 
-        propFlowVector  = serializedObject.FindProperty("flowVector");
-        propFlowDensity = serializedObject.FindProperty("flowDensity");
-
+        propDisplacement      = serializedObject.FindProperty("displacement");
+        propRotation          = serializedObject.FindProperty("rotation");
+        propScale             = serializedObject.FindProperty("scale");
         propCoeffDisplacement = serializedObject.FindProperty("coeffDisplacement");
         propCoeffRotation     = serializedObject.FindProperty("coeffRotation");
         propCoeffScale        = serializedObject.FindProperty("coeffScale");
@@ -60,6 +64,12 @@ public class TurbulentMotionEditor : Editor
         propUseLocalCoordinate = serializedObject.FindProperty("useLocalCoordinate");
         propScaleByShader      = serializedObject.FindProperty("scaleByShader");
         propScalePropertyName  = serializedObject.FindProperty("scalePropertyName");
+
+        labelAmplitude       = new GUIContent("Amplitude");
+        labelWaveNumber      = new GUIContent("Wave Number");
+        labelInfluence       = new GUIContent("Influence (≦1.0)");
+        labelPropertyName    = new GUIContent("Property Name");
+        labelLocalCoordinate = new GUIContent("Local Coordinate");
     }
 
     public override void OnInspectorGUI()
@@ -68,33 +78,32 @@ public class TurbulentMotionEditor : Editor
 
         EditorGUILayout.LabelField("Noise");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propFlowDensity, new GUIContent("Density"));
-        EditorGUILayout.PropertyField(propFlowVector, new GUIContent("Linear Flow"));
+        EditorGUILayout.PropertyField(propDensity);
+        EditorGUILayout.PropertyField(propLinearFlow);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Displacement");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMaxDisplacement, new GUIContent("Amplitude"));
-        EditorGUILayout.PropertyField(propCoeffDisplacement, new GUIContent("Wavenumber"));
+        EditorGUILayout.PropertyField(propDisplacement, labelAmplitude);
+        EditorGUILayout.PropertyField(propCoeffDisplacement, labelWaveNumber);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Rotation (Euler)");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMaxRotation, new GUIContent("Amplitude"));
-        EditorGUILayout.PropertyField(propCoeffRotation, new GUIContent("Wavenumber"));
+        EditorGUILayout.PropertyField(propRotation, labelAmplitude);
+        EditorGUILayout.PropertyField(propCoeffRotation, labelWaveNumber);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.LabelField("Scale");
         EditorGUI.indentLevel++;
-        EditorGUILayout.PropertyField(propMinScale, new GUIContent("Influence (≦1.0)"));
-        EditorGUILayout.PropertyField(propCoeffScale, new GUIContent("Wavenumber"));
+        EditorGUILayout.PropertyField(propScale, labelInfluence);
+        EditorGUILayout.PropertyField(propCoeffScale, labelWaveNumber);
         EditorGUILayout.PropertyField(propScaleByShader);
         if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
-            EditorGUILayout.PropertyField(propScalePropertyName, new GUIContent("Property Name"));
+            EditorGUILayout.PropertyField(propScalePropertyName, labelPropertyName);
         EditorGUI.indentLevel--;
 
-
-        EditorGUILayout.PropertyField(propUseLocalCoordinate, new GUIContent("Local Coordinate"));
+        EditorGUILayout.PropertyField(propUseLocalCoordinate, labelLocalCoordinate);
 
         serializedObject.ApplyModifiedProperties();
     }

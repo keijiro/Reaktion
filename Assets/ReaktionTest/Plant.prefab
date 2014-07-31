@@ -68,11 +68,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bace80d1c2d94c51ab17a01a6901499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDisplacement: {x: 2, y: 2, z: 0}
-  maxRotation: {x: 90, y: 90, z: 90}
-  minScale: {x: 1, y: 0, z: 1}
-  flowVector: {x: 0, y: .200000003, z: 0}
-  flowDensity: .100000001
+  density: .100000001
+  linearFlow: {x: 0, y: .200000003, z: 0}
+  displacement: {x: 2, y: 2, z: 0}
+  rotation: {x: 90, y: 90, z: 90}
+  scale: {x: 1, y: 0, z: 1}
   coeffDisplacement: 1
   coeffRotation: 1.34800005
   coeffScale: 1.23800004

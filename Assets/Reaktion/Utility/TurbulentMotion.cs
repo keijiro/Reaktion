@@ -26,24 +26,22 @@ namespace Reaktion {
 
 public class TurbulentMotion : MonoBehaviour
 {
-    // Amount of changes.
-    public Vector3 maxDisplacement = Vector3.one;
-    public Vector3 maxRotation     = new Vector3(30, 30, 0);
-    public Vector3 minScale        = Vector3.one;
+    // Noise parameters.
+    public float density      = 0.1f;
+    public Vector3 linearFlow = Vector3.up * 0.2f;
 
-    // Flow settings.
-    public Vector3 flowVector  = Vector3.up * 0.45f;
-    public float   flowDensity = 1;
-
-    // Coefficients (multiplier) for the elements.
-    public float coeffDisplacement = 1;
-    public float coeffRotation     = 1;
-    public float coeffScale        = 1;
+    // Amplitude and coefficient (wave number).
+    public Vector3 displacement = Vector3.one;
+    public Vector3 rotation     = Vector3.one * 60.0f;
+    public Vector3 scale        = Vector3.zero;
+    public float coeffDisplacement = 1.0f;
+    public float coeffRotation     = 1.1f;
+    public float coeffScale        = 1.2f;
 
     // Misc settings.
-    public bool   useLocalCoordinate = true;
-    public bool   scaleByShader      = false;
-    public string scalePropertyName  = "_Scale";
+    public bool useLocalCoordinate  = true;
+    public bool scaleByShader       = false;
+    public string scalePropertyName = "_Scale";
 
     // Initial states.
     Vector3    initialPosition;
@@ -69,23 +67,22 @@ public class TurbulentMotion : MonoBehaviour
     void Update()
     {
         // Noise position.
-        var np = initialPosition * flowDensity + flowVector * Time.time;
+        var np = initialPosition * density + linearFlow * Time.time;
 
         // Offset for the noise position.
         var offs = new Vector3(13, 17, 19);
 
         // Displacement.
-        if (maxDisplacement != Vector3.zero)
+        if (displacement != Vector3.zero)
         {
             // Noise position for the displacement.
             var npd = np * coeffDisplacement;
 
             // Get noise values.
-            var vd = maxDisplacement;
-            vd = new Vector3(
-                vd.x == 0.0f ? 0.0f : vd.x * Perlin.Noise(npd),
-                vd.y == 0.0f ? 0.0f : vd.y * Perlin.Noise(npd + offs),
-                vd.z == 0.0f ? 0.0f : vd.z * Perlin.Noise(npd + offs * 2)
+            var vd = new Vector3(
+                displacement.x == 0.0f ? 0.0f : displacement.x * Perlin.Noise(npd),
+                displacement.y == 0.0f ? 0.0f : displacement.y * Perlin.Noise(npd + offs),
+                displacement.z == 0.0f ? 0.0f : displacement.z * Perlin.Noise(npd + offs * 2)
             );
 
             // Apply the displacement.
@@ -96,17 +93,16 @@ public class TurbulentMotion : MonoBehaviour
         }
 
         // Rotation.
-        if (maxRotation != Vector3.zero)
+        if (rotation != Vector3.zero)
         {
             // Noise position for the rotation.
             var npr = np * coeffRotation;
 
             // Get noise values.
-            var vr = maxRotation;
-            vr = new Vector3(
-                vr.x == 0.0f ? 0.0f : vr.x * Perlin.Noise(npr + offs * 3),
-                vr.y == 0.0f ? 0.0f : vr.y * Perlin.Noise(npr + offs * 4),
-                vr.z == 0.0f ? 0.0f : vr.z * Perlin.Noise(npr + offs * 5)
+            var vr = new Vector3(
+                rotation.x == 0.0f ? 0.0f : rotation.x * Perlin.Noise(npr + offs * 3),
+                rotation.y == 0.0f ? 0.0f : rotation.y * Perlin.Noise(npr + offs * 4),
+                rotation.z == 0.0f ? 0.0f : rotation.z * Perlin.Noise(npr + offs * 5)
             );
 
             // Apply the rotation.
@@ -117,17 +113,16 @@ public class TurbulentMotion : MonoBehaviour
         }
 
         // Scale.
-        if (minScale != Vector3.one)
+        if (scale != Vector3.one)
         {
             // Noise position for the scale.
             var nps = np * coeffScale;
 
             // Get noise values.
-            var vs = minScale;
-            vs = new Vector3(
-                vs.x == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 6) + 1) * 0.5f, 1.0f, vs.x),
-                vs.y == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 7) + 1) * 0.5f, 1.0f, vs.y),
-                vs.z == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 8) + 1) * 0.5f, 1.0f, vs.z)
+            var vs = new Vector3(
+                scale.x == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 6) + 1) * 0.5f, 1.0f, scale.x),
+                scale.y == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 7) + 1) * 0.5f, 1.0f, scale.y),
+                scale.z == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 8) + 1) * 0.5f, 1.0f, scale.z)
             );
 
             // Apply the scale.
