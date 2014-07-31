@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(FabricatorGear)), CanEditMultipleObjects]
 public class FabricatorGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propBurst;
     SerializedProperty propBurstNumber;
@@ -38,7 +37,6 @@ public class FabricatorGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind          = serializedObject.FindProperty("autoBind");
         propReaktor           = serializedObject.FindProperty("reaktor");
         propBurst             = serializedObject.FindProperty("burst");
         propBurstNumber       = serializedObject.FindProperty("burstNumber");
@@ -50,10 +48,7 @@ public class FabricatorGearEditor : Editor
     {
         serializedObject.Update ();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propBurst);
         if (propBurst.hasMultipleDifferentValues ||

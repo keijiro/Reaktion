@@ -29,8 +29,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Generic Trigger Gear")]
 public class GenericTriggerGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
     public float threshold = 0.9f;
     public float interval = 0.1f;
     public UnityEvent target;
@@ -40,8 +39,7 @@ public class GenericTriggerGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
     }
 
     void Update()

@@ -29,9 +29,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Global Setting Gear")]
 public class GlobalSettingGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public AnimationCurve timeScaleCurve = AnimationCurve.Linear(0, 0.2f, 1, 1);
 
     void OnDisable()
@@ -41,8 +39,7 @@ public class GlobalSettingGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
     }
 
     void Update()

@@ -29,13 +29,11 @@ namespace Reaktion {
 [CustomEditor(typeof(GlobalSettingGear)), CanEditMultipleObjects]
 public class GlobalSettingGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propTimeScaleCurve;
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor = serializedObject.FindProperty("reaktor");
         propTimeScaleCurve = serializedObject.FindProperty("timeScaleCurve");
     }
@@ -44,11 +42,7 @@ public class GlobalSettingGearEditor : Editor
     {
         serializedObject.Update ();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
-
+        EditorGUILayout.PropertyField(propReaktor);
         EditorGUILayout.PropertyField(propTimeScaleCurve);
 
         serializedObject.ApplyModifiedProperties ();

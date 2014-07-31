@@ -32,16 +32,13 @@ public class GenericGradientGear : MonoBehaviour
     [System.Serializable]
     public class ColorEvent : UnityEvent<Color> {}
 
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
     public Gradient gradient;
     public ColorEvent target;
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
+        reaktor.Initialize(this);
         UpdateTarget(0);
     }
 

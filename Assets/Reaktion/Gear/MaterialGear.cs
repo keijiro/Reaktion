@@ -30,8 +30,7 @@ public class MaterialGear : MonoBehaviour
 {
     public enum TargetType { Color, Float, Vector, Texture }
 
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
 
     public string targetName = "_Color";
     public TargetType targetType = TargetType.Color;
@@ -52,8 +51,7 @@ public class MaterialGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
 
         material = renderer.material;
 

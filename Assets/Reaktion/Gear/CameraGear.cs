@@ -28,17 +28,14 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Camera Gear")]
 public class CameraGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public Modifier fieldOfView = Modifier.Linear(60, 45);
     public Modifier viewportWidth = Modifier.Linear(1, 0.2f);
     public Modifier viewportHeight = Modifier.Linear(1, 0.2f);
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
     }
 
     void Update()

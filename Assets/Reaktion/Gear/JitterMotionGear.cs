@@ -28,9 +28,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Jitter Motion Gear")]
 public class JitterMotionGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public Modifier positionFrequency = Modifier.Linear(0, 0.1f);
     public Modifier rotationFrequency = Modifier.Linear(0, 0.1f);
     public Modifier positionAmount = Modifier.Linear(0, 1);
@@ -40,9 +38,7 @@ public class JitterMotionGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
+        reaktor.Initialize(this);
         jitter = GetComponent<JitterMotion>();
     }
 

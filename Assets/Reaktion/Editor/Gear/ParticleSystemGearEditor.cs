@@ -29,30 +29,20 @@ namespace Reaktion {
 [CustomEditor(typeof(ParticleSystemGear)), CanEditMultipleObjects]
 public class ParticleSystemGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
     SerializedProperty propBurst;
     SerializedProperty propBurstNumber;
-
     SerializedProperty propEmissionRate;
-
     SerializedProperty propSize;
-
     GUIContent labelBurstNumber;
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
-        propReaktor  = serializedObject.FindProperty("reaktor");
-
-        propBurst       = serializedObject.FindProperty("burst");
-        propBurstNumber = serializedObject.FindProperty("burstNumber");
-
+        propReaktor      = serializedObject.FindProperty("reaktor");
+        propBurst        = serializedObject.FindProperty("burst");
+        propBurstNumber  = serializedObject.FindProperty("burstNumber");
         propEmissionRate = serializedObject.FindProperty("emissionRate");
-
-        propSize = serializedObject.FindProperty("size");
-
+        propSize         = serializedObject.FindProperty("size");
         labelBurstNumber = new GUIContent("Particles");
     }
 
@@ -60,9 +50,7 @@ public class ParticleSystemGearEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propBurst);
         if (propBurst.hasMultipleDifferentValues ||

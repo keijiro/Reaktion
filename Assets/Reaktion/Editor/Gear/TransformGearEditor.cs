@@ -121,7 +121,6 @@ class TransformGearElementDrawer : PropertyDrawer
 [CustomEditor(typeof(TransformGear)), CanEditMultipleObjects]
 public class TransformGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
 
     SerializedProperty propPosition;
@@ -136,7 +135,6 @@ public class TransformGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
 
         propPosition = serializedObject.FindProperty("position");
@@ -154,9 +152,7 @@ public class TransformGearEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propPosition);
 

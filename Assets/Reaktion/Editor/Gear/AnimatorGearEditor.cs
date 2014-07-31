@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(AnimatorGear)), CanEditMultipleObjects]
 public class AnimatorGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propSpeed;
     SerializedProperty propTrigger;
@@ -37,7 +36,6 @@ public class AnimatorGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind    = serializedObject.FindProperty("autoBind");
         propReaktor     = serializedObject.FindProperty("reaktor");
         propSpeed       = serializedObject.FindProperty("speed");
         propTrigger     = serializedObject.FindProperty("trigger");
@@ -48,10 +46,7 @@ public class AnimatorGearEditor : Editor
     {
         serializedObject.Update();
         
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propSpeed);
 

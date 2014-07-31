@@ -28,20 +28,16 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Fabricator Gear")]
 public class FabricatorGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public Trigger burst;
     public int burstNumber = 5;
-
     public Modifier instantiationRate = Modifier.Linear(0, 10);
 
     Fabricator fabricator;
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
         fabricator = GetComponent<Fabricator>();
     }
 
@@ -49,7 +45,6 @@ public class FabricatorGear : MonoBehaviour
     {
         if (burst.Update(reaktor.Output))
             fabricator.MakeInstance(burstNumber);
-
         if (instantiationRate.enabled)
             fabricator.instantiationRate = instantiationRate.Evaluate(reaktor.Output);
     }

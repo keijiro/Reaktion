@@ -31,20 +31,12 @@ public class GenericCurveGear : MonoBehaviour
 {
     public enum OptionType { Bool, Int, Float, Vector }
 
-    [System.Serializable]
-    public class BoolEvent : UnityEvent<bool> {}
+    [System.Serializable] public class BoolEvent : UnityEvent<bool> {}
+    [System.Serializable] public class IntEvent : UnityEvent<int> {}
+    [System.Serializable] public class FloatEvent : UnityEvent<float> {}
+    [System.Serializable] public class VectorEvent : UnityEvent<Vector3> {}
 
-    [System.Serializable]
-    public class IntEvent : UnityEvent<int> {}
-
-    [System.Serializable]
-    public class FloatEvent : UnityEvent<float> {}
-
-    [System.Serializable]
-    public class VectorEvent : UnityEvent<Vector3> {}
-
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
 
     public OptionType optionType = OptionType.Float;
     public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -58,27 +50,27 @@ public class GenericCurveGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
     }
 
     void Update()
     {
-        var current = curve.Evaluate(reaktor.Output);
-        switch (optionType)
+        var o = curve.Evaluate(reaktor.Output);
+        if (optionType == OptionType.Bool)
         {
-            case OptionType.Bool:
-                boolTarget.Invoke(0.5f <= current);
-                break;
-            case OptionType.Int:
-                intTarget.Invoke((int)current);
-                break;
-            case OptionType.Vector:
-                vectorTarget.Invoke(origin + direction * current);
-                break;
-            default:
-                floatTarget.Invoke(current);
-                break;
+            boolTarget.Invoke(0.5f <= o);
+        }
+        else if (optionType == OptionType.Int)
+        {
+            intTarget.Invoke((int)o);
+        }
+        else if (optionType == OptionType.Vector)
+        {
+            vectorTarget.Invoke(origin + direction * o);
+        }
+        else
+        {
+            floatTarget.Invoke(o);
         }
     }
 }

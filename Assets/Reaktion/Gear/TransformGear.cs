@@ -82,8 +82,7 @@ public class TransformGear : MonoBehaviour
         }
     }
 
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
 
     public TransformElement position = new TransformElement();
     public TransformElement rotation = new TransformElement{ max = 90 };
@@ -99,8 +98,7 @@ public class TransformGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
         position.Initialize();
         rotation.Initialize();
         scale.Initialize();

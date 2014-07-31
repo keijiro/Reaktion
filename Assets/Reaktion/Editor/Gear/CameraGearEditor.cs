@@ -29,18 +29,14 @@ namespace Reaktion {
 [CustomEditor(typeof(CameraGear)), CanEditMultipleObjects]
 public class CameraGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
     SerializedProperty propFieldOfView;
     SerializedProperty propViewportWidth;
     SerializedProperty propViewportHeight;
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
-        propReaktor  = serializedObject.FindProperty("reaktor");
-
+        propReaktor        = serializedObject.FindProperty("reaktor");
         propFieldOfView    = serializedObject.FindProperty("fieldOfView");
         propViewportWidth  = serializedObject.FindProperty("viewportWidth");
         propViewportHeight = serializedObject.FindProperty("viewportHeight");
@@ -50,11 +46,7 @@ public class CameraGearEditor : Editor
     {
         serializedObject.Update();
         
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
-
+        EditorGUILayout.PropertyField(propReaktor);
         EditorGUILayout.PropertyField(propFieldOfView);
         EditorGUILayout.PropertyField(propViewportWidth);
         EditorGUILayout.PropertyField(propViewportHeight);

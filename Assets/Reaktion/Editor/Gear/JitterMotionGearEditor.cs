@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(JitterMotionGear)), CanEditMultipleObjects]
 public class JitterMotionGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propPositionFrequency;
     SerializedProperty propRotationFrequency;
@@ -41,7 +40,6 @@ public class JitterMotionGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
         propPositionFrequency = serializedObject.FindProperty("positionFrequency");
         propRotationFrequency = serializedObject.FindProperty("rotationFrequency");
@@ -56,9 +54,7 @@ public class JitterMotionGearEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.Space();
 

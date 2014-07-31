@@ -28,9 +28,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Animator Gear")]
 public class AnimatorGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public Modifier speed;
     public Trigger trigger;
     public string triggerName;
@@ -39,8 +37,7 @@ public class AnimatorGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
         animator = GetComponent<Animator>();
     }
 

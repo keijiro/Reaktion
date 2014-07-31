@@ -214,19 +214,6 @@ public class Reaktor : MonoBehaviour
         fakeInput = -1.0f;
     }
 
-    // Search an available Reaktor placed close to the game object.
-    public static Reaktor SearchAvailableFrom(GameObject go)
-    {
-        var r = go.GetComponent<Reaktor>();
-        if (r) return r;
-
-        r = go.GetComponentInParent<Reaktor>();
-        if (r) return r;
-
-        r = go.GetComponentInChildren<Reaktor>();
-        return r;
-    }
-
     #endregion
 }
 

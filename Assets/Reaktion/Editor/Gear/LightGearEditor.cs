@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(LightGear)), CanEditMultipleObjects]
 public class LightGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propIntensity;
     SerializedProperty propEnableColor;
@@ -40,7 +39,6 @@ public class LightGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind      = serializedObject.FindProperty("autoBind");
         propReaktor       = serializedObject.FindProperty("reaktor");
         propIntensity     = serializedObject.FindProperty("intensity");
         propEnableColor   = serializedObject.FindProperty("enableColor");
@@ -54,9 +52,7 @@ public class LightGearEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.PropertyField(propIntensity);
 

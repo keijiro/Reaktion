@@ -171,8 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c73495c07c574c8888398de99a9c523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: Test | Transform
+    _forceUpdate: 1
   position:
     mode: 1
     min: 0
@@ -468,8 +471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb99621fcb1f4503985e79e170fa93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   position:
     enabled: 0
     min: 0
@@ -978,8 +984,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cb2331231cf48f5bcd3aa4030ea802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   intensity:
     enabled: 1
     min: .100000001
@@ -2780,8 +2789,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -2858,8 +2870,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _Shininess
   targetType: 1
   threshold: .5
@@ -2955,8 +2970,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e98ecc7d043445439010cbb4b3c9c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   burst:
     enabled: 1
     threshold: .600000024
@@ -4502,8 +4520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7465771cea044f4bf201779c7cd3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   speed:
     enabled: 0
     min: 0
@@ -4558,8 +4579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _MainTex
   targetType: 3
   threshold: .5
@@ -4636,8 +4660,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -4878,8 +4905,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c3dbf1303294554afe784251140d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   positionFrequency:
     enabled: 1
     min: 0
@@ -4998,8 +5028,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78e344a432524336b96b71a19d5cb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   gradient:
     key0:
       serializedVersion: 2
@@ -5405,8 +5438,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019c9b3121da7431cb5f32c6500d1fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   burst:
     enabled: 1
     threshold: .5
@@ -5699,8 +5735,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb99621fcb1f4503985e79e170fa93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   position:
     enabled: 1
     min: 0
@@ -5886,8 +5925,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _Color
   targetType: 0
   threshold: .5
@@ -5991,8 +6033,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1a60ba6260844a8be0549fbe12670c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   targetName: _SpecColor
   targetType: 0
   threshold: .5
@@ -6099,8 +6144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7465771cea044f4bf201779c7cd3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   speed:
     enabled: 1
     min: .100000001
@@ -6256,8 +6304,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbea1f4bc98b455093b3b4b607ed9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   optionType: 0
   curve:
     serializedVersion: 2
@@ -6434,8 +6485,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7feb1b54a914d6fbfe8a70b0d210f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   threshold: .899999976
   interval: .100000001
   target:
@@ -7668,8 +7722,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cb2331231cf48f5bcd3aa4030ea802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   intensity:
     enabled: 1
     min: .100000001
@@ -7796,8 +7853,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0163ad860331472e885d81f8860b779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  reaktor: {fileID: 0}
+  reaktor:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   timeScaleCurve:
     serializedVersion: 2
     m_Curve:

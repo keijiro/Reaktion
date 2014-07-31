@@ -29,9 +29,7 @@ namespace Reaktion {
 [CustomEditor(typeof(GenericCurveGear)), CanEditMultipleObjects]
 public class GenericCurveGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
-
     SerializedProperty propOptionType;
     SerializedProperty propCurve;
     SerializedProperty propOrigin;
@@ -46,9 +44,7 @@ public class GenericCurveGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind     = serializedObject.FindProperty("autoBind");
         propReaktor      = serializedObject.FindProperty("reaktor");
-
         propOptionType   = serializedObject.FindProperty("optionType");
         propCurve        = serializedObject.FindProperty("curve");
         propOrigin       = serializedObject.FindProperty("origin");
@@ -66,11 +62,7 @@ public class GenericCurveGearEditor : Editor
     {
         serializedObject.Update ();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
-
+        EditorGUILayout.PropertyField(propReaktor);
         EditorGUILayout.PropertyField(propOptionType);
         EditorGUILayout.PropertyField(propCurve);
 

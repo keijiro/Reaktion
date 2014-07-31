@@ -28,16 +28,14 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Light Gear")]
 public class LightGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
     public Modifier intensity;
     public bool enableColor;
     public Gradient colorGradient;
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
         UpdateLight(0);
     }
 

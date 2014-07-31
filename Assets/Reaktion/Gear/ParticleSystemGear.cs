@@ -28,8 +28,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Particle System Gear")]
 public class ParticleSystemGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
+    public ReaktorLink reaktor;
 
     public Trigger burst;
     public int burstNumber = 10;
@@ -42,8 +41,7 @@ public class ParticleSystemGear : MonoBehaviour
     
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
+        reaktor.Initialize(this);
     }
 
     void Update()

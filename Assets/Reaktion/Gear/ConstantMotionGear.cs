@@ -28,9 +28,7 @@ namespace Reaktion {
 [AddComponentMenu("Reaktion/Gear/Constant Motion Gear")]
 public class ConstantMotionGear : MonoBehaviour
 {
-    public bool autoBind = true;
-    public Reaktor reaktor;
-
+    public ReaktorLink reaktor;
     public Modifier position = Modifier.Linear(0, 1);
     public Modifier rotation = Modifier.Linear(0, 30);
 
@@ -38,21 +36,16 @@ public class ConstantMotionGear : MonoBehaviour
 
     void Awake()
     {
-        if (autoBind || reaktor == null)
-            reaktor = Reaktor.SearchAvailableFrom(gameObject);
-
+        reaktor.Initialize(this);
         motion = GetComponent<ConstantMotion>();
     }
 
     void Update()
     {
-        var o = reaktor.Output;
-
         if (position.enabled)
-            motion.position.velocity = position.Evaluate(o);
-
+            motion.position.velocity = position.Evaluate(reaktor.Output);
         if (rotation.enabled)
-            motion.rotation.velocity = rotation.Evaluate(o);
+            motion.rotation.velocity = rotation.Evaluate(reaktor.Output);
     }
 }
 

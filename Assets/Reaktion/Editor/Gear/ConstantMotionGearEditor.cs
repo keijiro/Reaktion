@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(ConstantMotionGear)), CanEditMultipleObjects]
 public class ConstantMotionGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propPosition;
     SerializedProperty propRotation;
@@ -38,7 +37,6 @@ public class ConstantMotionGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind = serializedObject.FindProperty("autoBind");
         propReaktor  = serializedObject.FindProperty("reaktor");
         propPosition = serializedObject.FindProperty("position");
         propRotation = serializedObject.FindProperty("rotation");
@@ -50,10 +48,7 @@ public class ConstantMotionGearEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
-
+        EditorGUILayout.PropertyField(propReaktor);
         EditorGUILayout.PropertyField(propPosition, labelPosition);
         EditorGUILayout.PropertyField(propRotation, labelRotation);
 

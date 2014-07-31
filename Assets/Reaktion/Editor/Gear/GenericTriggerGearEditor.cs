@@ -29,7 +29,6 @@ namespace Reaktion {
 [CustomEditor(typeof(GenericTriggerGear)), CanEditMultipleObjects]
 public class GenericTriggerGearEditor : Editor
 {
-    SerializedProperty propAutoBind;
     SerializedProperty propReaktor;
     SerializedProperty propThreshold;
     SerializedProperty propInterval;
@@ -38,7 +37,6 @@ public class GenericTriggerGearEditor : Editor
 
     void OnEnable()
     {
-        propAutoBind  = serializedObject.FindProperty("autoBind");
         propReaktor   = serializedObject.FindProperty("reaktor");
         propThreshold = serializedObject.FindProperty("threshold");
         propInterval  = serializedObject.FindProperty("interval");
@@ -50,10 +48,7 @@ public class GenericTriggerGearEditor : Editor
     {
         serializedObject.Update ();
 
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propReaktor);
 
         EditorGUILayout.Slider(propThreshold, 0.01f, 0.99f);
         EditorGUILayout.PropertyField(propInterval, labelInterval);
