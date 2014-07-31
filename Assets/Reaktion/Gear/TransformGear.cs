@@ -87,7 +87,7 @@ public class TransformGear : MonoBehaviour
 
     public TransformElement position = new TransformElement();
     public TransformElement rotation = new TransformElement{ max = 90 };
-    public TransformElement scale = new TransformElement{ arbitralVector = Vector3.one };
+    public TransformElement scale = new TransformElement{ arbitralVector = Vector3.one, min = 1, max = 2 };
 
     public bool addInitialValue = true;
 
@@ -129,8 +129,8 @@ public class TransformGear : MonoBehaviour
 
         if (scale.mode != TransformMode.Off)
         {
-            transform.localScale = scale.Vector * scale.GetScalar(ro);
-            if (addInitialValue) transform.localScale += initialScale;
+            var so = addInitialValue ? initialScale : Vector3.one;
+            transform.localScale = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.GetScalar(ro) - 1));
         }
     }
 }
