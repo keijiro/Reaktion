@@ -96,7 +96,7 @@ class VariableMotionElementDrawer : PropertyDrawer
             position.y += rowHeight;
 
             // Time scale box.
-            EditorGUI.Slider(position, property.FindPropertyRelative("timeScale"), 0, 5, new GUIContent("Time Scale"));
+            EditorGUI.Slider(position, property.FindPropertyRelative("speed"), 0, 5, new GUIContent("Speed"));
             position.y += rowHeight;
 
             // Randomness slider.

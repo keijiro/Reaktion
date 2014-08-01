@@ -39,7 +39,7 @@ public class VariableMotion : MonoBehaviour
         public TransformMode mode = TransformMode.Off;
         public AnimationCurve curve = AnimationCurve.Linear(0, -1, 1, 1);
         public float amplitude = 1;
-        public float timeScale = 1;
+        public float speed = 1;
 
         // Used only in the arbitrary mode.
         public Vector3 arbitraryVector = Vector3.up;
@@ -50,7 +50,7 @@ public class VariableMotion : MonoBehaviour
         // Randomizer states.
         Vector3 randomVector;
         float randomAmplitude;
-        float randomTimeScale;
+        float randomSpeed;
 
         // Time parameter.
         float time;
@@ -59,7 +59,7 @@ public class VariableMotion : MonoBehaviour
         {
             randomVector = Random.onUnitSphere;
             randomAmplitude = Random.value;
-            randomTimeScale = Random.value;
+            randomSpeed = Random.value;
             time = 0;
         }
 
@@ -81,7 +81,7 @@ public class VariableMotion : MonoBehaviour
         // Advance the time parameter.
         public void Step()
         {
-            time += Time.deltaTime * timeScale * (1.0f - randomTimeScale * randomness);
+            time += Time.deltaTime * speed * (1.0f - randomSpeed * randomness);
         }
 
         // Get the current scalar value.
