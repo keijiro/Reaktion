@@ -103,7 +103,7 @@ public class VariableMotion : MonoBehaviour
 
     // Options for applying transformations.
     public bool useLocalCoordinate = true;
-    public bool setAbsolute = false;
+    public bool useDifferentials = true;
 
     // Transformation history.
     Vector3 previousPosition;
@@ -133,38 +133,38 @@ public class VariableMotion : MonoBehaviour
 
         if (position.mode != TransformMode.Off)
         {
-            if (setAbsolute)
-            {
-                if (useLocalCoordinate)
-                    transform.localPosition = p;
-                else
-                    transform.position = p;
-            }
-            else
+            if (useDifferentials)
             {
                 if (useLocalCoordinate)
                     transform.localPosition += p - previousPosition;
                 else
                     transform.position += p - previousPosition;
             }
+            else
+            {
+                if (useLocalCoordinate)
+                    transform.localPosition = p;
+                else
+                    transform.position = p;
+            }
         }
 
         if (position.mode != TransformMode.Off)
         {
-            if (setAbsolute)
-            {
-                if (useLocalCoordinate)
-                    transform.localRotation = r;
-                else
-                    transform.rotation = r;
-            }
-            else
+            if (useDifferentials)
             {
                 var dr = r * Quaternion.Inverse(previousRotation);
                 if (useLocalCoordinate)
                     transform.localRotation = dr * transform.localRotation;
                 else
                     transform.rotation = dr * transform.rotation;
+            }
+            else
+            {
+                if (useLocalCoordinate)
+                    transform.localRotation = r;
+                else
+                    transform.rotation = r;
             }
         }
 
@@ -176,7 +176,7 @@ public class VariableMotion : MonoBehaviour
         if (scale.mode != TransformMode.Off)
         {
             scale.Step();
-            var so = (!setAbsolute && !scaleByShader) ? initialScale : Vector3.one;
+            var so = (useDifferentials && !scaleByShader) ? initialScale : Vector3.one;
             var s = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.Scalar - 1));
             if (scaleByShader)
                 renderer.material.SetVector(scalePropertyName, s);

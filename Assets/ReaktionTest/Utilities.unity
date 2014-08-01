@@ -209,7 +209,7 @@ MonoBehaviour:
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   scale:
-    mode: 4
+    mode: 2
     curve:
       serializedVersion: 2
       m_Curve:
@@ -267,7 +267,7 @@ MonoBehaviour:
   scaleByShader: 1
   scalePropertyName: _Scale
   useLocalCoordinate: 1
-  setAbsolute: 0
+  useDifferentials: 1
 --- !u!23 &471077318
 Renderer:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ MonoBehaviour:
   scaleByShader: 0
   scalePropertyName: _Scale
   useLocalCoordinate: 1
-  setAbsolute: 0
+  useDifferentials: 1
 --- !u!23 &565561272
 Renderer:
   m_ObjectHideFlags: 0
