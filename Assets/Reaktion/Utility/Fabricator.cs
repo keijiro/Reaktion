@@ -31,6 +31,7 @@ public class Fabricator : MonoBehaviour
     // General options.
     public GameObject[] prefabs;
     public float instantiationRate;
+    public int initialBurst;
     public bool randomRotation = true;
     public Transform parent;
 
@@ -57,6 +58,11 @@ public class Fabricator : MonoBehaviour
     public void MakeInstance(int count)
     {
         while (count-- > 0) MakeInstance();
+    }
+
+    void Start()
+    {
+        MakeInstance(initialBurst);
     }
 
     void Update()

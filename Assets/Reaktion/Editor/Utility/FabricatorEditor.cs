@@ -31,29 +31,23 @@ public class FabricatorEditor : Editor
 {
     SerializedProperty propPrefabs;
     SerializedProperty propInstantiationRate;
+    SerializedProperty propInitialBurst;
     SerializedProperty propRandomRotation;
     SerializedProperty propParent;
-
     SerializedProperty propRangeType;
     SerializedProperty propRangeRadius;
     SerializedProperty propRangeVector;
-
-    GUIContent labelRangeRadius;
-    GUIContent labelParent;
 
     void OnEnable()
     {
         propPrefabs           = serializedObject.FindProperty("prefabs");
         propInstantiationRate = serializedObject.FindProperty("instantiationRate");
+        propInitialBurst      = serializedObject.FindProperty("initialBurst");
         propRandomRotation    = serializedObject.FindProperty("randomRotation");
         propParent            = serializedObject.FindProperty("parent");
-
-        propRangeType   = serializedObject.FindProperty("rangeType");
-        propRangeRadius = serializedObject.FindProperty("rangeRadius");
-        propRangeVector = serializedObject.FindProperty("rangeVector");
-
-        labelRangeRadius = new GUIContent("Radius");
-        labelParent      = new GUIContent("Set Parent");
+        propRangeType         = serializedObject.FindProperty("rangeType");
+        propRangeRadius       = serializedObject.FindProperty("rangeRadius");
+        propRangeVector       = serializedObject.FindProperty("rangeVector");
     }
 
     public override void OnInspectorGUI()
@@ -62,17 +56,18 @@ public class FabricatorEditor : Editor
 
         EditorGUILayout.PropertyField(propPrefabs, true);
         EditorGUILayout.PropertyField(propInstantiationRate);
+        EditorGUILayout.PropertyField(propInitialBurst);
         EditorGUILayout.PropertyField(propRangeType);
 
         EditorGUI.indentLevel++;
         var isSphere = (propRangeType.enumValueIndex == (int)Fabricator.RangeType.Sphere);
         var showBoth = propRangeType.hasMultipleDifferentValues;
-        if ( isSphere || showBoth) EditorGUILayout.PropertyField(propRangeRadius, labelRangeRadius);
+        if ( isSphere || showBoth) EditorGUILayout.PropertyField(propRangeRadius, new GUIContent("Radius"));
         if (!isSphere || showBoth) EditorGUILayout.PropertyField(propRangeVector, GUIContent.none);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.PropertyField(propRandomRotation);
-        EditorGUILayout.PropertyField(propParent, labelParent);
+        EditorGUILayout.PropertyField(propParent, new GUIContent("Set Parent"));
 
         serializedObject.ApplyModifiedProperties();
     }
