@@ -43,7 +43,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: f944af69b6b95412abe9c41b6811e0aa, type: 2}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -84,22 +84,22 @@ MonoBehaviour:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.49920869
-        value: .999960482
+      - time: 2.54863071
+        value: .999960542
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.95008194
-        value: 2.66929565e-05
+      - time: 2.99950385
+        value: 2.6693102e-05
         inSlope: -2.56489992
         outSlope: 0
         tangentMode: 1
       m_PreInfinity: 2
       m_PostInfinity: 1
-    amplitude: 1.5
+    amplitude: 2
     speed: 1
     arbitraryVector: {x: 0, y: 1, z: 0}
-    randomness: .5
+    randomness: .699999988
   rotation:
     mode: 5
     curve:
@@ -126,18 +126,13 @@ MonoBehaviour:
     curve:
       serializedVersion: 2
       m_Curve:
-      - time: -.000897988677
-        value: 2.99199019e-06
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: .401405096
+      - time: 6.62207603e-05
         value: 3.00304964e-06
         inSlope: .0392814167
         outSlope: 2.48036575
         tangentMode: 1
-      - time: 1.56696403
-        value: 1.00002348
+      - time: .505705476
+        value: .998385668
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -156,7 +151,7 @@ MonoBehaviour:
     amplitude: 1
     speed: 1
     arbitraryVector: {x: 1, y: 1, z: 1}
-    randomness: .280000001
+    randomness: .479999989
   scaleByShader: 0
   scalePropertyName: _Scale
   useLocalCoordinate: 1

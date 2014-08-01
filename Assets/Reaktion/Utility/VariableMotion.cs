@@ -50,7 +50,6 @@ public class VariableMotion : MonoBehaviour
         // Randomizer states.
         Vector3 randomVector;
         float randomAmplitude;
-        float randomSpeed;
 
         // Time parameter.
         float time;
@@ -59,7 +58,6 @@ public class VariableMotion : MonoBehaviour
         {
             randomVector = Random.onUnitSphere;
             randomAmplitude = Random.value;
-            randomSpeed = Random.value;
             time = 0;
         }
 
@@ -81,7 +79,7 @@ public class VariableMotion : MonoBehaviour
         // Advance the time parameter.
         public void Step()
         {
-            time += Time.deltaTime * speed * (1.0f - randomSpeed * randomness);
+            time += Time.deltaTime * speed;
         }
 
         // Get the current scalar value.
