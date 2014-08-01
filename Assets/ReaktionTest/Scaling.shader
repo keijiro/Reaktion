@@ -4,14 +4,14 @@
     {
         _MainTex("Base", 2D) = "white" {}
         _Color("Color", Color) = (1, 1, 1, 1)
-        _Scale("Scale Facor (<1.0)", Vector) = (1, 1, 1, 0)
+        _Scale("Scale Facor (<=1.0)", Vector) = (1, 1, 1, 0)
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         
         CGPROGRAM
-        #pragma surface surf Lambert vertex:vert
+        #pragma surface surf Lambert vertex:vert addshadow
 
         sampler2D _MainTex;
         half4 _Color;
