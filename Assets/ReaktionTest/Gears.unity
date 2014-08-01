@@ -195,7 +195,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
     mode: 2
@@ -216,7 +216,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    arbitralVector: {x: 0, y: 1, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   scale:
     mode: 2
@@ -237,7 +237,7 @@ MonoBehaviour:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    arbitralVector: {x: 1, y: 1, z: 1}
+    arbitraryVector: {x: 1, y: 1, z: 1}
     randomness: 0
   addInitialValue: 1
   scaleByShader: 1
@@ -555,12 +555,12 @@ MonoBehaviour:
   position:
     mode: 0
     velocity: 0
-    arbitralVector: {x: 1, y: 0, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
     mode: 0
     velocity: 30
-    arbitralVector: {x: 0, y: 1, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   useLocalCoordinate: 1
 --- !u!1 &328707817
@@ -5819,12 +5819,12 @@ MonoBehaviour:
   position:
     mode: 0
     velocity: 1
-    arbitralVector: {x: 1, y: 0, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
     mode: 0
     velocity: 300
-    arbitralVector: {x: 0, y: 1, z: 0}
+    arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   useLocalCoordinate: 1
 --- !u!1 &1672564658

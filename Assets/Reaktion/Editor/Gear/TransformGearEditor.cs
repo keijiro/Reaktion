@@ -36,7 +36,7 @@ class TransformGearElementDrawer : PropertyDrawer
         new GUIContent("X Axis"),
         new GUIContent("Y Axis"),
         new GUIContent("Z Axis"),
-        new GUIContent("Arbitral Vector"),
+        new GUIContent("Arbitrary Vector"),
         new GUIContent("Random Vector")
     };
     static int[] modeValues = { 0, 1, 2, 3, 4, 5 };
@@ -48,8 +48,8 @@ class TransformGearElementDrawer : PropertyDrawer
         if (mode.hasMultipleDifferentValues) return 2;
         // "Off"
         if (mode.enumValueIndex == 0) return 0;
-        // Fully expand if it's in Arbitral mode.
-        if (mode.enumValueIndex == (int)TransformGear.TransformMode.Arbitral) return 2;
+        // Fully expand if it's in Arbitrary mode.
+        if (mode.enumValueIndex == (int)TransformGear.TransformMode.Arbitrary) return 2;
         // Expand one level.
         return 1;
     }
@@ -83,7 +83,7 @@ class TransformGearElementDrawer : PropertyDrawer
             if (expansion == 2)
             {
                 // Vector box.
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("arbitralVector"), GUIContent.none);
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("arbitraryVector"), GUIContent.none);
                 position.y += rowHeight;
             }
 

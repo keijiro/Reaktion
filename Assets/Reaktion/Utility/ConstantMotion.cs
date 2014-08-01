@@ -27,7 +27,7 @@ namespace Reaktion {
 public class ConstantMotion : MonoBehaviour
 {
     public enum TransformMode {
-        Off, XAxis, YAxis, ZAxis, Arbitral, Random
+        Off, XAxis, YAxis, ZAxis, Arbitrary, Random
     };
 
     // A class for handling each transformation.
@@ -37,8 +37,8 @@ public class ConstantMotion : MonoBehaviour
         public TransformMode mode = TransformMode.Off;
         public float velocity = 1;
 
-        // Used only in the arbitral mode.
-        public Vector3 arbitralVector = Vector3.up;
+        // Used only in the arbitrary mode.
+        public Vector3 arbitraryVector = Vector3.up;
 
         // Affects velocity.
         public float randomness = 0;
@@ -58,11 +58,11 @@ public class ConstantMotion : MonoBehaviour
             get {
                 switch (mode)
                 {
-                    case TransformMode.XAxis:    return Vector3.right;
-                    case TransformMode.YAxis:    return Vector3.up;
-                    case TransformMode.ZAxis:    return Vector3.forward;
-                    case TransformMode.Arbitral: return arbitralVector;
-                    case TransformMode.Random:   return randomVector;
+                    case TransformMode.XAxis:     return Vector3.right;
+                    case TransformMode.YAxis:     return Vector3.up;
+                    case TransformMode.ZAxis:     return Vector3.forward;
+                    case TransformMode.Arbitrary: return arbitraryVector;
+                    case TransformMode.Random:    return randomVector;
                 }
                 return Vector3.zero;
             }
