@@ -95,33 +95,67 @@ public class VariableMotion : MonoBehaviour
     public TransformElement position = new TransformElement();
     public TransformElement rotation = new TransformElement();
     public bool useLocalCoordinate = true;
+    public bool setAbsolute = false;
+
+    Vector3 previousPosition;
+    Quaternion previousRotation;
 
     void OnEnable()
     {
         position.Initialize();
         rotation.Initialize();
+
+        previousPosition = position.Vector * position.Scalar;
+        previousRotation = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
     }
 
     void Update()
     {
+        position.Step();
+        rotation.Step();
+
+        var p = position.Vector * position.Scalar;
+        var r = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
+
         if (position.mode != TransformMode.Off)
         {
-            position.Step();
-            if (useLocalCoordinate)
-                transform.localPosition = position.Vector * position.Scalar;
+            if (setAbsolute)
+            {
+                if (useLocalCoordinate)
+                    transform.localPosition = p;
+                else
+                    transform.position = p;
+            }
             else
-                transform.position = position.Vector * position.Scalar;
+            {
+                if (useLocalCoordinate)
+                    transform.localPosition += p - previousPosition;
+                else
+                    transform.position += p - previousPosition;
+            }
         }
 
         if (position.mode != TransformMode.Off)
         {
-            rotation.Step();
-            var r = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
-            if (useLocalCoordinate)
-                transform.localRotation = r;
+            if (setAbsolute)
+            {
+                if (useLocalCoordinate)
+                    transform.localRotation = r;
+                else
+                    transform.rotation = r;
+            }
             else
-                transform.rotation = r;
+            {
+                var dr = r * Quaternion.Inverse(previousRotation);
+                if (useLocalCoordinate)
+                    transform.localRotation = dr * transform.localRotation;
+                else
+                    transform.rotation = dr * transform.rotation;
+            }
         }
+
+        previousPosition = p;
+        previousRotation = r;
     }
 }
 

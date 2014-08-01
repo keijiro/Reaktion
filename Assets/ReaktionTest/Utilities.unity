@@ -209,6 +209,7 @@ MonoBehaviour:
     arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   useLocalCoordinate: 1
+  setAbsolute: 0
 --- !u!23 &471077318
 Renderer:
   m_ObjectHideFlags: 0
@@ -320,6 +321,7 @@ MonoBehaviour:
     arbitralVector: {x: 0, y: 1, z: 0}
     randomness: 0
   useLocalCoordinate: 1
+  setAbsolute: 0
 --- !u!23 &565561272
 Renderer:
   m_ObjectHideFlags: 0
