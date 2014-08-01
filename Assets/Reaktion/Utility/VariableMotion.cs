@@ -80,7 +80,7 @@ public class VariableMotion : MonoBehaviour
         // Advance the time parameter.
         public void Step()
         {
-            time += Time.deltaTime * (1.0f - randomTimeScale * randomness);
+            time += Time.deltaTime * timeScale * (1.0f - randomTimeScale * randomness);
         }
 
         // Get the current scalar value.
@@ -92,25 +92,39 @@ public class VariableMotion : MonoBehaviour
         }
     }
 
+    // Transformation elements.
     public TransformElement position = new TransformElement();
     public TransformElement rotation = new TransformElement();
+    public TransformElement scale = new TransformElement();
+
+    // Scale options.
+    public bool scaleByShader = false;
+    public string scalePropertyName = "_Scale";
+
+    // Options for applying transformations.
     public bool useLocalCoordinate = true;
     public bool setAbsolute = false;
 
+    // Transformation history.
     Vector3 previousPosition;
     Quaternion previousRotation;
+    Vector3 initialScale;
 
     void OnEnable()
     {
         position.Initialize();
         rotation.Initialize();
+        scale.Initialize();
 
         previousPosition = position.Vector * position.Scalar;
         previousRotation = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
+        initialScale = transform.localScale;
     }
 
     void Update()
     {
+        // Position and rotation.
+
         position.Step();
         rotation.Step();
 
@@ -156,6 +170,19 @@ public class VariableMotion : MonoBehaviour
 
         previousPosition = p;
         previousRotation = r;
+
+        // Scale.
+
+        if (scale.mode != TransformMode.Off)
+        {
+            scale.Step();
+            var so = (!setAbsolute && !scaleByShader) ? initialScale : Vector3.one;
+            var s = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.Scalar - 1));
+            if (scaleByShader)
+                renderer.material.SetVector(scalePropertyName, s);
+            else
+                transform.localScale = s;
+        }
     }
 }
 

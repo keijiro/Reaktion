@@ -184,11 +184,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 0
     amplitude: 1
-    timeScale: 1
+    timeScale: 1.20000005
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
-    mode: 2
+    mode: 3
     curve:
       serializedVersion: 2
       m_Curve:
@@ -205,9 +205,67 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 0
     amplitude: 180
-    timeScale: 1
+    timeScale: .800000012
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
+  scale:
+    mode: 4
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .0524065681
+        value: -4.83586919e-05
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .196962863
+        value: 1.20279169
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .348247349
+        value: .798323154
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .500489473
+        value: 1.19131184
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .656557441
+        value: .799524546
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .804843485
+        value: 1.2071991
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .939587772
+        value: -2.90913158e-06
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1.0057224
+        value: 1.74808292e-08
+        inSlope: -.00564803509
+        outSlope: -.00564803509
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+    amplitude: 1
+    timeScale: .200000003
+    arbitraryVector: {x: 1, y: 1, z: 1}
+    randomness: 0
+  scaleByShader: 1
+  scalePropertyName: _Scale
   useLocalCoordinate: 1
   setAbsolute: 0
 --- !u!23 &471077318
@@ -218,11 +276,11 @@ Renderer:
   m_GameObject: {fileID: 471077316}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f944af69b6b95412abe9c41b6811e0aa, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -244,7 +302,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 471077316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -320,6 +378,39 @@ MonoBehaviour:
     timeScale: 1
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
+  scale:
+    mode: 4
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: .999809861
+        inSlope: 4.98399067
+        outSlope: 4.98399067
+        tangentMode: 10
+      - time: .0939570963
+        value: 1.46809113
+        inSlope: -1.52054071
+        outSlope: -1.52054071
+        tangentMode: 10
+      - time: .213797808
+        value: .506360769
+        inSlope: -1.14243007
+        outSlope: -1.14243007
+        tangentMode: 10
+      - time: .299860686
+        value: 1.00037992
+        inSlope: 5.74021196
+        outSlope: 5.74021196
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+    amplitude: 1
+    timeScale: .430000007
+    arbitraryVector: {x: 1, y: 0, z: 1}
+    randomness: 0
+  scaleByShader: 0
+  scalePropertyName: _Scale
   useLocalCoordinate: 1
   setAbsolute: 0
 --- !u!23 &565561272
@@ -330,7 +421,7 @@ Renderer:
   m_GameObject: {fileID: 565561270}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
@@ -356,7 +447,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 565561270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -503,8 +594,78 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1508327438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: .600000024, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &1797823428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1797823432}
+  - 33: {fileID: 1797823431}
+  - 64: {fileID: 1797823430}
+  - 23: {fileID: 1797823429}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1797823429
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797823428}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!64 &1797823430
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797823428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &1797823431
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797823428}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1797823432
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797823428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
