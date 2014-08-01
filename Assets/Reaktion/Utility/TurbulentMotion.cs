@@ -62,9 +62,17 @@ public class TurbulentMotion : MonoBehaviour
             initialRotation = transform.rotation;
         }
         initialScale = transform.localScale;
+
+        // Apply the initial state.
+        ApplyTransform();
     }
 
     void Update()
+    {
+        ApplyTransform();
+    }
+
+    void ApplyTransform()
     {
         // Noise position.
         var np = initialPosition * density + linearFlow * Time.time;
@@ -113,16 +121,16 @@ public class TurbulentMotion : MonoBehaviour
         }
 
         // Scale.
-        if (scale != Vector3.one)
+        if (scale != Vector3.zero)
         {
             // Noise position for the scale.
             var nps = np * coeffScale;
 
             // Get noise values.
             var vs = new Vector3(
-                scale.x == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 6) + 1) * 0.5f, 1.0f, scale.x),
-                scale.y == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 7) + 1) * 0.5f, 1.0f, scale.y),
-                scale.z == 1.0f ? 1.0f : Mathf.Lerp((Perlin.Noise(nps + offs * 8) + 1) * 0.5f, 1.0f, scale.z)
+                scale.x == 0.0f ? 1.0f : Mathf.Lerp(1.0f, (Perlin.Noise(nps + offs * 6) * 1.25f + 1) * 0.5f, scale.x),
+                scale.y == 0.0f ? 1.0f : Mathf.Lerp(1.0f, (Perlin.Noise(nps + offs * 7) * 1.25f + 1) * 0.5f, scale.y),
+                scale.z == 0.0f ? 1.0f : Mathf.Lerp(1.0f, (Perlin.Noise(nps + offs * 8) * 1.25f + 1) * 0.5f, scale.z)
             );
 
             // Apply the scale.

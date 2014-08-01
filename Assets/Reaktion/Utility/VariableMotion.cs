@@ -35,6 +35,7 @@ public class VariableMotion : MonoBehaviour
     [System.Serializable]
     public class TransformElement
     {
+        // Basic transform and time parameters.
         public TransformMode mode = TransformMode.Off;
         public AnimationCurve curve = AnimationCurve.Linear(0, -1, 1, 1);
         public float amplitude = 1;
@@ -94,16 +95,19 @@ public class VariableMotion : MonoBehaviour
 
     // Transformation elements.
     public TransformElement position = new TransformElement();
-    public TransformElement rotation = new TransformElement();
-    public TransformElement scale = new TransformElement();
+    public TransformElement rotation = new TransformElement{ amplitude = 90 };
 
     // Scale options.
+    public TransformElement scale = new TransformElement{
+        curve = AnimationCurve.Linear(0, 0, 1, 1),
+        arbitraryVector = Vector3.one
+    };
     public bool scaleByShader = false;
     public string scalePropertyName = "_Scale";
 
     // Options for applying transformations.
     public bool useLocalCoordinate = true;
-    public bool useDifferentials = true;
+    public bool useDifferentials = false;
 
     // Transformation history.
     Vector3 previousPosition;
@@ -112,22 +116,34 @@ public class VariableMotion : MonoBehaviour
 
     void OnEnable()
     {
+        // Initialization.
         position.Initialize();
         rotation.Initialize();
         scale.Initialize();
 
+        // Store the initial states.
         previousPosition = position.Vector * position.Scalar;
         previousRotation = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
         initialScale = transform.localScale;
+
+        // Apply the initial transform.
+        ApplyTransform();
     }
 
     void Update()
     {
-        // Position and rotation.
-
+        // Advance the time parameters.
         position.Step();
         rotation.Step();
+        scale.Step();
 
+        // Apply the transforms.
+        ApplyTransform();
+    }
+
+    void ApplyTransform()
+    {
+        // Position and rotation.
         var p = position.Vector * position.Scalar;
         var r = Quaternion.AngleAxis(rotation.Scalar, rotation.Vector);
 
@@ -149,7 +165,7 @@ public class VariableMotion : MonoBehaviour
             }
         }
 
-        if (position.mode != TransformMode.Off)
+        if (rotation.mode != TransformMode.Off)
         {
             if (useDifferentials)
             {
@@ -172,10 +188,8 @@ public class VariableMotion : MonoBehaviour
         previousRotation = r;
 
         // Scale.
-
         if (scale.mode != TransformMode.Off)
         {
-            scale.Step();
             var so = (useDifferentials && !scaleByShader) ? initialScale : Vector3.one;
             var s = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.Scalar - 1));
             if (scaleByShader)
