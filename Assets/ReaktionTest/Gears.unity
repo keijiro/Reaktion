@@ -311,8 +311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -328,51 +331,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 6
-  dynamicRange: 20
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!1 &226079364
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,12 +560,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    mode: 0
+    mode: 1
     velocity: 0
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
-    mode: 0
+    mode: 2
     velocity: 30
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
@@ -673,8 +680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -690,51 +700,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 100
-  showAudioOptions: 1
-  headroom: 0
-  dynamicRange: 16
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!1 &368835009
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,8 +776,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -779,49 +796,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
-  showAudioOptions: 1
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
   headroom: 1
-  dynamicRange: 16
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!4 &368835011
@@ -4185,8 +4206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4202,51 +4226,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 4.5
-  showAudioOptions: 1
-  headroom: 0
-  dynamicRange: 16
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!4 &1153192219
 Transform:
   m_ObjectHideFlags: 0
@@ -4301,8 +4329,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4318,49 +4349,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 100
-  showAudioOptions: 1
-  headroom: 8
-  dynamicRange: 12
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!1 &1300914055
@@ -4403,8 +4438,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4420,49 +4458,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
-  showAudioOptions: 1
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
   headroom: 1
-  dynamicRange: 16
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!1 &1330305258
@@ -4817,8 +4859,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -4834,49 +4879,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 2
-  dynamicRange: 16
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!4 &1362350449
@@ -5104,8 +5153,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -5121,51 +5173,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 100
-  showAudioOptions: 1
-  headroom: 0
-  dynamicRange: 16
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!1 &1438092069
 GameObject:
   m_ObjectHideFlags: 0
@@ -5347,8 +5403,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -5364,49 +5423,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
-  showAudioOptions: 1
-  headroom: 2
-  dynamicRange: 16
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
+  showAudioOptions: 0
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!1 &1569667044
@@ -5478,8 +5541,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -5495,51 +5561,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 100
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 6
-  dynamicRange: 20
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!4 &1569667047
 Transform:
   m_ObjectHideFlags: 0
@@ -5568,6 +5638,7 @@ MonoBehaviour:
   - {fileID: 100000, guid: a260d7c2f83ce41058b0d0b17e0950cf, type: 2}
   - {fileID: 100000, guid: 03d8473e3b50e4d0a8a967eefe43d8f1, type: 2}
   instantiationRate: 4
+  initialBurst: 0
   randomRotation: 1
   parent: {fileID: 0}
   rangeType: 0
@@ -5817,12 +5888,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position:
-    mode: 0
+    mode: 1
     velocity: 1
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
   rotation:
-    mode: 0
+    mode: 2
     velocity: 300
     arbitraryVector: {x: 0, y: 1, z: 0}
     randomness: 0
@@ -6231,8 +6302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -6248,51 +6322,55 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 100
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 6
-  dynamicRange: 20
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
-  falldown: .400000006
+  falldown: .5
 --- !u!114 &1858113703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7620,8 +7698,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -7637,49 +7718,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 15.1000004
-  decaySpeed: 1.5
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 2
-  dynamicRange: 16
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!1 &2097324533
@@ -7884,8 +7969,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -7901,49 +7989,53 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  sensitivity: 0
-  decaySpeed: 5.5
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  sensitivity: .949999988
+  decaySpeed: .5
   showAudioOptions: 0
-  headroom: 2
-  dynamicRange: 16
+  headroom: 1
+  dynamicRange: 17
   lowerBound: -60
   falldown: .5
 --- !u!4 &2124012540

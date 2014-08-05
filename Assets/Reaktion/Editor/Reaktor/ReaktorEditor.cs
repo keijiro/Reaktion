@@ -33,19 +33,9 @@ public class ReaktorEditor : Editor
     SerializedProperty propInjector;
     SerializedProperty propAudioCurve;
 
-    // Gain control.
-    SerializedProperty propGainEnabled;
-    SerializedProperty propGainKnobIndex;
-    SerializedProperty propGainKnobChannel;
-    SerializedProperty propGainInputAxis;
-    SerializedProperty propGainCurve;
-
-    // Offset control.
-    SerializedProperty propOffsetEnabled;
-    SerializedProperty propOffsetKnobIndex;
-    SerializedProperty propOffsetKnobChannel;
-    SerializedProperty propOffsetInputAxis;
-    SerializedProperty propOffsetCurve;
+    // Remote controls.
+    SerializedProperty propGain;
+    SerializedProperty propOffset;
 
     // General option.
     SerializedProperty propSensitivity;
@@ -58,83 +48,31 @@ public class ReaktorEditor : Editor
     SerializedProperty propLowerBound;
     SerializedProperty propFalldown;
 
-    // String labels.
-    GUIContent labelGainControl;
-    GUIContent labelOffsetControl;
-    GUIContent labelCurve;
-    GUIContent labelMidiCC;
-    GUIContent labelMidiChannel;
-    GUIContent labelInputAxis;
-
     // Texutres for drawing level bars.
     Texture2D[] barTextures;
 
-    // UI contents.
-    static GUIContent[] midiChannelLabels = {
-        new GUIContent("Channel 1"),
-        new GUIContent("Channel 2"),
-        new GUIContent("Channel 3"),
-        new GUIContent("Channel 4"),
-        new GUIContent("Channel 5"),
-        new GUIContent("Channel 6"),
-        new GUIContent("Channel 7"),
-        new GUIContent("Channel 8"),
-        new GUIContent("Channel 9"),
-        new GUIContent("Channel 10"),
-        new GUIContent("Channel 11"),
-        new GUIContent("Channel 12"),
-        new GUIContent("Channel 13"),
-        new GUIContent("Channel 14"),
-        new GUIContent("Channel 15"),
-        new GUIContent("Channel 16"),
-        new GUIContent("All Channels")
-    };
-    static int[] midiChannelOptions = {
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-    };
-
-    // On Enable (initialization)
     void OnEnable()
     {
         // Audio input settings.
-        propInjector          = serializedObject.FindProperty("injector");
-        propAudioCurve        = serializedObject.FindProperty("audioCurve");
+        propInjector         = serializedObject.FindProperty("injector");
+        propAudioCurve       = serializedObject.FindProperty("audioCurve");
 
-        // Gain control.
-        propGainEnabled       = serializedObject.FindProperty("gainEnabled");
-        propGainKnobIndex     = serializedObject.FindProperty("gainKnobIndex");
-        propGainKnobChannel   = serializedObject.FindProperty("gainKnobChannel");
-        propGainInputAxis     = serializedObject.FindProperty("gainInputAxis");
-        propGainCurve         = serializedObject.FindProperty("gainCurve");
-
-        // Offset control.
-        propOffsetEnabled     = serializedObject.FindProperty("offsetEnabled");
-        propOffsetKnobIndex   = serializedObject.FindProperty("offsetKnobIndex");
-        propOffsetKnobChannel = serializedObject.FindProperty("offsetKnobChannel");
-        propOffsetInputAxis   = serializedObject.FindProperty("offsetInputAxis");
-        propOffsetCurve       = serializedObject.FindProperty("offsetCurve");
+        // Remote controls.
+        propGain             = serializedObject.FindProperty("gain");
+        propOffset           = serializedObject.FindProperty("offset");
 
         // General option.
-        propSensitivity       = serializedObject.FindProperty("sensitivity");
-        propDecaySpeed        = serializedObject.FindProperty("decaySpeed");
+        propSensitivity      = serializedObject.FindProperty("sensitivity");
+        propDecaySpeed       = serializedObject.FindProperty("decaySpeed");
         
         // Audio input options.
-        propShowAudioOptions  = serializedObject.FindProperty("showAudioOptions");
-        propHeadroom          = serializedObject.FindProperty("headroom");
-        propDynamicRange      = serializedObject.FindProperty("dynamicRange");
-        propLowerBound        = serializedObject.FindProperty("lowerBound");
-        propFalldown          = serializedObject.FindProperty("falldown");
-
-        // String labels.
-        labelGainControl   = new GUIContent("Gain Control");
-        labelOffsetControl = new GUIContent("Offset Control");
-        labelCurve         = new GUIContent("Curve");
-        labelMidiCC        = new GUIContent("MIDI CC#");
-        labelMidiChannel   = new GUIContent("MIDI Channel");
-        labelInputAxis     = new GUIContent("Input Axis");
+        propShowAudioOptions = serializedObject.FindProperty("showAudioOptions");
+        propHeadroom         = serializedObject.FindProperty("headroom");
+        propDynamicRange     = serializedObject.FindProperty("dynamicRange");
+        propLowerBound       = serializedObject.FindProperty("lowerBound");
+        propFalldown         = serializedObject.FindProperty("falldown");
     }
     
-    // On Disable (cleanup)
     void OnDisable()
     {
         if (barTextures != null)
@@ -146,7 +84,6 @@ public class ReaktorEditor : Editor
         }
     }
 
-    // Shows the inspector.
     public override void OnInspectorGUI()
     {
         // Update the references.
@@ -154,91 +91,34 @@ public class ReaktorEditor : Editor
 
         // Audio input settings.
         EditorGUILayout.PropertyField(propInjector);
+        EditorGUILayout.PropertyField(propAudioCurve, new GUIContent("Amplitude Curve"));
 
-        EditorGUILayout.PropertyField(propAudioCurve, labelCurve);
-
-        var shouldInsertSpace = propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue ||
-                                propOffsetEnabled.hasMultipleDifferentValues || propOffsetEnabled.boolValue;
-
-        // Gain control.
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
-        var useMidi = true;
-#else
-        var useMidi = false;
-#endif
-
-        if (shouldInsertSpace) EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propGainEnabled, labelGainControl);
-        if (propGainEnabled.hasMultipleDifferentValues || propGainEnabled.boolValue)
-        {
-            if (useMidi)
-            {
-                EditorGUILayout.PropertyField(propGainKnobIndex, labelMidiCC);
-                EditorGUILayout.IntPopup(propGainKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
-            }
-            EditorGUILayout.PropertyField(propGainInputAxis, labelInputAxis);
-            EditorGUILayout.PropertyField(propGainCurve, labelCurve);
-        }
-
-        // Offset control.
-        if (shouldInsertSpace) EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(propOffsetEnabled, labelOffsetControl);
-        if (propOffsetEnabled.hasMultipleDifferentValues || propOffsetEnabled.boolValue)
-        {
-            if (useMidi)
-            {
-                EditorGUILayout.PropertyField(propOffsetKnobIndex, labelMidiCC);
-                EditorGUILayout.IntPopup(propOffsetKnobChannel, midiChannelLabels, midiChannelOptions, labelMidiChannel);
-            }
-            EditorGUILayout.PropertyField(propOffsetInputAxis, labelInputAxis);
-            EditorGUILayout.PropertyField(propOffsetCurve, labelCurve);
-        }
-        
-        if (shouldInsertSpace) EditorGUILayout.Space();
+        // Remote controls.
+        EditorGUILayout.PropertyField(propGain, new GUIContent("Gain Control"));
+        EditorGUILayout.PropertyField(propOffset, new GUIContent("Offset Control"));
 
         // General option.
-        if (!propSensitivity.hasMultipleDifferentValues)
-        {
-            var value = propSensitivity.floatValue;
-            if (value > 0.0f)
-                value = EditorGUILayout.Slider("Sensitivity", (value - 0.1f) / 30, 0.0f, 1.0f);
-            else
-                value = EditorGUILayout.Slider("(Filter Off)", 1.0f, 0.0f, 1.0f);
-            propSensitivity.floatValue = (value == 1.0f) ? 0.0f : value * 30 + 0.1f;
-        }
-        else
-        {
-            EditorGUILayout.PropertyField(propSensitivity);
-        }
-
-        if (!propDecaySpeed.hasMultipleDifferentValues)
-        {
-            var value = propDecaySpeed.floatValue;
-            if (value < 10.5f)
-                value = EditorGUILayout.Slider("Decay Speed", (value - 0.5f) / 10, 0.0f, 1.0f);
-            else
-                value = EditorGUILayout.Slider("(Infinite)", 1.0f, 0.0f, 1.0f);
-            propDecaySpeed.floatValue = (value == 1.0f) ? 100.0f : value * 10f + 0.5f;
-        }
-        else
-        {
-            EditorGUILayout.PropertyField(propDecaySpeed);
-        }
+        EditorGUILayout.Slider(propSensitivity, 0, 1);
+        EditorGUILayout.Slider(propDecaySpeed, 0, 1);
 
         // Audio input options.
         if (!propShowAudioOptions.hasMultipleDifferentValues)
         {
             propShowAudioOptions.boolValue = EditorGUILayout.Foldout(propShowAudioOptions.boolValue, "Audio Input Options");
         }
+        else
+        {
+            EditorGUILayout.LabelField("Audio Input Options");
+        }
 
         if (propShowAudioOptions.hasMultipleDifferentValues || propShowAudioOptions.boolValue)
         {
+            EditorGUI.indentLevel++;
             EditorGUILayout.Slider(propHeadroom, 0.0f, 20.0f, "Headroom [dB]");
-            EditorGUILayout.Slider(propDynamicRange, 1.0f, 60.0f, "Dynamic Range [dB]");
+            EditorGUILayout.Slider(propDynamicRange, 1.0f, 60.0f, "Dyn. Range [dB]");
             EditorGUILayout.Slider(propLowerBound, -100.0f, -10.0f, "Lower Bound [dB]");
             EditorGUILayout.Slider(propFalldown, 0.0f, 10.0f, "Falldown [dB/Sec]");
+            EditorGUI.indentLevel--;
         }
 
         // Apply modifications.
@@ -304,12 +184,10 @@ public class ReaktorEditor : Editor
         EditorGUI.LabelField(rect, "Peak: " + reaktor.Peak.ToString ("0.0") + " dB");
 
         // Draw the gain level.
-        if (reaktor.gainEnabled)
-            DrawLevelBar("Gain", reaktor.Gain, barTextures[0], barTextures[1]);
+        DrawLevelBar("Gain", reaktor.Gain, barTextures[0], barTextures[1]);
 
         // Draw the offset level.
-        if (reaktor.offsetEnabled)
-            DrawLevelBar("Offset", reaktor.Offset, barTextures[0], barTextures[1]);
+        DrawLevelBar("Offset", reaktor.Offset, barTextures[0], barTextures[1]);
 
         // Draw the output level.
         DrawLevelBar("Out", reaktor.Output, barTextures[0], barTextures[4]);
