@@ -26,9 +26,8 @@ using System.Collections;
 
 namespace Reaktion {
 
-// Custom editor UI for ReaktorLink.
-[CustomPropertyDrawer(typeof(ReaktorLink))]
-class ReaktorLinkDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(GenericLinkBase), true)]
+class GenericLinkDrawer : PropertyDrawer
 {
     // Labels and values for the mode selector.
     static GUIContent[] modeLabels = {
@@ -46,9 +45,9 @@ class ReaktorLinkDrawer : PropertyDrawer
         if (propMode.hasMultipleDifferentValues) return 3;
 
         // Expand when by-reference and by-name mode.
-        var mode = (ReaktorLink.Mode)propMode.enumValueIndex;
-        if (mode == ReaktorLink.Mode.ByReference ||
-            mode == ReaktorLink.Mode.ByName) return 2;
+        var mode = (InjectorLink.Mode)propMode.intValue;
+        if (mode == InjectorLink.Mode.ByReference ||
+            mode == InjectorLink.Mode.ByName) return 2;
 
         // Just one line.
         return 1;
@@ -78,15 +77,15 @@ class ReaktorLinkDrawer : PropertyDrawer
         EditorGUIUtility.labelWidth -= 16;
 
         // Reference box.
-        var mode = (ReaktorLink.Mode)propMode.enumValueIndex;
-        if (propMode.hasMultipleDifferentValues || mode == ReaktorLink.Mode.ByReference)
+        var mode = (InjectorLink.Mode)propMode.intValue;
+        if (propMode.hasMultipleDifferentValues || mode == InjectorLink.Mode.ByReference)
         {
             EditorGUI.PropertyField(position, property.FindPropertyRelative("_reference"));
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
         }
 
         // Name box.
-        if (propMode.hasMultipleDifferentValues || mode == ReaktorLink.Mode.ByName)
+        if (propMode.hasMultipleDifferentValues || mode == InjectorLink.Mode.ByName)
             EditorGUI.PropertyField(position, property.FindPropertyRelative("_name"));
 
         // Update the link when it gets updated.
