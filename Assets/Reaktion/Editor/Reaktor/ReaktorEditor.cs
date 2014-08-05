@@ -30,7 +30,6 @@ namespace Reaktion {
 public class ReaktorEditor : Editor
 {
     // Audio input settings.
-    SerializedProperty propAutoBind;
     SerializedProperty propInjector;
     SerializedProperty propAudioCurve;
 
@@ -98,7 +97,6 @@ public class ReaktorEditor : Editor
     void OnEnable()
     {
         // Audio input settings.
-        propAutoBind          = serializedObject.FindProperty("autoBind");
         propInjector          = serializedObject.FindProperty("injector");
         propAudioCurve        = serializedObject.FindProperty("audioCurve");
 
@@ -155,10 +153,7 @@ public class ReaktorEditor : Editor
         serializedObject.Update();
 
         // Audio input settings.
-        EditorGUILayout.PropertyField(propAutoBind);
-
-        if (propAutoBind.hasMultipleDifferentValues || !propAutoBind.boolValue)
-            EditorGUILayout.PropertyField(propInjector);
+        EditorGUILayout.PropertyField(propInjector);
 
         EditorGUILayout.PropertyField(propAudioCurve, labelCurve);
 

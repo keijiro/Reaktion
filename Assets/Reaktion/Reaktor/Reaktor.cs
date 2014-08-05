@@ -30,8 +30,7 @@ public class Reaktor : MonoBehaviour
 {
     #region Audio input settings
 
-    public bool autoBind = true;
-    public InjectorBase injector;
+    public InjectorLink injector;
     public AnimationCurve audioCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     #endregion
@@ -132,17 +131,7 @@ public class Reaktor : MonoBehaviour
 
     void Start()
     {
-        // Search for an injector.
-        if (autoBind)
-        {
-            injector = GetComponentInChildren<InjectorBase>();
-            if (injector == null)
-            {
-                injector = GetComponentInParent<InjectorBase>();
-                if (injector == null)
-                    injector = FindObjectOfType<InjectorBase>();
-            }
-        }
+        injector.Initialize(this);
 
         // Begins with the lowest level.
         peak = lowerBound + dynamicRange + headroom;
@@ -155,7 +144,7 @@ public class Reaktor : MonoBehaviour
         float input = 0.0f;
 
         // Audio input.
-        rawInput = injector ? injector.DbLevel : -1e12f;
+        rawInput = injector.DbLevel;
 
         // Check the peak level.
         peak -= Time.deltaTime * falldown;
