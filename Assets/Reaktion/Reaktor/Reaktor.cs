@@ -25,7 +25,7 @@ using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Reaktor")]
+[AddComponentMenu("Reaktion/Reaktor/Reaktor")]
 public class Reaktor : MonoBehaviour
 {
     #region Audio input settings
