@@ -43,24 +43,28 @@ public class Remote
     // Amplitude curve.
     [SerializeField] AnimationCurve _curve = AnimationCurve.Linear(0, 0, 1, 1);
 
+    // Default value.
+    float _defaultLevel;
+
     // Current value.
     float _level;
     public float level { get { return _level; } }
 
-    public Remote(float initialLevel)
+    public void Reset(float defaultLevel)
     {
-        _level = initialLevel;
+        _defaultLevel = defaultLevel;
+        Update();
     }
 
     public void Update()
     {
         if (_control == Control.Off)
         {
-            return;
+            _level = _defaultLevel;
         }
         else if (_control == Control.MidiKnob)
         {
-            _level = MidiJack.GetKnob(_midiChannel, _knobIndex, 1.0f);
+            _level = MidiJack.GetKnob(_midiChannel, _knobIndex, _defaultLevel);
         }
         else if (_control == Control.MidiNote)
         {
@@ -68,10 +72,11 @@ public class Remote
         }
         else // _control == Control.InputAxis
         {
-            if (string.IsNullOrEmpty(_inputAxis)) return;
-            _level = Input.GetAxis(_inputAxis);
+            if (string.IsNullOrEmpty(_inputAxis))
+                _level = _defaultLevel;
+            else
+                _level = Input.GetAxis(_inputAxis);
         }
-
         _level = _curve.Evaluate(_level);
     }
 }

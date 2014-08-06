@@ -33,8 +33,8 @@ public class Reaktor : MonoBehaviour
     public AnimationCurve audioCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     // Remote control settings.
-    public Remote gain = new Remote(1);
-    public Remote offset = new Remote(0);
+    public Remote gain;
+    public Remote offset;
 
     // General options.
     public float sensitivity = 0.95f;
@@ -85,6 +85,8 @@ public class Reaktor : MonoBehaviour
     void Start()
     {
         injector.Initialize(this);
+        gain.Reset(1);
+        offset.Reset(0);
 
         // Begins with the lowest level.
         peak = lowerBound + dynamicRange + headroom;
