@@ -26,6 +26,9 @@ using System.Collections;
 
 namespace Reaktion {
 
+// Enable only on UGUI enabled versions (requiring UnityEvent)
+#if UNITY_4_6 || UNITY_5_0
+
 [AddComponentMenu("Reaktion/Gear/Generic Gradient Gear")]
 public class GenericGradientGear : MonoBehaviour
 {
@@ -52,5 +55,7 @@ public class GenericGradientGear : MonoBehaviour
         target.Invoke(gradient.Evaluate(param));
     }
 }
+
+#endif
 
 } // namespace Reaktion

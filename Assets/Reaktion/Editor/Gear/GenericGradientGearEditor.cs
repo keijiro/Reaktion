@@ -26,6 +26,9 @@ using System.Collections;
 
 namespace Reaktion {
 
+// Enable only on UGUI enabled versions (requiring UnityEvent)
+#if UNITY_4_6 || UNITY_5_0
+
 [CustomEditor(typeof(GenericGradientGear)), CanEditMultipleObjects]
 public class GenericGradientGearEditor : Editor
 {
@@ -51,5 +54,7 @@ public class GenericGradientGearEditor : Editor
         serializedObject.ApplyModifiedProperties ();
     }
 }
+
+#endif
 
 } // namespace Reaktion

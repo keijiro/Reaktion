@@ -26,6 +26,9 @@ using System.Collections;
 
 namespace Reaktion {
 
+// Enable only on UGUI enabled versions (requiring UnityEvent)
+#if UNITY_4_6 || UNITY_5_0
+
 [AddComponentMenu("Reaktion/Gear/Generic Trigger Gear")]
 public class GenericTriggerGear : MonoBehaviour
 {
@@ -56,5 +59,7 @@ public class GenericTriggerGear : MonoBehaviour
         previousOutput = reaktor.Output;
     }
 }
+
+#endif
 
 } // namespace Reaktion

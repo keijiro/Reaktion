@@ -26,6 +26,9 @@ using System.Collections;
 
 namespace Reaktion {
 
+// Enable only on UGUI enabled versions (requiring UnityEvent)
+#if UNITY_4_6 || UNITY_5_0
+
 [CustomEditor(typeof(GenericCurveGear)), CanEditMultipleObjects]
 public class GenericCurveGearEditor : Editor
 {
@@ -95,5 +98,7 @@ public class GenericCurveGearEditor : Editor
         serializedObject.ApplyModifiedProperties ();
     }
 }
+
+#endif
 
 } // namespace Reaktion
