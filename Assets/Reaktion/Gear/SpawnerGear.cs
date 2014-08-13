@@ -1,4 +1,4 @@
-﻿//
+//
 // Reaktion - An audio reactive animation toolkit for Unity.
 //
 // Copyright (C) 2013, 2014 Keijiro Takahashi
@@ -21,47 +21,32 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 namespace Reaktion {
 
-[CustomEditor(typeof(FabricatorGear)), CanEditMultipleObjects]
-public class FabricatorGearEditor : Editor
+[AddComponentMenu("Reaktion/Gear/Spawner Gear")]
+public class SpawnerGear : MonoBehaviour
 {
-    SerializedProperty propReaktor;
-    SerializedProperty propBurst;
-    SerializedProperty propBurstNumber;
-    SerializedProperty propInstantiationRate;
-    GUIContent labelBurstNumber;
+    public ReaktorLink reaktor;
+    public Trigger burst;
+    public int burstNumber = 5;
+    public Modifier spawnRate = Modifier.Linear(0, 10);
 
-    void OnEnable()
+    Spawner spawner;
+
+    void Awake()
     {
-        propReaktor           = serializedObject.FindProperty("reaktor");
-        propBurst             = serializedObject.FindProperty("burst");
-        propBurstNumber       = serializedObject.FindProperty("burstNumber");
-        propInstantiationRate = serializedObject.FindProperty("instantiationRate");
-        labelBurstNumber      = new GUIContent("Instance Count");
+        reaktor.Initialize(this);
+        spawner = GetComponent<Spawner>();
     }
 
-    public override void OnInspectorGUI()
+    void Update()
     {
-        serializedObject.Update ();
-
-        EditorGUILayout.PropertyField(propReaktor);
-
-        EditorGUILayout.PropertyField(propBurst);
-        if (propBurst.hasMultipleDifferentValues ||
-            propBurst.FindPropertyRelative("enabled").boolValue)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propBurstNumber, labelBurstNumber);
-            EditorGUI.indentLevel--;
-        }
-
-        EditorGUILayout.PropertyField(propInstantiationRate);
-
-        serializedObject.ApplyModifiedProperties();
+        if (burst.Update(reaktor.Output))
+            spawner.Spawn(burstNumber);
+        if (spawnRate.enabled)
+            spawner.spawnRate = spawnRate.Evaluate(reaktor.Output);
     }
 }
 

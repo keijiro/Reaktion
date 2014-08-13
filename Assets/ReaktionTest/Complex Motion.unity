@@ -85,7 +85,7 @@ GameObject:
   - 114: {fileID: 239753465}
   - 114: {fileID: 239753467}
   m_Layer: 0
-  m_Name: Fabricator Pivot
+  m_Name: Spawner Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -554,7 +554,7 @@ GameObject:
   - 114: {fileID: 1267804020}
   - 114: {fileID: 1267804022}
   m_Layer: 0
-  m_Name: Fabricator
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,13 +573,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 100000, guid: b7b110efdf2ff42d69d0722ec6a5f79a, type: 2}
-  instantiationRate: 30
-  initialBurst: 0
+  spawnRate: 30
+  spawnRateRandomness: .100000001
+  distribution: 0
+  sphereRadius: .300000012
+  boxSize: {x: 0, y: 0, z: 0}
+  spawnPoints: []
   randomRotation: 1
   parent: {fileID: 1267804021}
-  rangeType: 0
-  rangeRadius: .300000012
-  rangeVector: {x: 1, y: 1, z: 1}
 --- !u!4 &1267804021
 Transform:
   m_ObjectHideFlags: 0
@@ -816,8 +817,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3ec3ae67a0841d8aa990e0f2e1089e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoBind: 1
-  injector: {fileID: 0}
+  injector:
+    _mode: 1
+    _reference: {fileID: 0}
+    _name: 
+    _forceUpdate: 0
   audioCurve:
     serializedVersion: 2
     m_Curve:
@@ -833,44 +837,48 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  gainEnabled: 0
-  gainKnobIndex: 2
-  gainKnobChannel: 16
-  gainInputAxis: 
-  gainCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  offsetEnabled: 0
-  offsetKnobIndex: 3
-  offsetKnobChannel: 16
-  offsetInputAxis: 
-  offsetCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  gain:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  offset:
+    _control: 0
+    _midiChannel: 16
+    _knobIndex: 2
+    _noteNumber: 40
+    _inputAxis: Jump
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
   sensitivity: 15.1000004
   decaySpeed: 5.5
   showAudioOptions: 0

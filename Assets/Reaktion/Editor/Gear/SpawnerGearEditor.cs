@@ -1,4 +1,4 @@
-//
+﻿//
 // Reaktion - An audio reactive animation toolkit for Unity.
 //
 // Copyright (C) 2013, 2014 Keijiro Takahashi
@@ -21,32 +21,47 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 namespace Reaktion {
 
-[AddComponentMenu("Reaktion/Gear/Fabricator Gear")]
-public class FabricatorGear : MonoBehaviour
+[CustomEditor(typeof(SpawnerGear)), CanEditMultipleObjects]
+public class SpawnerGearEditor : Editor
 {
-    public ReaktorLink reaktor;
-    public Trigger burst;
-    public int burstNumber = 5;
-    public Modifier instantiationRate = Modifier.Linear(0, 10);
+    SerializedProperty propReaktor;
+    SerializedProperty propBurst;
+    SerializedProperty propBurstNumber;
+    SerializedProperty propSpawnRate;
+    GUIContent labelBurstNumber;
 
-    Fabricator fabricator;
-
-    void Awake()
+    void OnEnable()
     {
-        reaktor.Initialize(this);
-        fabricator = GetComponent<Fabricator>();
+        propReaktor      = serializedObject.FindProperty("reaktor");
+        propBurst        = serializedObject.FindProperty("burst");
+        propBurstNumber  = serializedObject.FindProperty("burstNumber");
+        propSpawnRate    = serializedObject.FindProperty("spawnRate");
+        labelBurstNumber = new GUIContent("Spawn Count");
     }
 
-    void Update()
+    public override void OnInspectorGUI()
     {
-        if (burst.Update(reaktor.Output))
-            fabricator.MakeInstance(burstNumber);
-        if (instantiationRate.enabled)
-            fabricator.instantiationRate = instantiationRate.Evaluate(reaktor.Output);
+        serializedObject.Update ();
+
+        EditorGUILayout.PropertyField(propReaktor);
+
+        EditorGUILayout.PropertyField(propBurst);
+        if (propBurst.hasMultipleDifferentValues ||
+            propBurst.FindPropertyRelative("enabled").boolValue)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(propBurstNumber, labelBurstNumber);
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.PropertyField(propSpawnRate);
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
 
