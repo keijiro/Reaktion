@@ -30,6 +30,7 @@ namespace Reaktion {
 public class MaterialGearEditor : Editor
 {
     SerializedProperty propReaktor;
+    SerializedProperty propMaterialIndex;
     SerializedProperty propTargetType;
     SerializedProperty propTargetName;
     SerializedProperty propThreshold;
@@ -48,6 +49,7 @@ public class MaterialGearEditor : Editor
     void OnEnable()
     {
         propReaktor       = serializedObject.FindProperty("reaktor");
+        propMaterialIndex = serializedObject.FindProperty("materialIndex");
         propTargetType    = serializedObject.FindProperty("targetType");
         propTargetName    = serializedObject.FindProperty("targetName");
         propThreshold     = serializedObject.FindProperty("threshold");
@@ -69,6 +71,7 @@ public class MaterialGearEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(propReaktor);
+        EditorGUILayout.PropertyField(propMaterialIndex);
         EditorGUILayout.PropertyField(propTargetType);
         EditorGUILayout.PropertyField(propTargetName);
 

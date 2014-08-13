@@ -32,6 +32,8 @@ public class MaterialGear : MonoBehaviour
 
     public ReaktorLink reaktor;
 
+    public int materialIndex;
+
     public string targetName = "_Color";
     public TargetType targetType = TargetType.Color;
 
@@ -53,7 +55,10 @@ public class MaterialGear : MonoBehaviour
     {
         reaktor.Initialize(this);
 
-        material = renderer.material;
+        if (materialIndex == 0)
+            material = renderer.material;
+        else
+            material = renderer.materials[materialIndex];
 
         UpdateMaterial(0);
     }
