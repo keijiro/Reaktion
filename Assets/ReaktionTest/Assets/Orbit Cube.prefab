@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 33: {fileID: 3300000}
+  - 23: {fileID: 2300000}
+  - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
+  m_Layer: 0
+  m_Name: Orbit Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!23 &2300000
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3300000
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74090bf65deb941b0bdd0e60f1b8d4b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position:
+    mode: 5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 3.00304964e-06
+        inSlope: 4.32912111
+        outSlope: 4.32912111
+        tangentMode: 0
+      - time: .500184894
+        value: 1.00002348
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.54863071
+        value: .999960542
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.99950385
+        value: 2.6693102e-05
+        inSlope: -2.56489992
+        outSlope: 0
+        tangentMode: 1
+      m_PreInfinity: 2
+      m_PostInfinity: 1
+    amplitude: 2
+    speed: 1
+    arbitraryVector: {x: 0, y: 1, z: 0}
+    randomness: .699999988
+  rotation:
+    mode: 5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 0
+    amplitude: 200
+    speed: 1
+    arbitraryVector: {x: 0, y: 1, z: 0}
+    randomness: .75
+  scale:
+    mode: 4
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 6.62207603e-05
+        value: 3.00304964e-06
+        inSlope: .0392814167
+        outSlope: 2.48036575
+        tangentMode: 1
+      - time: .505705476
+        value: .998385668
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.19947934
+        value: .998726606
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.99971628
+        value: .000938281999
+        inSlope: -2.14125752
+        outSlope: -2.14125752
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    amplitude: 1
+    speed: 1
+    arbitraryVector: {x: 1, y: 1, z: 1}
+    randomness: .479999989
+  scaleByShader: 0
+  scalePropertyName: _Scale
+  useLocalCoordinate: 1
+  useDifferentials: 1
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b440719a9ec144adc9ce347c882d7728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditionType: 2
+  referenceType: 2
+  maxDistance: 10
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 5, y: 5, z: 5}
+  lifetime: 4
+  referencePoint: {x: 0, y: 0, z: 0}
+  referenceObject: {fileID: 0}
+  referenceName: 
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

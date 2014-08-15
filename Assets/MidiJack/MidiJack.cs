@@ -292,6 +292,8 @@ public class MidiJack : MonoBehaviour
 
     #region Native module interface
 
+#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+
     [DllImport ("MidiJackPlugin", EntryPoint="MidiJackCountEndpoints")]
     public static extern int CountEndpoints ();
 
@@ -308,6 +310,36 @@ public class MidiJack : MonoBehaviour
     {
         return Marshal.PtrToStringAnsi (MidiJackGetEndpointName (id));
     }
+
+#else
+
+    public static int CountEndpoints ()
+    {
+        return 0;
+    }
+
+    public static uint GetEndpointIdAtIndex (int index)
+    {
+        return 0;
+    }
+
+    public static ulong DequeueIncomingData ()
+    {
+        return 0;
+    }
+
+    private static System.IntPtr MidiJackGetEndpointName (uint id)
+    {
+        return System.IntPtr.Zero;
+    }
+
+    public static string GetEndpointName (uint id)
+    {
+        return null;
+    }
+
+#endif
+
     #endregion
 
     #region Singleton class handling
