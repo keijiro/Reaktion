@@ -34,12 +34,31 @@ public class GenericAudioInput : MonoBehaviour
 
     void Awake()
     {
-        var sampleRate = AudioSettings.outputSampleRate;
-
         // Create an audio source.
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.loop = true;
+
+        StartInput();
+    }
+
+    void OnApplicationPause(bool paused)
+    {
+        if (paused)
+        {
+            audio.Stop();
+            Microphone.End(null);
+            audio.clip = null;
+        }
+        else
+        {
+            StartInput();
+        }
+    }
+
+    void StartInput()
+    {
+        var sampleRate = AudioSettings.outputSampleRate;
 
         // Create a clip which is assigned to the default microphone.
         audio.clip = Microphone.Start(null, true, 1, sampleRate);
