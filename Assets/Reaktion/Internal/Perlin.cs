@@ -21,10 +21,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
-#define ENABLE_NATIVE_PLUGIN
-#endif
-
 using UnityEngine;
 using System.Runtime.InteropServices;
 
@@ -32,8 +28,6 @@ namespace Reaktion {
 
 public static class Perlin
 {
-#if !ENABLE_NATIVE_PLUGIN
-
     //
     // Based on the original implementation by Ken Perlin
     // http://mrl.nyu.edu/~perlin/noise/
@@ -186,84 +180,6 @@ public static class Perlin
     };
 
     #endregion
-
-#else // ENABLE_NATIVE_PLUGIN
-
-    //
-    // The native implementation.
-    //
-
-    #region Noise functions
-    
-    public static float Noise (float x)
-    {
-        return KvantNoise1D (x);
-    }
-    
-    public static float Noise (float x, float y)
-    {
-        return KvantNoise2D (x, y);
-    }
-    
-    public static float Noise (Vector2 coord)
-    {
-        return KvantNoise2D (coord.x, coord.y);
-    }
-    
-    public static float Noise (float x, float y, float z)
-    {
-        return KvantNoise3D (x, y, z);
-    }
-    
-    public static float Noise (Vector3 coord)
-    {
-        return KvantNoise3D (coord.x, coord.y, coord.z);
-    }
-    
-    #endregion
-    
-    #region Fractal functions
-    
-    public static float Fbm (float x, int octave)
-    {
-        return KvantFBM1D (x, octave);
-    }
-    
-    public static float Fbm (Vector2 coord, int octave)
-    {
-        return KvantFBM2D (coord.x, coord.y, octave);
-    }
-    
-    public static float Fbm (Vector3 coord, int octave)
-    {
-        return KvantFBM3D (coord.x, coord.y, coord.z, octave);
-    }
-    
-    #endregion
-
-    #region Native plug-in interface
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantNoise1D (float x);
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantNoise2D (float x, float y);
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantNoise3D (float x, float y, float z);
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantFBM1D (float x, int octave);
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantFBM2D (float x, float y, int octave);
-    
-    [DllImport ("Kvant")]
-    private static extern float KvantFBM3D (float x, float y, float z, int octave);
-    
-    #endregion
-
-#endif // ENABLE_NATIVE_PLUGIN
 }
 
 } // namespace Reaktion
