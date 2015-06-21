@@ -22,6 +22,7 @@
 //
 using UnityEngine;
 using System.Collections;
+using MidiJack;
 
 namespace Reaktion {
 
@@ -41,7 +42,7 @@ public class BeatInjector : InjectorBase
     void Update()
     {
         if (tapNote >= 0)
-            if (MidiJack.GetKeyDown(tapChannel, tapNote))
+            if (MidiMaster.GetKeyDown(tapChannel, tapNote))
                 Tap();
 
         if (!string.IsNullOrEmpty(tapButton))

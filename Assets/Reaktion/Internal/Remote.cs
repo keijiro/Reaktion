@@ -21,6 +21,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using UnityEngine;
+using MidiJack;
 
 namespace Reaktion {
 
@@ -64,11 +65,11 @@ public class Remote
         }
         else if (_control == Control.MidiKnob)
         {
-            _level = MidiJack.GetKnob(_midiChannel, _knobIndex, _defaultLevel);
+            _level = MidiMaster.GetKnob(_midiChannel, _knobIndex, _defaultLevel);
         }
         else if (_control == Control.MidiNote)
         {
-            _level = MidiJack.GetKey(_midiChannel, _noteNumber);
+            _level = MidiMaster.GetKey(_midiChannel, _noteNumber);
         }
         else // _control == Control.InputAxis
         {
