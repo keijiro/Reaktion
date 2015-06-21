@@ -42,16 +42,16 @@ public class GenericAudioInput : MonoBehaviour
         audioSource.loop = true;
 
         // Create a clip which is assigned to the default microphone.
-        audio.clip = Microphone.Start(null, true, 1, sampleRate);
+        GetComponent<AudioSource>().clip = Microphone.Start(null, true, 1, sampleRate);
 
-        if (audio.clip != null)
+        if (GetComponent<AudioSource>().clip != null)
         {
             // Wait until the microphone gets initialized.
             int delay = 0;
             while (delay <= 0) delay = Microphone.GetPosition(null);
 
             // Start playing.
-            audio.Play();
+            GetComponent<AudioSource>().Play();
 
             // Estimate the latency.
             estimatedLatency = (float)delay / sampleRate;
