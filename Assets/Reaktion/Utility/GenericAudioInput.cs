@@ -34,32 +34,47 @@ public class GenericAudioInput : MonoBehaviour
 
     void Awake()
     {
-        var sampleRate = AudioSettings.outputSampleRate;
-
         // Create an audio source.
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.loop = true;
 
-        // Create a clip which is assigned to the default microphone.
-        GetComponent<AudioSource>().clip = Microphone.Start(null, true, 1, sampleRate);
+        StartInput();
+    }
 
-        if (GetComponent<AudioSource>().clip != null)
+    void OnApplicationPause(bool paused)
+    {
+        if (paused)
+        {
+            audioSource.Stop();
+            Microphone.End(null);
+            audioSource.clip = null;
+        }
+        else
+            StartInput();
+    }
+
+    void StartInput()
+    {
+        var sampleRate = AudioSettings.outputSampleRate;
+
+        // Create a clip which is assigned to the default microphone.
+        audioSource.clip = Microphone.Start(null, true, 1, sampleRate);
+
+        if (audioSource.clip != null)
         {
             // Wait until the microphone gets initialized.
             int delay = 0;
             while (delay <= 0) delay = Microphone.GetPosition(null);
 
             // Start playing.
-            GetComponent<AudioSource>().Play();
+            audioSource.Play();
 
             // Estimate the latency.
             estimatedLatency = (float)delay / sampleRate;
         }
         else
-        {
             Debug.LogWarning("GenericAudioInput: Initialization failed.");
-        }
     }
 }
 

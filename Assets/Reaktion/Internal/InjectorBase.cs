@@ -27,7 +27,7 @@ namespace Reaktion {
 
 public class InjectorBase : MonoBehaviour
 {
-    protected float dbLevel;
+    protected float dbLevel = -60.0f;
 
     public float DbLevel
     {
