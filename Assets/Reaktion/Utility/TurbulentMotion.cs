@@ -40,8 +40,6 @@ public class TurbulentMotion : MonoBehaviour
 
     // Misc settings.
     public bool useLocalCoordinate  = true;
-    public bool scaleByShader       = false;
-    public string scalePropertyName = "_Scale";
 
     // Initial states.
     Vector3    initialPosition;
@@ -134,10 +132,7 @@ public class TurbulentMotion : MonoBehaviour
             );
 
             // Apply the scale.
-            if (scaleByShader)
-                GetComponent<Renderer>().material.SetVector(scalePropertyName, vs);
-            else
-                transform.localScale = Vector3.Scale(initialScale, vs);
+            transform.localScale = Vector3.Scale(initialScale, vs);
         }
     }
 }

@@ -89,8 +89,6 @@ public class TransformGear : MonoBehaviour
     public TransformElement scale = new TransformElement{ arbitraryVector = Vector3.one, min = 1, max = 2 };
 
     public bool addInitialValue = true;
-    public bool scaleByShader = false;
-    public string scalePropertyName = "_Scale";
 
     Vector3 initialPosition;
     Quaternion initialRotation;
@@ -129,12 +127,8 @@ public class TransformGear : MonoBehaviour
 
         if (scale.mode != TransformMode.Off)
         {
-            var so = (addInitialValue && !scaleByShader) ? initialScale : Vector3.one;
-            var s = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.GetScalar(ro) - 1));
-            if (scaleByShader)
-                GetComponent<Renderer>().material.SetVector(scalePropertyName, s);
-            else
-                transform.localScale = s;
+            var s = Vector3.one + scale.Vector * (scale.GetScalar(ro) - 1);
+            transform.localScale = Vector3.Scale(addInitialValue ? initialScale : Vector3.one, s);
         }
     }
 }

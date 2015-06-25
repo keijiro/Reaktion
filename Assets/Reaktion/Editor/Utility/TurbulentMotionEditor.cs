@@ -40,13 +40,10 @@ public class TurbulentMotionEditor : Editor
     SerializedProperty propCoeffScale;
 
     SerializedProperty propUseLocalCoordinate;
-    SerializedProperty propScaleByShader;
-    SerializedProperty propScalePropertyName;
 
     GUIContent labelAmplitude;
     GUIContent labelWaveNumber;
     GUIContent labelInfluence;
-    GUIContent labelPropertyName;
     GUIContent labelLocalCoordinate;
     
     void OnEnable()
@@ -62,13 +59,10 @@ public class TurbulentMotionEditor : Editor
         propCoeffScale        = serializedObject.FindProperty("coeffScale");
 
         propUseLocalCoordinate = serializedObject.FindProperty("useLocalCoordinate");
-        propScaleByShader      = serializedObject.FindProperty("scaleByShader");
-        propScalePropertyName  = serializedObject.FindProperty("scalePropertyName");
 
         labelAmplitude       = new GUIContent("Amplitude");
         labelWaveNumber      = new GUIContent("Wave Number");
         labelInfluence       = new GUIContent("Influence (≦1.0)");
-        labelPropertyName    = new GUIContent("Property Name");
         labelLocalCoordinate = new GUIContent("Local Coordinate");
     }
 
@@ -98,9 +92,6 @@ public class TurbulentMotionEditor : Editor
         EditorGUI.indentLevel++;
         EditorGUILayout.PropertyField(propScale, labelInfluence);
         EditorGUILayout.PropertyField(propCoeffScale, labelWaveNumber);
-        EditorGUILayout.PropertyField(propScaleByShader);
-        if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
-            EditorGUILayout.PropertyField(propScalePropertyName, labelPropertyName);
         EditorGUI.indentLevel--;
 
         EditorGUILayout.PropertyField(propUseLocalCoordinate, labelLocalCoordinate);

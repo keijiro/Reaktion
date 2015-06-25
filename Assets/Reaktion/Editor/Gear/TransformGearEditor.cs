@@ -128,10 +128,6 @@ public class TransformGearEditor : Editor
     SerializedProperty propScale;
 
     SerializedProperty propAddInitial;
-    SerializedProperty propScaleByShader;
-    SerializedProperty propScalePropertyName;
-
-    GUIContent labelPropertyName;
 
     void OnEnable()
     {
@@ -141,11 +137,7 @@ public class TransformGearEditor : Editor
         propRotation = serializedObject.FindProperty("rotation");
         propScale    = serializedObject.FindProperty("scale");
 
-        propAddInitial        = serializedObject.FindProperty("addInitialValue");
-        propScaleByShader     = serializedObject.FindProperty("scaleByShader");
-        propScalePropertyName = serializedObject.FindProperty("scalePropertyName");
-
-        labelPropertyName = new GUIContent("Property Name");
+        propAddInitial = serializedObject.FindProperty("addInitialValue");
     }
 
     public override void OnInspectorGUI()
@@ -159,15 +151,6 @@ public class TransformGearEditor : Editor
         EditorGUILayout.PropertyField(propRotation);
 
         EditorGUILayout.PropertyField(propScale);
-        var propMode = propScale.FindPropertyRelative("mode");
-        if (propMode.hasMultipleDifferentValues || propMode.enumValueIndex > 0)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propScaleByShader);
-            if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
-                EditorGUILayout.PropertyField(propScalePropertyName, labelPropertyName);
-            EditorGUI.indentLevel--;
-        }
 
         EditorGUILayout.PropertyField(propAddInitial);
 
