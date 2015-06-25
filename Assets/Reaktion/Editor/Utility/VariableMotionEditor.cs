@@ -114,9 +114,6 @@ public class VariableMotionEditor : Editor
     SerializedProperty propRotation;
     SerializedProperty propScale;
 
-    SerializedProperty propScaleByShader;
-    SerializedProperty propScalePropertyName;
-
     SerializedProperty propUseLocalCoordinate;
     SerializedProperty propUseDifferentials;
 
@@ -125,9 +122,6 @@ public class VariableMotionEditor : Editor
         propPosition = serializedObject.FindProperty("position");
         propRotation = serializedObject.FindProperty("rotation");
         propScale    = serializedObject.FindProperty("scale");
-
-        propScaleByShader     = serializedObject.FindProperty("scaleByShader");
-        propScalePropertyName = serializedObject.FindProperty("scalePropertyName");
 
         propUseLocalCoordinate = serializedObject.FindProperty("useLocalCoordinate");
         propUseDifferentials   = serializedObject.FindProperty("useDifferentials");
@@ -140,16 +134,6 @@ public class VariableMotionEditor : Editor
         EditorGUILayout.PropertyField(propPosition);
         EditorGUILayout.PropertyField(propRotation);
         EditorGUILayout.PropertyField(propScale);
-
-        var propMode = propScale.FindPropertyRelative("mode");
-        if (propMode.hasMultipleDifferentValues || propMode.enumValueIndex > 0)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(propScaleByShader);
-            if (propScaleByShader.hasMultipleDifferentValues || propScaleByShader.boolValue)
-                EditorGUILayout.PropertyField(propScalePropertyName, new GUIContent("Property Name"));
-            EditorGUI.indentLevel--;
-        }
 
         EditorGUILayout.PropertyField(propUseLocalCoordinate, new GUIContent("Local Coordinate"));
         EditorGUILayout.PropertyField(propUseDifferentials);

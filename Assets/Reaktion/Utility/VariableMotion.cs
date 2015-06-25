@@ -100,8 +100,6 @@ public class VariableMotion : MonoBehaviour
         curve = AnimationCurve.Linear(0, 0, 1, 1),
         arbitraryVector = Vector3.one
     };
-    public bool scaleByShader = false;
-    public string scalePropertyName = "_Scale";
 
     // Options for applying transformations.
     public bool useLocalCoordinate = true;
@@ -194,12 +192,9 @@ public class VariableMotion : MonoBehaviour
         // Scale.
         if (scale.mode != TransformMode.Off)
         {
-            var so = (useDifferentials && !scaleByShader) ? initialScale : Vector3.one;
-            var s = Vector3.Scale(so, Vector3.one + scale.Vector * (scale.Scalar - 1));
-            if (scaleByShader)
-                GetComponent<Renderer>().material.SetVector(scalePropertyName, s);
-            else
-                transform.localScale = s;
+            var so = useDifferentials ? initialScale : Vector3.one;
+            var sc = Vector3.one + scale.Vector * (scale.Scalar - 1);
+            transform.localScale = Vector3.Scale(so, sc);
         }
     }
 }
