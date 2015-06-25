@@ -3,6 +3,10 @@ Reaktion
 
 ![Snap](http://38.media.tumblr.com/fe9bb0573d05fcbe29903c046f8e86db/tumblr_nqi2phvAfY1qio469o1_400.gif)
 
+![Generative](http://38.media.tumblr.com/57afc7693bdbd699847806d8c1e7bbc7/tumblr_nqiazfQhrP1qio469o1_400.gif)
+
+![Beats](http://38.media.tumblr.com/abfd26888e35f383ddbfc1ad0c0cc445/tumblr_nqib0cOeDE1qio469o1_400.gif)
+
 Reaktion is an audio reactive animation toolkit for Unity.
 
 License
