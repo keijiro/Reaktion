@@ -1,14 +1,14 @@
 Reaktion
 ========
 
-![Screenshot](http://keijiro.github.io/Reaktion/screenshot.png)
+![Snap](http://38.media.tumblr.com/fe9bb0573d05fcbe29903c046f8e86db/tumblr_nqi2phvAfY1qio469o1_400.gif)
 
-**Reaktion** is an audio reactive animation toolkit for Unity.
+Reaktion is an audio reactive animation toolkit for Unity.
 
 License
 -------
 
-Copyright (C) 2013, 2014 Keijiro Takahashi
+Copyright (C) 2013-2015 Keijiro Takahashi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
