@@ -26,9 +26,6 @@ using System.Collections;
 
 namespace Reaktion {
 
-// Enable only on UGUI enabled versions (requiring UnityEvent)
-#if UNITY_4_6 || UNITY_5_0
-
 [CustomEditor(typeof(GenericTriggerGear)), CanEditMultipleObjects]
 public class GenericTriggerGearEditor : Editor
 {
@@ -61,7 +58,5 @@ public class GenericTriggerGearEditor : Editor
         serializedObject.ApplyModifiedProperties ();
     }
 }
-
-#endif
 
 } // namespace Reaktion
