@@ -97,7 +97,7 @@ public class JitterMotion : MonoBehaviour
         var w = 1.0f;
         for (var i = 0; i < octave; i++)
         {
-            f += w * (Mathf.PerlinNoise(coord.x, coord.y) - 0.5f);
+            f += w * Perlin.Noise(coord.x, coord.y) * 0.5f;
             coord *= 2;
             w *= 0.5f;
         }
