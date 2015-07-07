@@ -53,6 +53,7 @@ namespace OscJack
         {
             _endPoint = new IPEndPoint(IPAddress.Any, listenPort);
             _udpClient = new UdpClient(_endPoint);
+            _udpClient.Client.ReceiveTimeout = 1000;
             _osc = new OscParser();
         }
 
